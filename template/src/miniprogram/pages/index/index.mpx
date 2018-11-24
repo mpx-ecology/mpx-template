@@ -1,0 +1,26 @@
+<template>
+  <list></list>
+</template>
+
+<script>
+  import {createPage} from 'mpx'
+
+  createPage({
+    onLoad: function () {
+    }
+  })
+</script>
+
+<style>
+</style>
+
+<script type="application/json">
+  {
+    "usingComponents": {
+      "list": "plugin://myPlugin/list"
+    }
+  }
+</script>
+
+
+

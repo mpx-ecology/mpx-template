@@ -1,0 +1,30 @@
+<template>
+  <view class="list">
+    <view wx:for="{{listData}}">{{item}}</view>
+  </view>
+</template>
+
+<script>
+  import {createComponent} from 'mpx'
+
+  createComponent({
+    data: {
+      listData: {
+        'phone': '手机',
+        'tv': '电视',
+        'computer': '电脑'
+      }
+    }
+  })
+</script>
+
+<style lang="stylus">
+  .list
+    background-color red
+</style>
+
+<script type="application/json">
+  {
+    "component": true
+  }
+</script>

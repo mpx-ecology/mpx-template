@@ -1,0 +1,31 @@
+<template>
+  <list></list>
+</template>
+
+{% if mode === 'wx' %}
+<script>
+  import {createPage} from 'mpx'
+
+  createPage({
+    onLoad: function () {
+    }
+  })
+</script>
+{% else %}
+<script>
+  import {createPage} from 'mpx-ant'
+
+  createPage({
+    onLoad: function () {
+    }
+  }, Page)
+</script>
+{% endif %}
+
+<script type="application/json">
+  {
+    "usingComponents": {
+      "list": "../../components/list/list"
+    }
+  }
+</script>

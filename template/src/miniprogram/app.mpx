@@ -1,0 +1,25 @@
+<script>
+  //app.js
+  App({
+    onLaunch: function () {
+    }
+  })
+</script>
+
+<style>
+
+</style>
+
+<script type="application/json">
+  {
+    "pages": [
+      "pages/index/index"
+    ],
+    "plugins": {
+      "myPlugin": {
+        "version": "dev",
+        "provider": "<$ appid $>"
+      }
+    }
+  }
+</script>

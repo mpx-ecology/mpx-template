@@ -1,0 +1,16 @@
+{
+  {% if isPlugin %}
+  "miniprogramRoot": "./miniprogram",
+  "pluginRoot": "./plugin",
+  "compileType": "plugin",
+  {% else %}
+  "compileType": "miniprogram",
+  {% endif %}
+  "setting": {
+    "newFeature": true
+  },
+  "appid": "<$ appid $>",
+  "projectname": "<$ name $>",
+  "description": "<$ description $>",
+  "condition": {}
+}

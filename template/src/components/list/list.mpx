@@ -1,0 +1,52 @@
+{% if mode === 'wx' %}
+<template>
+  <view class="list">
+    <view wx:for="{{listData}}" wx:key="index">{{item}}</view>
+  </view>
+</template>
+
+<script>
+  import {createComponent} from 'mpx'
+
+  createComponent({
+    data: {
+      listData: {
+        'phone': '手机',
+        'tv': '电视',
+        'computer': '电脑'
+      }
+    }
+  })
+</script>
+{% else %}
+<template>
+  <view class="list">
+    <view a:for="{{listData}}" a:key="{{index}}">{{item}}</view>
+  </view>
+</template>
+
+<script>
+  import {createComponent} from 'mpx-ant'
+
+  createComponent({
+    data: {
+      listData: {
+        'phone': '手机',
+        'tv': '电视',
+        'computer': '电脑'
+      }
+    }
+  }, Component)
+</script>
+{% endif %}
+
+<style lang="stylus">
+  .list
+    background-color red
+</style>
+
+<script type="application/json">
+  {
+    "component": true
+  }
+</script>
