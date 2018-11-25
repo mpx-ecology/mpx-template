@@ -20,9 +20,8 @@
     {% endif %}
   },
   "devDependencies": {
-    "@gulfstream/mpx-webpack-plugin": "^1.0.0",
-    "@gulfstream/babel-rule-plugin": "^2.0.0",
-    "@gulfstream/mpx-url-loader": "^1.0.0",
+    "@mpxjs/webpack-plugin": "^1.0.0",
+    "@mpxjs/url-loader": "^1.0.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-runtime": "^6.26.0",

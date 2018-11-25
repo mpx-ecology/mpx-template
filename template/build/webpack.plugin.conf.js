@@ -1,6 +1,6 @@
 var path = require('path')
 var merge = require('webpack-merge')
-var MpxWebpackPlugin = require('@gulfstream/mpx-webpack-plugin')
+var MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 var baseWebpackConfig = require('./webpack.base.conf')
 
 var pluginSubDir = 'plugin'

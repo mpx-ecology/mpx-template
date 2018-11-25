@@ -1,6 +1,5 @@
 var path = require('path')
-var MpxWebpackPlugin = require('@gulfstream/mpx-webpack-plugin')
-var BabelRulePlugin = require('@gulfstream/babel-rule-plugin')
+var MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -20,11 +19,11 @@ var webpackConf = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test'), resolve('node_modules/mpx')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
-        loader: '@gulfstream/mpx-url-loader',
+        loader: '@mpxjs/url-loader',
         options: {
           autoBase64: true,
           name: 'img/[name].[ext]'
@@ -51,8 +50,7 @@ var webpackConf = {
   plugins: [
     new MpxWebpackPlugin({
       mode: '<$ mode $>'
-    }),
-    new BabelRulePlugin()
+    })
   ],
   resolve: {
     extensions: ['.js', '.mpx'],
