@@ -19,7 +19,7 @@ var webpackConf = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/mpx')]
+        include: [resolve('src'), resolve('test'), resolve('node_modules/@mpxjs')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -32,8 +32,7 @@ var webpackConf = {
     ]
   },
   output: {
-    filename: '[name].js',
-    publicPath: '/'
+    filename: '[name].js'
   },
   optimization: {
     runtimeChunk: {
@@ -46,7 +45,6 @@ var webpackConf = {
     }
   },
   mode: 'none',
-  node: false,
   plugins: [
     new MpxWebpackPlugin({
       mode: '<$ mode $>'
