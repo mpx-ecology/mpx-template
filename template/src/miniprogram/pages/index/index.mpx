@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import {createPage} from 'mpx'
+  import {createPage} from '@mpxjs/core'
 
   createPage({
     onLoad: function () {

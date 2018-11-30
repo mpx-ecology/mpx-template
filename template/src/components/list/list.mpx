@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import {createComponent} from 'mpx'
+  import {createComponent} from '@mpxjs/core'
 
   createComponent({
     data: {
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import {createComponent} from 'mpx-ant'
+  import {createComponent} from '@mpxjs/ant'
 
   createComponent({
     data: {

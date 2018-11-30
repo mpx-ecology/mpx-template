@@ -14,9 +14,9 @@
   "license": "ISC",
   "dependencies": {
     {% if mode === 'wx' %}
-    "mpx": "^1.0.0"
+    "@mpxjs/core": "^1.0.0"
     {% else %}
-    "mpx-ant": "^1.0.0"
+    "@mpxjs/ant": "^1.0.0"
     {% endif %}
   },
   "devDependencies": {
