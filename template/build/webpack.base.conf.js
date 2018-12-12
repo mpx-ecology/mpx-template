@@ -22,6 +22,11 @@ var webpackConf = {
         include: [resolve('src'), resolve('test'), resolve('node_modules/@mpxjs')]
       },
       {
+        test: /\.json$/,
+        resourceQuery: /__component/,
+        type: 'javascript/auto'
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)$/,
         loader: '@mpxjs/url-loader',
         options: {
