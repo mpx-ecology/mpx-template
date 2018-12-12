@@ -16,7 +16,7 @@
     {% if mode === 'wx' %}
     "@mpxjs/core": "^1.0.0"
     {% else %}
-    "@mpxjs/ant": "^1.0.0"
+    "@mpxjs/core-ant": "^1.0.0"
     {% endif %}
   },
   "devDependencies": {

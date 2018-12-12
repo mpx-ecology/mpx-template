@@ -13,7 +13,7 @@
 </script>
 {% else %}
 <script>
-  import {createPage} from '@mpxjs/ant'
+  import {createPage} from '@mpxjs/core-ant'
 
   createPage({
     onLoad: function () {
