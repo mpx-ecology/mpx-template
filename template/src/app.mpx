@@ -10,7 +10,7 @@
 <script type="application/json">
   {
     "pages": [
-      "pages/index/index"
+      "pages/index"
     ]
   }
 </script>

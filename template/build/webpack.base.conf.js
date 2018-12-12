@@ -56,5 +56,4 @@ var webpackConf = {
   }
 }
 
-
 module.exports = webpackConf
