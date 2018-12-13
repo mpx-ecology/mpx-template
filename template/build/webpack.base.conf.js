@@ -12,8 +12,7 @@ var webpackConf = {
         test: /\.mpx$/,
         use: MpxWebpackPlugin.loader({
           transRpx: false,
-          comment: 'use rpx',
-          compileBindEvent: true
+          comment: 'use rpx'
         })
       },
       {
@@ -57,7 +56,7 @@ var webpackConf = {
   ],
   resolve: {
     extensions: ['.js', '.mpx'],
-    modules: ["node_modules"]
+    modules: ['node_modules']
   }
 }
 
