@@ -49,9 +49,13 @@ var webpackConf = {
       name: 'bundle'
     },
     splitChunks: {
-      chunks: 'all',
-      name: 'bundle',
-      minChunks: 2
+      cacheGroups: {
+        bundle: {
+          chunks: 'all',
+          name: 'bundle',
+          minChunks: 2
+        }
+      }
     }
   },
   mode: 'none',
