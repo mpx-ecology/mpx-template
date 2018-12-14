@@ -42,9 +42,10 @@ function callback (err, stats) {
   process.stdout.write(stats.toString({
     colors: true,
     modules: false,
-    children: true,
+    children: false,
     chunks: false,
-    chunkModules: false
+    chunkModules: false,
+    entrypoints: false
   }) + '\n\n')
 
   console.log(chalk.cyan('  Build complete.\n'))
