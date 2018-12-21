@@ -14,6 +14,7 @@ function resolveDist (file) {
 }
 
 module.exports = merge(baseWebpackConfig, {
+  name: 'plugin-compile',
   // entry point of our application
   entry: {
     plugin: resolveSrc('plugin.json')

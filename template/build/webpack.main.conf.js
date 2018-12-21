@@ -12,6 +12,7 @@ function resolveDist (file) {
 }
 
 module.exports = merge(baseWebpackConfig, {
+  name: 'main-compile',
   // entry point of our application
   entry: {
     app: resolveSrc('app.mpx')

@@ -39,6 +39,30 @@ function runWebpack (cfg) {
 function callback (err, stats) {
   spinner.stop()
   if (err) return console.error(err)
+  {% if isPlugin %}
+  if (Array.isArray(stats.stats)) {
+    stats.stats.forEach(item => {
+      console.log(item.compilation.name === 'main-compile' ? '\n\n主项目打包结果' : '\n\n插件打包结果')
+      process.stdout.write(item.toString({
+        colors: true,
+        modules: false,
+        children: false,
+        chunks: false,
+        chunkModules: false,
+        entrypoints: false
+      }) + '\n\n')
+    })
+  } else {
+    process.stdout.write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false,
+      entrypoints: false
+    }) + '\n\n')
+  }
+  {% else %}
   process.stdout.write(stats.toString({
     colors: true,
     modules: false,
@@ -47,6 +71,7 @@ function callback (err, stats) {
     chunkModules: false,
     entrypoints: false
   }) + '\n\n')
+  {% endif %}
 
   console.log(chalk.cyan('  Build complete.\n'))
   if (program.watch) {
