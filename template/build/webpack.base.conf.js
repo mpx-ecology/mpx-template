@@ -11,8 +11,11 @@ var webpackConf = {
       {
         test: /\.mpx$/,
         use: MpxWebpackPlugin.loader({
-          transRpx: false,
-          comment: 'use rpx'
+          transRpx: {
+            mode: 'only',
+            comment: 'use rpx',
+            include: resolve('src')
+          }
         })
       },
       {
