@@ -10,12 +10,22 @@ var webpackConfig = require('./webpack.main.conf')
 webpackConfig = [require('./webpack.plugin.conf'), webpackConfig]
 {% endif %}
 
+var prodEnv = require('../config/prod.env')
+var devEnv = require('../config/dev.env')
+
 program
   .option('-w, --watch', 'watch mode')
   .option('-p, --production', 'production release')
   .parse(process.argv)
 
 function runWebpack (cfg) {
+  // env
+  if (Array.isArray(cfg)) {
+    cfg.forEach(item => item.plugins.unshift(new webpack.DefinePlugin(program.production ? prodEnv : devEnv)))
+  } else {
+    cfg.plugins.unshift(new webpack.DefinePlugin(program.production ? prodEnv : devEnv))
+  }
+
   if (program.production || program.watch) {
     const extendCfg = program.production ? { mode: 'production' } : { cache: true }
     if (Array.isArray(cfg)) {
