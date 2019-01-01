@@ -8,6 +8,9 @@
     "build": "node ./build/build.js",
     "watch": "node ./build/build.js -w",
     "prod": "node ./build/build.js -p",
+    {% if needEslint %}
+    "lint": "eslint --ext .js,.mpx src/",
+    {% endif %}
     "help": "node ./build/build.js --help"
   },
   "author": "<$ author $>",
@@ -22,6 +25,20 @@
   "devDependencies": {
     "@mpxjs/webpack-plugin": "^1.0.10",
     "@mpxjs/url-loader": "^1.0.0",
+    {% if needEslint %}
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.10.0",
+    "eslint-config-babel": "^8.0.2",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-plugin-html": "^5.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-local-rules": "^0.1.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    {% endif %}
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-runtime": "^6.26.0",
