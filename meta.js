@@ -33,6 +33,9 @@ module.exports = {
       required: true,
       message: 'Appid',
       default: 'touristappid'
+    },
+    needEslint: {
+      default: true
     }
   },
   filters: {
@@ -40,7 +43,8 @@ module.exports = {
     'build/webpack.plugin.conf.js': 'mode === "wx" && isPlugin',
     'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
     'src/*': 'mode !== "wx" || !isPlugin',
-    'project.config.json': 'mode === "wx"'
+    'project.config.json': 'mode === "wx"',
+    '.eslintrc.js': 'needEslint'
   },
   complete: function (data, {chalk}) {
     const green = chalk.green
