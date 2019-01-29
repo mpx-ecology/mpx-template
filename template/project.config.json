@@ -8,7 +8,12 @@
   "compileType": "miniprogram",
   {% endif %}
   "setting": {
-    "newFeature": true
+    "newFeature": true,
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false,
+    "autoAudits": false
   },
   "appid": "<$ appid $>",
   "projectname": "<$ name $>",
