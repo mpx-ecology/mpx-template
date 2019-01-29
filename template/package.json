@@ -16,14 +16,10 @@
   "author": "<$ author $>",
   "license": "ISC",
   "dependencies": {
-    {% if mode === 'wx' %}
-    "@mpxjs/core": "^1.0.5"
-    {% else %}
-    "@mpxjs/core-ant": "^1.0.0"
-    {% endif %}
+    "@mpxjs/core": "^1.0.27"
   },
   "devDependencies": {
-    "@mpxjs/webpack-plugin": "^1.0.10",
+    "@mpxjs/webpack-plugin": "^1.0.26",
     "@mpxjs/url-loader": "^1.0.0",
     {% if needEslint %}
     "babel-eslint": "^10.0.1",

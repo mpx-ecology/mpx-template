@@ -4,7 +4,7 @@ module.exports = {
       type: 'list',
       required: true,
       message: 'Project mode',
-      choices: ['wx', 'ali'],
+      choices: ['wx', 'ali', 'swan'],
       default: 'wx'
     },
     name: {
@@ -38,6 +38,28 @@ module.exports = {
       default: true
     }
   },
+  computed: {
+    dirFor () {
+      switch (this.mode) {
+        case 'wx':
+          return 'wx:for'
+        case 'ali':
+          return 'a:for'
+        case 'swan':
+          return 's-for'
+      }
+    },
+    dirKey () {
+      switch (this.mode) {
+        case 'wx':
+          return 'wx:key'
+        case 'ali':
+          return 'a:key'
+        case 'swan':
+          return 's-key'
+      }
+    }
+  },
   filters: {
     'src/@(miniprogram|plugin)/**/*': 'mode === "wx" && isPlugin',
     'build/webpack.plugin.conf.js': 'mode === "wx" && isPlugin',
@@ -46,7 +68,7 @@ module.exports = {
     'project.config.json': 'mode === "wx"',
     '.eslintrc.js': 'needEslint'
   },
-  complete: function (data, {chalk}) {
+  complete: function (data, { chalk }) {
     const green = chalk.green
     console.log(green('complete!'))
   }

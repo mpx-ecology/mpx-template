@@ -2,23 +2,13 @@
   <list></list>
 </template>
 
-{% if mode === 'wx' %}
 <script>
   import { createPage } from '@mpxjs/core'
 
   createPage({
     onLoad () {}
-  })
+  }{% if mode === 'ali' %}, Page{% endif %})
 </script>
-{% else %}
-<script>
-  import { createPage } from '@mpxjs/core-ant'
-
-  createPage({
-    onLoad () {}
-  }, Page)
-</script>
-{% endif %}
 
 <script type="application/json">
   {

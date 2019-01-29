@@ -29,7 +29,7 @@ var webpackConf = {
         type: 'javascript/auto'
       },
       {
-        test: /\.wxs$/,
+        test: /(\.wxs|\.sjs)$/,
         use: MpxWebpackPlugin.wxsLoader(),
         type: 'javascript/auto',
         issuer: /(\.wxml|\.mpx)$/

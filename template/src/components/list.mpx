@@ -1,7 +1,6 @@
-{% if mode === 'wx' %}
 <template>
   <view class="list">
-    <view wx:for="{{listData}}" wx:key="index">{{item}}</view>
+    <view <$ dirFor $>="{{listData}}" <$ dirKey $>="index">{{item}}</view>
   </view>
 </template>
 
@@ -16,29 +15,9 @@
         'computer': '电脑'
       }
     }
-  })
+  }{% if mode === 'ali' %}, Component{% endif %})
 </script>
-{% else %}
-<template>
-  <view class="list">
-    <view a:for="{{listData}}" a:key="{{index}}">{{item}}</view>
-  </view>
-</template>
 
-<script>
-  import { createComponent } from '@mpxjs/core-ant'
-
-  createComponent({
-    data: {
-      listData: {
-        'phone': '手机',
-        'tv': '电视',
-        'computer': '电脑'
-      }
-    }
-  }, Component)
-</script>
-{% endif %}
 
 <style lang="stylus">
   .list
