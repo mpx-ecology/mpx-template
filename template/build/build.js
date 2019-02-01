@@ -92,7 +92,5 @@ function callback (err, stats) {
 var spinner = ora('building...')
 spinner.start()
 
-rm(path.resolve(__dirname, '../dist/*'), err => {
-  if (err) return console.error(err)
-  runWebpack(webpackConfig)
-})
+rm.sync(path.resolve(__dirname, '../dist/*'))
+runWebpack(webpackConfig)

@@ -4,7 +4,7 @@ module.exports = {
       type: 'list',
       required: true,
       message: 'Project mode',
-      choices: ['wx', 'ali', 'swan'],
+      choices: ['wx', 'ali'],
       default: 'wx'
     },
     name: {
@@ -35,6 +35,7 @@ module.exports = {
       default: 'touristappid'
     },
     needEslint: {
+      type: 'confirm',
       default: true
     }
   },
