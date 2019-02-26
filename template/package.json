@@ -19,7 +19,7 @@
     "@mpxjs/core": "^1.1.0"
   },
   "devDependencies": {
-    "@mpxjs/webpack-plugin": "^1.0.26",
+    "@mpxjs/webpack-plugin": "^1.1.0",
     "@mpxjs/url-loader": "^1.0.0",
     {% if needEslint %}
     "babel-eslint": "^10.0.1",
