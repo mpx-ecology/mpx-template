@@ -16,7 +16,7 @@
   "author": "<$ author $>",
   "license": "ISC",
   "dependencies": {
-    "@mpxjs/core": "^1.0.27"
+    "@mpxjs/core": "^1.1.0"
   },
   "devDependencies": {
     "@mpxjs/webpack-plugin": "^1.0.26",
