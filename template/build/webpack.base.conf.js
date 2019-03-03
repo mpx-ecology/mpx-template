@@ -31,7 +31,8 @@ var webpackConf = {
       {
         test: /(\.wxs|\.sjs|\.filter\.js)$/,
         use: MpxWebpackPlugin.wxsLoader(),
-        type: 'javascript/auto'
+        type: 'javascript/auto',
+        issuer: /(\.wxml|\.mpx)$/
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
