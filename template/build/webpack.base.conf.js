@@ -5,6 +5,31 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+// 配置分包内抽取公共jsBundle，进一步降低主包体积
+// 抽取规则如下
+// 1. 模块被同一分包内2个或以上的chunk所引用
+// 2. 能够抽取的模块体积总和>=10kB
+// 3. 满足以上条件会将抽取后的bundle输出至dist的分包目录下
+
+function getSubPackagesCacheGroups (packages) {
+  let result = {}
+  packages.forEach((root) => {
+    result[root] = {
+      test: (module, chunks) => {
+        return chunks.every((chunk) => {
+          return (new RegExp(`^${root}\\/`)).test(chunk.name)
+        })
+      },
+      name: `${root}/bundle`,
+      minChunks: 2,
+      minSize: 10000,
+      priority: 100,
+      chunks: 'initial'
+    }
+  })
+  return result
+}
+
 var webpackConf = {
   module: {
     rules: [
@@ -53,11 +78,13 @@ var webpackConf = {
     },
     splitChunks: {
       cacheGroups: {
-        bundle: {
-          chunks: 'all',
+        main: {
           name: 'bundle',
-          minChunks: 2
-        }
+          minChunks: 2,
+          chunks: 'initial'
+        },
+        // 分包内抽取bundle示例配置，传入分包root数组
+        // ...getSubPackagesCacheGroups(Array<subpackage root>)
       }
     }
   },
