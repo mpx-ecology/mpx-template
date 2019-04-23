@@ -7,7 +7,7 @@
 
   createPage({
     onLoad () {}
-  }{% if mode === 'ali' %}, Page{% endif %})
+  })
 </script>
 
 <script type="application/json">

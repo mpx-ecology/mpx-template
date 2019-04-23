@@ -9,11 +9,7 @@
 
   createComponent({
     data: {
-      listData: {
-        'phone': '手机',
-        'tv': '电视',
-        'computer': '电脑'
-      }
+      listData: ['手机', '电视', '电脑']
     }
   })
 </script>

@@ -11,7 +11,7 @@
     data: {
       listData: ['手机', '电视', '电脑']
     }
-  }{% if mode === 'ali' %}, Component{% endif %})
+  })
 </script>
 
 

@@ -4,7 +4,7 @@ module.exports = {
       type: 'list',
       required: true,
       message: 'Project mode',
-      choices: ['wx', 'ali', 'swan'],
+      choices: ['wx', 'ali', 'swan', 'qq', 'tt'],
       default: 'wx'
     },
     name: {
@@ -48,6 +48,10 @@ module.exports = {
           return 'a:for'
         case 'swan':
           return 's-for'
+        case 'qq':
+          return 'qq:for'
+        case 'tt':
+          return 'tt:for'
       }
     },
     dirKey () {
@@ -58,6 +62,10 @@ module.exports = {
           return 'a:key'
         case 'swan':
           return 's-key'
+        case 'qq':
+          return 'qq:key'
+        case 'tt':
+          return 'tt:key'
       }
     }
   },
