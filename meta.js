@@ -4,7 +4,7 @@ module.exports = {
       type: 'list',
       required: true,
       message: 'Project mode',
-      choices: ['wx', 'ali', 'swan', 'qq', 'tt'],
+      choices: ['wx', 'ali', 'swan', 'qq'],
       default: 'wx'
     },
     name: {
