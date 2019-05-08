@@ -3,39 +3,46 @@ module.exports = {
     mode: {
       type: 'list',
       required: true,
-      message: 'Project mode',
+      message: '请选择小程序项目所属平台（目前仅微信下支持跨平台输出）',
       choices: ['wx', 'ali', 'swan', 'qq'],
       default: 'wx'
+    },
+    cross: {
+      when: 'mode === "wx"',
+      message: '是否需要跨小程序平台',
+      type: 'confirm',
+      default: true
     },
     name: {
       type: 'string',
       required: true,
-      message: 'Project name'
+      message: '项目名称'
     },
     description: {
       type: 'string',
       required: false,
-      message: 'Project description',
+      message: '项目描述',
       default: 'A mpx project'
     },
     author: {
       type: 'string',
-      message: 'Author'
+      message: '作者'
     },
     isPlugin: {
       when: 'mode === "wx"',
       type: 'confirm',
-      message: 'Is this a plugin project?',
+      message: '是否是个插件项目?（不清楚请选 No ！什么是插件项目请看微信官方文档！）',
       default: false
     },
     appid: {
       when: 'mode === "wx"',
       required: true,
-      message: 'Appid',
+      message: '请输入小程序的Appid',
       default: 'touristappid'
     },
     needEslint: {
       type: 'confirm',
+      message: '是否需要ESlint',
       default: true
     }
   },
