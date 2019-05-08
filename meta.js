@@ -79,6 +79,7 @@ module.exports = {
   filters: {
     'src/@(miniprogram|plugin)/**/*': 'mode === "wx" && isPlugin',
     'build/webpack.plugin.conf.js': 'mode === "wx" && isPlugin',
+    'build/webpack.wx.conf.js': 'mode === "wx"',
     'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
     'src/*': 'mode !== "wx" || !isPlugin',
     'project.config.json': 'mode === "wx"',

@@ -1,9 +1,9 @@
-var path = require('path')
-var merge = require('webpack-merge')
-var MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-var baseWebpackConfig = require('./webpack.base.conf')
+const path = require('path')
+const merge = require('webpack-merge')
+const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
+const baseWebpackConfig = require('./webpack.base.conf')
 
-var pluginSubDir = 'plugin'
+const pluginSubDir = 'plugin'
 
 function resolveSrc (file) {
   return path.resolve(__dirname, '../src', pluginSubDir, file || '')
