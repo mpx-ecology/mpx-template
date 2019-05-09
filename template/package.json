@@ -21,12 +21,11 @@
   "author": "<$ author $>",
   "license": "ISC",
   "dependencies": {
-    "@mpxjs/core": "^1.1.0"
+    "@mpxjs/core": "^2.0.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.3",
-    "@mpxjs/webpack-plugin": "^1.1.0",
-    "@mpxjs/url-loader": "^1.0.0",
+    "@mpxjs/webpack-plugin": "^2.0.0",
     {% if needEslint %}
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
