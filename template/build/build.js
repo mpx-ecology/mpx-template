@@ -7,13 +7,13 @@ var merge = require('webpack-merge')
 var program = require('commander')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 var webpackMainConfig = require('./webpack.main.conf')
-{% if mode %}
+{% if mode === 'wx' %}
 var webpackWxConfig = require('./webpack.wx.conf')
 {% endif %}
 
 var webpackConfigArr = []
 let isPluginProject = false
-
+const userSelectedMode = '<$ mode $>'
 {% if isPlugin %}
 isPluginProject = true
 webpackConfigArr.push(require('./webpack.plugin.conf'))
@@ -27,8 +27,8 @@ const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt']
 const npmConfigArgvOriginal = JSON.parse(process.env.npm_config_argv).original || []
 const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
 
-if ((isPluginProject && '<$ mode $>' === 'wx') || modeArr.length === 0) {
-  webpackConfigArr.push(merge(item === 'wx' ? webpackWxConfig : webpackMainConfig, {
+if ((isPluginProject && userSelectedMode === 'wx') || modeArr.length === 0) {
+  webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
     output: {
       path: resolveDist('', '../dist/')
     },

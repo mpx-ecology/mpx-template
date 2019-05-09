@@ -29,7 +29,7 @@ module.exports = {
       message: '作者'
     },
     isPlugin: {
-      when: 'mode === "wx"',
+      when: 'mode === "wx" && cross === false',
       type: 'confirm',
       message: '是否是个插件项目?（不清楚请选 No ！什么是插件项目请看微信官方文档！）',
       default: false
@@ -77,11 +77,11 @@ module.exports = {
     }
   },
   filters: {
-    'src/@(miniprogram|plugin)/**/*': 'mode === "wx" && isPlugin',
-    'build/webpack.plugin.conf.js': 'mode === "wx" && isPlugin',
+    'src/@(miniprogram|plugin)/**/*': '(mode === "wx" && cross === false) && isPlugin',
+    'build/webpack.plugin.conf.js': '(mode === "wx" && cross === false) && isPlugin',
     'build/webpack.wx.conf.js': 'mode === "wx"',
-    'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
-    'src/*': 'mode !== "wx" || !isPlugin',
+    'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || (mode === "wx" && cross === false && !isPlugin)',
+    'src/*': 'mode !== "wx" || (mode === "wx" && cross === false && !isPlugin)',
     'project.config.json': 'mode === "wx"',
     '.eslintrc.js': 'needEslint'
   },

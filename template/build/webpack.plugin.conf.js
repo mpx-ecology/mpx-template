@@ -28,6 +28,11 @@ module.exports = merge(baseWebpackConfig, {
       }
     ]
   },
+  plugins: [
+    new MpxWebpackPlugin({
+      mode: '<$ mode $>'
+    })
+  ],
   output: {
     path: resolveDist(),
   },
