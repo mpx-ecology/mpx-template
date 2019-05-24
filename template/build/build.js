@@ -5,10 +5,56 @@ var chalk = require('chalk')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
 var program = require('commander')
-var webpackConfig = require('./webpack.main.conf')
-{% if isPlugin %}
-webpackConfig = [require('./webpack.plugin.conf'), webpackConfig]
+const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
+var webpackMainConfig = require('./webpack.main.conf')
+{% if mode === 'wx' %}
+var webpackWxConfig = require('./webpack.wx.conf')
 {% endif %}
+
+var webpackConfigArr = []
+let isPluginProject = false
+const userSelectedMode = '<$ mode $>'
+{% if isPlugin %}
+isPluginProject = true
+webpackConfigArr.push(require('./webpack.plugin.conf'))
+{% endif %}
+
+function resolveDist (file, pathStr = '../dist') {
+  return path.resolve(__dirname, pathStr, file || '')
+}
+
+const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt']
+const npmConfigArgvOriginal = JSON.parse(process.env.npm_config_argv).original || []
+const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
+
+if ((isPluginProject && userSelectedMode === 'wx') || modeArr.length === 0) {
+  webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+    output: {
+      path: resolveDist('', '../dist/')
+    },
+    plugins: [
+      new MpxWebpackPlugin({
+        mode: '<$ mode $>',
+        srcMode: '<$ mode $>'
+      })
+    ]
+  }))
+} else {
+  modeArr.forEach(item => {
+    const webpackCrossConfig = merge(item === 'wx' ? webpackWxConfig : webpackMainConfig, {
+      output: {
+        path: resolveDist('', '../dist/' + item)
+      },
+      plugins: [
+        new MpxWebpackPlugin({
+          mode: item,
+          srcMode: '<$ mode $>'
+        })
+      ]
+    })
+    webpackConfigArr.push(webpackCrossConfig)
+  })
+}
 
 var prodEnv = require('../config/prod.env')
 var devEnv = require('../config/dev.env')
@@ -52,7 +98,7 @@ function callback (err, stats) {
   {% if isPlugin %}
   if (Array.isArray(stats.stats)) {
     stats.stats.forEach(item => {
-      console.log(item.compilation.name === 'main-compile' ? '\n\n主项目打包结果' : '\n\n插件打包结果')
+      console.log(item.compilation.name !== 'plugin-compile' ? '\n\n主项目打包结果' : '\n\n插件打包结果')
       process.stdout.write(item.toString({
         colors: true,
         modules: false,
@@ -98,4 +144,4 @@ try {
   console.error(e)
   console.log('\n\n删除dist文件夹遇到了一些问题，如果遇到问题请手工删除dist重来\n\n')
 }
-runWebpack(webpackConfig)
+runWebpack(webpackConfigArr)
