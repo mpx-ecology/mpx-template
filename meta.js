@@ -80,8 +80,8 @@ module.exports = {
     'src/@(miniprogram|plugin)/**/*': '(mode === "wx" && cross === false) && isPlugin',
     'build/webpack.plugin.conf.js': '(mode === "wx" && cross === false) && isPlugin',
     'build/webpack.wx.conf.js': 'mode === "wx"',
-    'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || (mode === "wx" && cross === false && !isPlugin)',
-    'src/*': 'mode !== "wx" || (mode === "wx" && cross === true)',
+    'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || (mode === "wx" && cross === true) || (mode === "wx" && cross === false && !isPlugin)',
+    'src/*': 'mode !== "wx" || (mode === "wx" && cross === true) || (mode === "wx" && cross === false && !isPlugin)',
     'project.config.json': 'mode === "wx"',
     '.eslintrc.js': 'needEslint'
   },
