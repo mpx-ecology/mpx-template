@@ -24,7 +24,7 @@ function resolveDist (file, pathStr = '../dist') {
 }
 
 const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt']
-const npmConfigArgvOriginal = JSON.parse(process.env.npm_config_argv).original || []
+const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
 const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
 
 if ((isPluginProject && userSelectedMode === 'wx') || modeArr.length === 0) {
@@ -42,6 +42,7 @@ if ((isPluginProject && userSelectedMode === 'wx') || modeArr.length === 0) {
 } else {
   modeArr.forEach(item => {
     const webpackCrossConfig = merge(item === 'wx' ? webpackWxConfig : webpackMainConfig, {
+      name: item + '-compiler',
       output: {
         path: resolveDist('', '../dist/' + item)
       },
@@ -95,10 +96,9 @@ function runWebpack (cfg) {
 function callback (err, stats) {
   spinner.stop()
   if (err) return console.error(err)
-  {% if isPlugin %}
   if (Array.isArray(stats.stats)) {
     stats.stats.forEach(item => {
-      console.log(item.compilation.name !== 'plugin-compile' ? '\n\n主项目打包结果' : '\n\n插件打包结果')
+      console.log(item.compilation.name + '打包结果：')
       process.stdout.write(item.toString({
         colors: true,
         modules: false,
@@ -118,16 +118,6 @@ function callback (err, stats) {
       entrypoints: false
     }) + '\n\n')
   }
-  {% else %}
-  process.stdout.write(stats.toString({
-    colors: true,
-    modules: false,
-    children: false,
-    chunks: false,
-    chunkModules: false,
-    entrypoints: false
-  }) + '\n\n')
-  {% endif %}
 
   console.log(chalk.cyan('  Build complete.\n'))
   if (program.watch) {
@@ -144,4 +134,8 @@ try {
   console.error(e)
   console.log('\n\n删除dist文件夹遇到了一些问题，如果遇到问题请手工删除dist重来\n\n')
 }
-runWebpack(webpackConfigArr)
+if (webpackConfigArr.length === 1) {
+  runWebpack(webpackConfigArr[0])
+} else {
+  runWebpack(webpackConfigArr)
+}

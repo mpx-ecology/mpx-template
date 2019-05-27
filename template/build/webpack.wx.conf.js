@@ -17,7 +17,7 @@ function resolveDist (file) {
 const configOutputPath = process.env.npm_config_wx ? '../dist/wx/project.config.json' : '../dist/project.config.json'
 
 module.exports = merge(mainWebpackConfig, {
-  name: 'wx-compile',
+  name: 'wechat-compiler',
   // entry point of our application
   entry: {
     app: resolveSrc('app.mpx')
