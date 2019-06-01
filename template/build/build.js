@@ -129,7 +129,7 @@ var spinner = ora('building...')
 spinner.start()
 
 try {
-  rm.sync(path.resolve(__dirname, '../dist/*'))
+  rm.sync(path.resolve(__dirname, '../dist/{*,.*}'))
 } catch (e) {
   console.error(e)
   console.log('\n\n删除dist文件夹遇到了一些问题，如果遇到问题请手工删除dist重来\n\n')

@@ -77,11 +77,11 @@ module.exports = {
     }
   },
   filters: {
-    'src/@(miniprogram|plugin)/**/*': '(mode === "wx" && cross === false) && isPlugin',
-    'build/webpack.plugin.conf.js': '(mode === "wx" && cross === false) && isPlugin',
+    'src/@(miniprogram|plugin)/**/*': 'isPlugin',
+    'build/webpack.plugin.conf.js': 'isPlugin',
     'build/webpack.wx.conf.js': 'mode === "wx"',
-    'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || (mode === "wx" && cross === true) || (mode === "wx" && cross === false && !isPlugin)',
-    'src/*': 'mode !== "wx" || (mode === "wx" && cross === true) || (mode === "wx" && cross === false && !isPlugin)',
+    'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
+    'src/*': 'mode !== "wx" || !isPlugin',
     'project.config.json': 'mode === "wx"',
     '.eslintrc.js': 'needEslint'
   },
