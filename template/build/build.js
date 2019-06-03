@@ -27,18 +27,23 @@ const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt']
 const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
 const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
 
-if ((isPluginProject && userSelectedMode === 'wx') || modeArr.length === 0) {
-  webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
-    output: {
-      path: resolveDist('', '../dist/')
-    },
-    plugins: [
-      new MpxWebpackPlugin({
-        mode: '<$ mode $>',
-        srcMode: '<$ mode $>'
-      })
-    ]
-  }))
+if (modeArr.length === 0) {
+  if (isPluginProject) {
+    webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+      plugins: [
+        new MpxWebpackPlugin({mode: userSelectedMode})
+      ]
+    }))
+  } else {
+    webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+      output: {
+        path: resolveDist('', '../dist/')
+      },
+      plugins: [
+        new MpxWebpackPlugin({mode: userSelectedMode})
+      ]
+    }))
+  }
 } else {
   modeArr.forEach(item => {
     const webpackCrossConfig = merge(item === 'wx' ? webpackWxConfig : webpackMainConfig, {

@@ -2,12 +2,14 @@ const path = require('path')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 
+const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
+
 function resolveSrc (file) {
-  return path.resolve(__dirname, '../src', file || '')
+  return path.resolve(__dirname, '../src', mainSubDir, file || '')
 }
 
 function resolveDist (file) {
-  return path.resolve(__dirname, '../dist', file || '')
+  return path.resolve(__dirname, '../dist', mainSubDir, file || '')
 }
 
 module.exports = merge(baseWebpackConfig, {
