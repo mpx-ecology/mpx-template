@@ -1,7 +1,8 @@
-var path = require('path')
-var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
-var mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
+const path = require('path')
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('./webpack.base.conf')
+
+const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
 
 function resolveSrc (file) {
   return path.resolve(__dirname, '../src', mainSubDir, file || '')

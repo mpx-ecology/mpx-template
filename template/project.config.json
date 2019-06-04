@@ -1,10 +1,9 @@
 {
   {% if isPlugin %}
-  "miniprogramRoot": "dist/miniprogram",
-  "pluginRoot": "dist/plugin",
+  "miniprogramRoot": "miniprogram",
+  "pluginRoot": "plugin",
   "compileType": "plugin",
   {% else %}
-  "miniprogramRoot": "dist/",
   "compileType": "miniprogram",
   {% endif %}
   "setting": {

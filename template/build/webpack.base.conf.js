@@ -1,5 +1,5 @@
-var path = require('path')
-var MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
+const path = require('path')
+const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -30,7 +30,7 @@ function getSubPackagesCacheGroups (packages) {
   return result
 }
 
-var webpackConf = {
+const webpackConf = {
   module: {
     rules: [
       {
@@ -61,8 +61,7 @@ var webpackConf = {
       {
         test: /\.(png|jpe?g|gif|svg)$/,
         loader: MpxWebpackPlugin.urlLoader({
-          name: 'img/[name].[ext]',
-          limit: 10000
+          name: 'img/[name].[ext]'
         })
       }
     ]
@@ -87,11 +86,6 @@ var webpackConf = {
     }
   },
   mode: 'none',
-  plugins: [
-    new MpxWebpackPlugin({
-      mode: '<$ mode $>'
-    })
-  ],
   resolve: {
     extensions: ['.js', '.mpx'],
     modules: ['node_modules']
