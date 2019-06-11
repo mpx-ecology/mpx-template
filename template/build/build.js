@@ -25,8 +25,8 @@ const webpackWxConfig = merge(webpackMainConfig, {
 {% endif %}
 
 const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
-function resolveDist (file, path = mainSubDir) {
-  return path.resolve(__dirname, '../dist', path, file || '')
+function resolveDist (file, subPathStr = mainSubDir) {
+  return path.resolve(__dirname, '../dist', subPathStr, file || '')
 }
 
 const webpackConfigArr = []
