@@ -95,7 +95,7 @@ const webpackConf = {
   mode: 'none',
   resolve: {
     extensions: ['.js', '.mpx'],
-    modules: ['node_modules', resolveSrc()]
+    modules: ['node_modules']
   }
 }
 
