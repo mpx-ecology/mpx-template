@@ -21,6 +21,9 @@
   "author": "<$ author $>",
   "license": "ISC",
   "dependencies": {
+    {% if cross %}
+    "@mpxjs/api-proxy": "^2.0.0",
+    {% endif %}
     "@mpxjs/core": "^2.0.0"
   },
   "devDependencies": {
