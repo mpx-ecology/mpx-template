@@ -126,7 +126,7 @@ function callback (err, stats) {
 
   console.log(chalk.cyan('  Build complete.\n'))
   if (program.watch) {
-    console.log(chalk.cyan('  Watching...\n'))
+    console.log(chalk.cyan(`  ${new Date()} build finished.\n  Still watching...\n`))
   }
 }
 
