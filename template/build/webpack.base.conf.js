@@ -61,7 +61,7 @@ const webpackConf = {
       {
         test: /\.(png|jpe?g|gif|svg)$/,
         loader: MpxWebpackPlugin.urlLoader({
-          name: 'img/[name].[ext]'
+          name: 'img/[name][hash].[ext]'
         })
       }
     ]
