@@ -1,6 +1,6 @@
 const shell = require('shelljs')
 
-shell.exec('cp testfile/meta.js .')
+shell.exec('cp testfile/wx-cross-meta.js ./meta.js')
 
 shell.exec('mpx init demo-wx-cross --offline .')
 
