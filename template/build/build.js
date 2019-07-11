@@ -7,6 +7,7 @@ const merge = require('webpack-merge')
 const program = require('commander')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
+const mpxWebpackPluginConfig = require('./mpx.webpack.conf')
 
 let webpackMainConfig = require('./webpack.conf')
 
@@ -36,13 +37,12 @@ const webpackWxConfig = merge(webpackMainConfig, {
 {% endif %}
 
 {% if isPlugin %}
-// todo
 webpackConfigArr.push(require('./webpack.plugin.conf'))
 
 webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
   name: 'main-compiler',
   plugins: [
-    new MpxWebpackPlugin({mode: userSelectedMode})
+    new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
 }))
 
