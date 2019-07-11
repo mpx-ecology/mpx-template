@@ -6,3 +6,4 @@ install:
   - npm i
 script:
   - node testWxCross.js
+  - node testWxPlugin.js
