@@ -1,4 +1,4 @@
-const shell = require('shell')
+const shell = require('shelljs')
 
 shell.exec('cp testfile/meta.js .')
 
