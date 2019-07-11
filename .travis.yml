@@ -3,5 +3,6 @@ node_js:
   - 12.3.0
 install:
   - npm i -g @mpxjs/cli
+  - npm i
 script:
   - node testWxCross.js
