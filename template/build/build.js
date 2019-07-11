@@ -40,6 +40,7 @@ const webpackWxConfig = merge(webpackMainConfig, {
 webpackConfigArr.push(require('./webpack.plugin.conf'))
 
 webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+  name: 'main-compiler',
   plugins: [
     new MpxWebpackPlugin({mode: userSelectedMode})
   ]
