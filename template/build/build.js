@@ -21,17 +21,6 @@ function resolveDist (file, subPathStr = mainSubDir) {
 const webpackConfigArr = []
 const userSelectedMode = '<$ mode $>'
 
-{% if isPlugin %}
-// todo
-webpackConfigArr.push(require('./webpack.plugin.conf'))
-
-webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
-  plugins: [
-    new MpxWebpackPlugin({mode: userSelectedMode})
-  ]
-}))
-
-{% else %}
 {% if mode === 'wx' %}
 // 微信小程序需要拷贝project.config.json，如果npm script参数里有--wx，拷贝到/dist下，如果指定--wx，拷贝到/dist/wx下
 const webpackWxConfig = merge(webpackMainConfig, {
@@ -46,6 +35,23 @@ const webpackWxConfig = merge(webpackMainConfig, {
 })
 {% endif %}
 
+{% if isPlugin %}
+// todo
+webpackConfigArr.push(require('./webpack.plugin.conf'))
+
+webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+  plugins: [
+    new MpxWebpackPlugin({mode: userSelectedMode})
+  ]
+}))
+
+{% elif not cross %}
+webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+  plugins: [
+    new MpxWebpackPlugin({mode: userSelectedMode})
+  ]
+}))
+{% else %}
 // 支持的平台，若后续@mpxjs/webpack-plugin支持了更多平台，补充在此即可
 const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt']
 // 提供npm argv找到期望构建的平台，必须在上面支持的平台列表里
@@ -140,9 +146,13 @@ var spinner = ora('building...')
 spinner.start()
 
 try {
+  {% if cross %}
   modeArr.forEach(item => {
     rm.sync(path.resolve(__dirname, `../dist/${item}/*`))
   })
+  {% else %}
+  rm.sync(path.resolve(__dirname, `../dist/*`))
+  {% endif %}
 } catch (e) {
   console.error(e)
   console.log('\n\n删除dist文件夹遇到了一些问题，如果遇到问题请手工删除dist重来\n\n')
