@@ -49,7 +49,7 @@ webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpac
 {% elif not cross %}
 webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
   plugins: [
-    new MpxWebpackPlugin({mode: userSelectedMode})
+    new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
 }))
 {% else %}
@@ -68,10 +68,10 @@ modeArr.forEach(item => {
       path: resolveDist('', item)
     },
     plugins: [
-      new MpxWebpackPlugin({
+      new MpxWebpackPlugin(Object.assign({
         mode: item,
-        srcMode: '<$ mode $>'
-      })
+        srcMode: userSelectedMode
+      }, mpxWebpackPluginConfig))
     ]
   })
   webpackConfigArr.push(webpackCrossConfig)
