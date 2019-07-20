@@ -29,7 +29,11 @@ const webpackWxConfig = merge(webpackMainConfig, {
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../project.config.json'),
+        {% if cross %}
         to: path.resolve(__dirname, '../dist/wx/project.config.json')
+        {% else %}
+        to: path.resolve(__dirname, '../dist/project.config.json')
+        {% endif %}
       }
     ])
   ]
@@ -47,7 +51,7 @@ webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpac
 }))
 
 {% elif not cross %}
-webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpackMainConfig{% endif %}, {
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
