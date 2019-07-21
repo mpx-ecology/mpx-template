@@ -7,3 +7,4 @@ install:
 script:
   - node testWxCross.js
   - node testWxPlugin.js
+  - node testWxNoCross.js
