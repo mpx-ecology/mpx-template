@@ -50,6 +50,13 @@ const webpackConf = {
           }
         })
       },
+      {% if tsSupport %}
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        include: [resolve('src')]
+      },
+      {% endif %}
       {
         test: /\.js$/,
         loader: 'babel-loader',

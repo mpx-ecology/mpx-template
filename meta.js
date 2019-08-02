@@ -13,6 +13,11 @@ module.exports = {
       type: 'confirm',
       default: true
     },
+    tsSupport: {
+      message: '是否需要使用TS？',
+      type: 'confirm',
+      default: false
+    },
     name: {
       type: 'string',
       required: true,
@@ -83,6 +88,7 @@ module.exports = {
     'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
     'src/*': 'mode !== "wx" || !isPlugin',
     'project.config.json': 'mode === "wx"',
+    'tsconfig.json': 'tsSupport',
     '.eslintrc.js': 'needEslint'
   },
   complete: function (data, { chalk }) {
