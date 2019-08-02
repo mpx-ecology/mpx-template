@@ -56,8 +56,7 @@ const webpackConf = {
         use: [
           'babel-loader',
           'ts-loader'
-        ],
-        include: [resolve('src'), resolve('test')]
+        ]
       },
       {% endif %}
       {
