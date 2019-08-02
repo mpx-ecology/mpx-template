@@ -1,6 +1,11 @@
 const path = require('path')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 
+const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
+function resolveSrc (file) {
+  return path.resolve(__dirname, '../src', mainSubDir, file || '')
+}
+
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -10,7 +15,6 @@ function resolve (dir) {
 // 1. 模块被同一分包内2个或以上的chunk所引用
 // 2. 能够抽取的模块体积总和>=10kB
 // 3. 满足以上条件会将抽取后的bundle输出至dist的分包目录下
-
 function getSubPackagesCacheGroups (packages) {
   let result = {}
   packages.forEach((root) => {
@@ -31,6 +35,9 @@ function getSubPackagesCacheGroups (packages) {
 }
 
 const webpackConf = {
+  entry: {
+    app: resolveSrc('app.mpx')
+  },
   module: {
     rules: [
       {
@@ -43,6 +50,15 @@ const webpackConf = {
           }
         })
       },
+      {% if tsSupport %}
+      {
+        test: /\.ts$/,
+        use: [
+          'babel-loader',
+          'ts-loader'
+        ]
+      },
+      {% endif %}
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -87,7 +103,7 @@ const webpackConf = {
   },
   mode: 'none',
   resolve: {
-    extensions: ['.js', '.mpx'],
+    extensions: ['.js', '.mpx'{% if tsSupport %}, '.ts'{% endif %}],
     modules: ['node_modules']
   }
 }

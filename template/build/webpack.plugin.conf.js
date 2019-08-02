@@ -1,7 +1,7 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-const baseWebpackConfig = require('./webpack.base.conf')
+const baseWebpackConfig = require('./webpack.conf')
 
 const pluginSubDir = 'plugin'
 
@@ -24,7 +24,6 @@ module.exports = merge(baseWebpackConfig, {
       {
         resource: resolveSrc('plugin.json'),
         use: MpxWebpackPlugin.pluginLoader()
-
       }
     ]
   },

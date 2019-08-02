@@ -1,69 +1,86 @@
-var ora = require('ora')
-var rm = require('rimraf')
-var path = require('path')
-var chalk = require('chalk')
-var webpack = require('webpack')
-var merge = require('webpack-merge')
-var program = require('commander')
+const ora = require('ora')
+const rm = require('rimraf')
+const path = require('path')
+const chalk = require('chalk')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const program = require('commander')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-var webpackMainConfig = require('./webpack.main.conf')
-{% if mode === 'wx' %}
-var webpackWxConfig = require('./webpack.wx.conf')
-{% endif %}
+const mpxWebpackPluginConfig = require('./mpx.webpack.conf')
 
-var webpackConfigArr = []
-let isPluginProject = false
-const userSelectedMode = '<$ mode $>'
-{% if isPlugin %}
-isPluginProject = true
-webpackConfigArr.push(require('./webpack.plugin.conf'))
-{% endif %}
-
-function resolveDist (file, pathStr = '../dist') {
-  return path.resolve(__dirname, pathStr, file || '')
-}
-
-const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt']
-const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
-const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
-
-if (modeArr.length === 0) {
-  if (isPluginProject) {
-    webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
-      plugins: [
-        new MpxWebpackPlugin({mode: userSelectedMode})
-      ]
-    }))
-  } else {
-    webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
-      output: {
-        path: resolveDist('', '../dist/')
-      },
-      plugins: [
-        new MpxWebpackPlugin({mode: userSelectedMode})
-      ]
-    }))
-  }
-} else {
-  modeArr.forEach(item => {
-    const webpackCrossConfig = merge(item === 'wx' ? webpackWxConfig : webpackMainConfig, {
-      name: item + '-compiler',
-      output: {
-        path: resolveDist('', '../dist/' + item)
-      },
-      plugins: [
-        new MpxWebpackPlugin({
-          mode: item,
-          srcMode: '<$ mode $>'
-        })
-      ]
-    })
-    webpackConfigArr.push(webpackCrossConfig)
-  })
-}
+let webpackMainConfig = require('./webpack.conf')
 
 var prodEnv = require('../config/prod.env')
 var devEnv = require('../config/dev.env')
+
+const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
+function resolveDist (file, subPathStr = mainSubDir) {
+  return path.resolve(__dirname, '../dist', subPathStr, file || '')
+}
+
+const webpackConfigArr = []
+const userSelectedMode = '<$ mode $>'
+
+{% if mode === 'wx' %}
+// 微信小程序需要拷贝project.config.json，如果npm script参数里有--wx，拷贝到/dist下，如果指定--wx，拷贝到/dist/wx下
+const webpackWxConfig = merge(webpackMainConfig, {
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../project.config.json'),
+        {% if cross %}
+        to: path.resolve(__dirname, '../dist/wx/project.config.json')
+        {% else %}
+        to: path.resolve(__dirname, '../dist/project.config.json')
+        {% endif %}
+      }
+    ])
+  ]
+})
+{% endif %}
+
+{% if isPlugin %}
+webpackConfigArr.push(require('./webpack.plugin.conf'))
+
+webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+  name: 'main-compiler',
+  plugins: [
+    new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
+  ]
+}))
+
+{% elif not cross %}
+webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpackMainConfig{% endif %}, {
+  plugins: [
+    new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
+  ]
+}))
+{% else %}
+// 支持的平台，若后续@mpxjs/webpack-plugin支持了更多平台，补充在此即可
+const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt']
+// 提供npm argv找到期望构建的平台，必须在上面支持的平台列表里
+const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
+const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
+
+if (modeArr.length === 0) modeArr.push(userSelectedMode)
+
+modeArr.forEach(item => {
+  const webpackCrossConfig = merge(item === 'wx' ? webpackWxConfig : webpackMainConfig, {
+    name: item + '-compiler',
+    output: {
+      path: resolveDist('', item)
+    },
+    plugins: [
+      new MpxWebpackPlugin(Object.assign({
+        mode: item,
+        srcMode: userSelectedMode
+      }, mpxWebpackPluginConfig))
+    ]
+  })
+  webpackConfigArr.push(webpackCrossConfig)
+})
+{% endif %}
 
 program
   .option('-w, --watch', 'watch mode')
@@ -134,11 +151,18 @@ var spinner = ora('building...')
 spinner.start()
 
 try {
-  rm.sync(path.resolve(__dirname, '../dist/{*,.*}'))
+  {% if cross %}
+  modeArr.forEach(item => {
+    rm.sync(path.resolve(__dirname, `../dist/${item}/*`))
+  })
+  {% else %}
+  rm.sync(path.resolve(__dirname, `../dist/*`))
+  {% endif %}
 } catch (e) {
   console.error(e)
   console.log('\n\n删除dist文件夹遇到了一些问题，如果遇到问题请手工删除dist重来\n\n')
 }
+
 if (webpackConfigArr.length === 1) {
   runWebpack(webpackConfigArr[0])
 } else {

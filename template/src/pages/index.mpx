@@ -2,6 +2,9 @@
   <list></list>
 </template>
 
+{% if tsSupport %}
+<script lang="ts" src="./index.ts"></script>
+{% else %}
 <script>
   import { createPage } from '@mpxjs/core'
 
@@ -9,6 +12,7 @@
     onLoad () {}
   })
 </script>
+{% endif %}
 
 <script type="application/json">
   {

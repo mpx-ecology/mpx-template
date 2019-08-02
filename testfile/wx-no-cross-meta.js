@@ -1,4 +1,10 @@
 module.exports = {
+  mock: {
+    mode: 'wx',
+    cross: false,
+    isPlugin: false,
+    needEslint: true
+  },
   prompts: {
     mode: {
       type: 'list',
@@ -12,11 +18,6 @@ module.exports = {
       message: '是否需要跨小程序平台',
       type: 'confirm',
       default: true
-    },
-    tsSupport: {
-      message: '是否需要使用TS？',
-      type: 'confirm',
-      default: false
     },
     name: {
       type: 'string',
@@ -88,9 +89,7 @@ module.exports = {
     'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
     'src/*': 'mode !== "wx" || !isPlugin',
     'project.config.json': 'mode === "wx"',
-    'tsconfig.json': 'tsSupport',
-    '.eslintrc.js': 'needEslint',
-    '**/*.ts': 'tsSupport'
+    '.eslintrc.js': 'needEslint'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
