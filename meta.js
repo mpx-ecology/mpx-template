@@ -89,7 +89,8 @@ module.exports = {
     'src/*': 'mode !== "wx" || !isPlugin',
     'project.config.json': 'mode === "wx"',
     'tsconfig.json': 'tsSupport',
-    '.eslintrc.js': 'needEslint'
+    '.eslintrc.js': 'needEslint',
+    '**/*.ts': 'tsSupport'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green

@@ -53,8 +53,11 @@ const webpackConf = {
       {% if tsSupport %}
       {
         test: /\.ts$/,
-        loader: 'ts-loader',
-        include: [resolve('src')]
+        use: [
+          'babel-loader',
+          'ts-loader'
+        ],
+        include: [resolve('src'), resolve('test')]
       },
       {% endif %}
       {
@@ -101,7 +104,7 @@ const webpackConf = {
   },
   mode: 'none',
   resolve: {
-    extensions: ['.js', '.mpx'],
+    extensions: ['.js', '.mpx'{% if tsSupport %}, '.ts'{% endif %}],
     modules: ['node_modules']
   }
 }
