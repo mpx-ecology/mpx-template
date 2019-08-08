@@ -40,6 +40,17 @@ const webpackConf = {
   },
   module: {
     rules: [
+      {% if needEslint %}
+      {
+        test: /\.(js{% if tsSupport %}|ts{% endif %}|mpx)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('src')],
+        options: {
+          formatter: require('eslint-friendly-formatter')
+        }
+      },
+      {% endif %}
       {
         test: /\.mpx$/,
         use: MpxWebpackPlugin.loader({
@@ -70,7 +81,7 @@ const webpackConf = {
         type: 'javascript/auto'
       },
       {
-        test: /\.(wxs|sjs|filter\.js)$/,
+        test: /\.(wxs|qs|sjs|filter\.js)$/,
         loader: MpxWebpackPlugin.wxsPreLoader(),
         enforce: 'pre'
       },
