@@ -141,6 +141,11 @@ function callback (err, stats) {
     }) + '\n\n')
   }
 
+  if (!program.watch && stats.hasErrors()) {
+    console.log(chalk.red('  Build failed with errors.\n'))
+    process.exit(1)
+  }
+
   console.log(chalk.cyan('  Build complete.\n'))
   if (program.watch) {
     console.log(chalk.cyan(`  ${new Date()} build finished.\n  Still watching...\n`))
