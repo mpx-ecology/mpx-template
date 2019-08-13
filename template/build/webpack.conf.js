@@ -100,6 +100,7 @@ const webpackConf = {
     runtimeChunk: {
       name: 'bundle'
     },
+    noEmitOnErrors: false,
     splitChunks: {
       cacheGroups: {
         main: {
