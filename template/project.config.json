@@ -3,6 +3,10 @@
   "miniprogramRoot": "miniprogram",
   "pluginRoot": "plugin",
   "compileType": "plugin",
+  {% elif cloudFunc %}
+  "miniprogramRoot": "miniprogram",
+  "cloudfunctionRoot": "functions",
+  "compileType": "miniprogram",
   {% else %}
   "compileType": "miniprogram",
   {% endif %}

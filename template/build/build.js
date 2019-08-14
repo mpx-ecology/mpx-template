@@ -34,7 +34,11 @@ const webpackWxConfig = merge(webpackMainConfig, {
         {% else %}
         to: path.resolve(__dirname, '../dist/project.config.json')
         {% endif %}
-      }
+      }{% if cloudFunc %},
+      {
+        from: path.resolve(__dirname, '../functions'),
+        to: path.resolve(__dirname, '../dist/functions')
+      }{% endif %}
     ])
   ]
 })

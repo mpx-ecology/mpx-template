@@ -13,6 +13,11 @@ module.exports = {
       type: 'confirm',
       default: true
     },
+    cloudFunc: {
+      when: 'mode === "wx" && cross === false',
+      message: '是否需要使用小程序云开发能力',
+      default: false
+    },
     tsSupport: {
       message: '是否需要使用TS？',
       type: 'confirm',
@@ -34,7 +39,7 @@ module.exports = {
       message: '作者'
     },
     isPlugin: {
-      when: 'mode === "wx" && cross === false',
+      when: 'mode === "wx" && cross === false && cloudFunc === false',
       type: 'confirm',
       message: '是否是个插件项目?（不清楚请选 No ！什么是插件项目请看微信官方文档！）',
       default: false
