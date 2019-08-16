@@ -34,8 +34,5 @@ module.exports = merge(baseWebpackConfig, {
   ],
   output: {
     path: resolveDist(),
-  },
-  resolve: {
-    modules: [resolveSrc()]
   }
 })
