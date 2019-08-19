@@ -14,7 +14,7 @@ let webpackMainConfig = require('./webpack.conf')
 var prodEnv = require('../config/prod.env')
 var devEnv = require('../config/dev.env')
 
-const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
+const mainSubDir = '{% if isPlugin %}miniprogram{% elif cloudFunc %}miniprogram{% endif %}'
 function resolveDist (file, subPathStr = mainSubDir) {
   return path.resolve(__dirname, '../dist', subPathStr, file || '')
 }
@@ -34,7 +34,11 @@ const webpackWxConfig = merge(webpackMainConfig, {
         {% else %}
         to: path.resolve(__dirname, '../dist/project.config.json')
         {% endif %}
-      }
+      }{% if cloudFunc %},
+      {
+        from: path.resolve(__dirname, '../functions'),
+        to: path.resolve(__dirname, '../dist/functions')
+      }{% endif %}
     ])
   ]
 })
@@ -52,6 +56,9 @@ webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpac
 
 {% elif not cross %}
 webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpackMainConfig{% endif %}, {
+  output: {
+    path: resolveDist()
+  },
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
