@@ -90,13 +90,13 @@ module.exports = {
   filters: {
     'src/@(miniprogram|plugin)/**/*': 'isPlugin',
     'build/webpack.plugin.conf.js': 'isPlugin',
-    'build/webpack.wx.conf.js': 'mode === "wx"',
     'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
     'src/*': 'mode !== "wx" || !isPlugin',
     'project.config.json': 'mode === "wx"',
     'tsconfig.json': 'tsSupport',
     '.eslintrc.js': 'needEslint',
-    '**/*.ts': 'tsSupport'
+    '**/*.ts': 'tsSupport',
+    'functions/*': 'cloudFunc'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
