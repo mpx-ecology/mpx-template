@@ -9,5 +9,8 @@ module.exports = {
   // projectRoot: path.resolve(__dirname, '../src'),
 
   // 可选值 full / changed，不传默认为full，当设置为changed时在watch模式下将只会对内容发生变化的文件进行写入，以提升小程序开发者工具编译性能
-  writeMode: 'changed'
+  writeMode: 'changed',
+
+  // 支付宝小程序没有微信小程序类似的组件样式隔离机制，如果遇到样式问题，将本选项置为true将自动为支付宝添加scope，会带来略微的体积上涨
+  enableAutoScope: false
 }
