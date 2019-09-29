@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node ./build/build.js",
+    "devbuild": "node ./build/build.js",
     "watch": "node ./build/build.js -w",
+    "build": "node ./build/build.js -p",
     "prod": "node ./build/build.js -p",
     {% if cross %}
     "watch:cross": "npm run watch --wx --ali --swan",
