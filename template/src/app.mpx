@@ -1,3 +1,6 @@
+{% if tsSupport %}
+<script lang="ts" src="./app.ts"></script>
+{% else %}
 <script>
   {% if cross %}
   import mpx from '@mpxjs/core'
@@ -8,6 +11,7 @@
   // app.js
   App({})
 </script>
+{% endif %}
 
 <style>
 
