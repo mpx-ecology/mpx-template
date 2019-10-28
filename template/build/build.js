@@ -78,7 +78,13 @@ modeArr.forEach(item => {
       new MpxWebpackPlugin(Object.assign({
         mode: item,
         srcMode: userSelectedMode
-      }, mpxWebpackPluginConfig))
+      }, mpxWebpackPluginConfig)),
+      new CopyWebpackPlugin([
+        {
+          from: `static/${item}/**.*`,
+          to: `../../dist/${item}/[name].[ext]`
+        }
+      ])
     ]
   })
   webpackConfigArr.push(webpackCrossConfig)
