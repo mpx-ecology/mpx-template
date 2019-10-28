@@ -7,7 +7,7 @@ const merge = require('webpack-merge')
 const program = require('commander')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-const mpxWebpackPluginConfig = require('./mpx.webpack.conf')
+const mpxWebpackPluginConfig = require('./mpx.plugin.conf')
 
 let webpackMainConfig = require('./webpack.conf')
 
@@ -22,18 +22,14 @@ function resolveDist (file, subPathStr = mainSubDir) {
 const webpackConfigArr = []
 const userSelectedMode = '<$ mode $>'
 
-{% if mode === 'wx' %}
+{% if mode === 'wx' and not cross %}
 // 微信小程序需要拷贝project.config.json，如果npm script参数里有--wx，拷贝到/dist下，如果指定--wx，拷贝到/dist/wx下
 const webpackWxConfig = merge(webpackMainConfig, {
   plugins: [
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../project.config.json'),
-        {% if cross %}
-        to: path.resolve(__dirname, '../dist/wx/project.config.json')
-        {% else %}
         to: path.resolve(__dirname, '../dist/project.config.json')
-        {% endif %}
       }{% if cloudFunc %},
       {
         from: path.resolve(__dirname, '../functions'),
@@ -73,7 +69,7 @@ const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').m
 if (modeArr.length === 0) modeArr.push(userSelectedMode)
 
 modeArr.forEach(item => {
-  const webpackCrossConfig = merge(item === 'wx' ? webpackWxConfig : webpackMainConfig, {
+  const webpackCrossConfig = merge(webpackMainConfig, {
     name: item + '-compiler',
     output: {
       path: resolveDist('', item)
