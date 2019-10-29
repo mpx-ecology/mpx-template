@@ -14,3 +14,4 @@ shell.exec(`
 `).code !== 0 && shell.exit(1)
 
 assert(fs.existsSync(resolve('demo-wx-no-cross/dist/project.config.json')))
+assert(fs.existsSync(resolve('demo-wx-no-cross/project.config.json')))

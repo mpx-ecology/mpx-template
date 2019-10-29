@@ -1,0 +1,25 @@
+{
+  {% if isPlugin %}
+  "miniprogramRoot": "miniprogram",
+  "pluginRoot": "plugin",
+  "compileType": "plugin",
+  {% elif cloudFunc %}
+  "miniprogramRoot": "miniprogram",
+  "cloudfunctionRoot": "functions",
+  "compileType": "miniprogram",
+  {% else %}
+  "compileType": "miniprogram",
+  {% endif %}
+  "setting": {
+    "newFeature": true,
+    "urlCheck": true,
+    "es6": false,
+    "postcss": true,
+    "minified": false,
+    "autoAudits": false
+  },
+  "appid": "<$ appid $>",
+  "projectname": "<$ name $>",
+  "description": "<$ description $>",
+  "condition": {}
+}
