@@ -22,3 +22,6 @@ assert(fs.existsSync(resolve('demo-wx-cross/static/wx/project.config.json')))
 assert(fs.existsSync(resolve('demo-wx-cross/dist/ali/mini.project.json')))
 
 assert(fs.existsSync(resolve('demo-wx-cross/static/ali/mini.project.json')))
+
+// 检查跨平台下不应该在根目录有配置文件
+assert(!fs.existsSync(resolve('demo-wx-cross/project.config.json')))
