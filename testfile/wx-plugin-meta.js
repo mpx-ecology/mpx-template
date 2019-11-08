@@ -1,4 +1,4 @@
-const commonMeta = require('../realMeta')
+const realMeta = require('./realMeta')
 
 module.exports = {
   mock: {
@@ -7,5 +7,5 @@ module.exports = {
     isPlugin: true,
     needEslint: true
   },
-  ...commonMeta
+  ...realMeta
 }
