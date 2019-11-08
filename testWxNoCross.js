@@ -15,3 +15,4 @@ shell.exec(`
 
 assert(fs.existsSync(resolve('demo-wx-no-cross/dist/project.config.json')))
 assert(fs.existsSync(resolve('demo-wx-no-cross/project.config.json')))
+assert(!fs.existsSync(resolve('demo-wx-no-cross/static/wx/project.config.json')))
