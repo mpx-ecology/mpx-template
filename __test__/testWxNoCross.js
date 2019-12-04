@@ -8,7 +8,7 @@ function resolve (dir) {
 }
 
 shell.exec(`
-  cd ..
+  cd .. &&
   cp testfile/wx-no-cross-meta.js ./meta.js &&
   mpx init demo-wx-no-cross --offline . &&
   cd demo-wx-no-cross && npm i && npm run build
