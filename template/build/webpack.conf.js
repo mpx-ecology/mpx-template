@@ -1,5 +1,8 @@
 const path = require('path')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
+{% if transWeb %}
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+{% endif %}
 
 const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
 function resolveSrc (file) {
@@ -8,6 +11,14 @@ function resolveSrc (file) {
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
+}
+
+const mpxLoaderConfig = {
+  transRpx: {
+    mode: 'only',
+    comment: 'use rpx',
+    include: resolve('src')
+  }
 }
 
 const webpackConf = {
@@ -26,16 +37,32 @@ const webpackConf = {
           formatter: require('eslint-friendly-formatter')
         }
       },
+      {% endif %}{% if transWeb %}
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.mpx$/,
+        resourceQuery: /(app|page|component)/,
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {
+              transformToRequire: {
+                'mpx-image': 'src',
+                'mpx-audio': 'src',
+                'mpx-video': 'src'
+              }
+            }
+          },
+          MpxWebpackPlugin.loader(mpxLoaderConfig)
+        ]
+      },
       {% endif %}
       {
         test: /\.mpx$/,
-        use: MpxWebpackPlugin.loader({
-          transRpx: {
-            mode: 'only',
-            comment: 'use rpx',
-            include: resolve('src')
-          }
-        })
+        use: MpxWebpackPlugin.loader(mpxLoaderConfig)
       },
       {% if tsSupport %}
       {
@@ -70,12 +97,26 @@ const webpackConf = {
       }
     ]
   },
+  {% if transWeb %}
+  optimization: {
+    usedExports: true,
+    sideEffects: true,
+    providedExports: true
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: resolveSrc('index.html'),
+      inject: true
+    })
+  ],
+  {% endif %}
   performance: {
     hints: false
   },
   mode: 'none',
   resolve: {
-    extensions: ['.js', '.mpx'{% if tsSupport %}, '.ts'{% endif %}],
+    extensions: ['.js', '.mpx'{% if transWeb %}, '.vue'{% endif %}{% if tsSupport %}, '.ts'{% endif %}],
     modules: ['node_modules']
   }
 }
