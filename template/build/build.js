@@ -61,7 +61,7 @@ webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpa
 }))
 {% else %}
 // 支持的平台，若后续@mpxjs/webpack-plugin支持了更多平台，补充在此即可
-const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt']
+const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt'{% if transWeb %}, 'web'{% endif %}]
 // 提供npm argv找到期望构建的平台，必须在上面支持的平台列表里
 const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
 const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
