@@ -13,6 +13,12 @@ module.exports = {
       type: 'confirm',
       default: true
     },
+    transWeb: {
+      when: 'mode === "wx" && cross === true',
+      message: '是否需要支持转换产出H5',
+      type: 'confirm',
+      default: true
+    },
     cloudFunc: {
       when: 'mode === "wx" && cross === false',
       message: '是否需要使用小程序云开发能力',
@@ -90,6 +96,7 @@ module.exports = {
   filters: {
     'src/@(miniprogram|plugin)/**/*': 'isPlugin',
     'build/webpack.plugin.conf.js': 'isPlugin',
+    'src/index.html': 'transWeb',
     'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
     'src/*': 'mode !== "wx" || !isPlugin',
     'project.config.json': 'mode === "wx" && !cross',
