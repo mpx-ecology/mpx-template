@@ -25,6 +25,7 @@
     "@mpxjs/api-proxy": "^2.0.0",
     {% if transWeb %}
     "vue": "^2.6.10",
+    "axios": "^0.19.0",
     {% endif %}
     "@mpxjs/core": "^2.0.0"
   },
