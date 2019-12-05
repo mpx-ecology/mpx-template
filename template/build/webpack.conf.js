@@ -59,6 +59,14 @@ const webpackConf = {
           MpxWebpackPlugin.loader(mpxLoaderConfig)
         ]
       },
+      {
+        test:/\.styl$/,
+          use: [
+            'style-loader',
+            'css-loader',
+            'stylus-loader'
+          ]
+      },
       {% endif %}
       {
         test: /\.mpx$/,
