@@ -15,7 +15,7 @@
     "prod:cross": "npm run prod --wx --ali --swan{% if transWeb %} --web{% endif %}",
     {% endif %}
     {% if transWeb %}
-    "watchweb": "npx npm-run-all --parallel 'watch --web' 'npx http-server dist/web'"
+    "watchweb": "npx npm-run-all --parallel 'watch --web' 'npx http-server dist/web'",
     {% endif %}
     {% if needEslint %}
     "lint": "eslint --ext .js,.mpx src/",
