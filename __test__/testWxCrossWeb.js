@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 
 function resolve (dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, '..', dir)
 }
 
 // 复制预设的问题答案，创建项目并尝试构建要求无error

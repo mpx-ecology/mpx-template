@@ -15,7 +15,7 @@ module.exports = {
     },
     transWeb: {
       when: 'mode === "wx" && cross === true',
-      message: '是否需要支持转换产出H5',
+      message: '是否需要支持输出web',
       type: 'confirm',
       default: true
     },
