@@ -5,6 +5,7 @@ install:
   - npm i -g @mpxjs/cli
   - npm i
 script:
-  - node testWxCross.js
-  - node testWxPlugin.js
-  - node testWxNoCross.js
+  - node __test__/testWxCrossWeb.js
+  - node __test__/testWxCrossNoWeb.js
+  - node __test__/testWxPlugin.js
+  - node __test__/testWxNoCross.js
