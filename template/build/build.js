@@ -74,7 +74,6 @@ const transModuleRules = [
 ]
 
 {% if mode === 'wx' and not cross %}
-// 微信小程序需要拷贝project.config.json，如果npm script参数里有--wx，拷贝到/dist下，如果指定--wx，拷贝到/dist/wx下
 const webpackWxConfig = merge(webpackMainConfig, {
   plugins: [
     new CopyWebpackPlugin([
@@ -96,6 +95,7 @@ webpackConfigArr.push(require('./webpack.plugin.conf'))
 
 webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
   name: 'main-compiler',
+  module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
@@ -106,6 +106,7 @@ webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpa
   output: {
     path: resolveDist()
   },
+  module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
