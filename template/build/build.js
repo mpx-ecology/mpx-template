@@ -125,7 +125,7 @@ modeArr.forEach(item => {
     output: {
       path: resolveDist('', item)
     },
-    module: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %},
+    module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
     plugins: [
       new MpxWebpackPlugin(Object.assign({
         mode: item,
