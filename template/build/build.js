@@ -63,7 +63,11 @@ const mpxLoaderConfig = {
       'css-loader',
       'stylus-loader'
     ]
-  }
+  },
+   {
+     test: /\.mpx$/,
+     use: MpxWebpackPlugin.loader(mpxLoaderConfig)
+   }
 ]
 {% endif %}
 const transModuleRules = [
