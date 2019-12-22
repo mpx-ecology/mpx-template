@@ -24,6 +24,10 @@ module.exports = merge(baseWebpackConfig, {
       {
         resource: resolveSrc('plugin.json'),
         use: MpxWebpackPlugin.pluginLoader()
+      },
+      {
+        test: /\.mpx$/,
+        use: MpxWebpackPlugin.loader(mpxLoaderConfig)
       }
     ]
   },
