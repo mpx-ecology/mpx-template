@@ -17,7 +17,7 @@ const mpxLoaderConfig = {
   transRpx: {
     mode: 'only',
     comment: 'use rpx',
-    include: resolve('src')
+    include: resolveSrc()
   }
 }
 
