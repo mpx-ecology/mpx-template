@@ -13,6 +13,14 @@ function resolveDist (file) {
   return path.resolve(__dirname, '../dist', pluginSubDir, file || '')
 }
 
+const mpxLoaderConfig = {
+  transRpx: {
+    mode: 'only',
+    comment: 'use rpx',
+    include: resolveSrc()
+  }
+}
+
 module.exports = merge(baseWebpackConfig, {
   name: 'plugin-compile',
   // entry point of our application
@@ -24,6 +32,10 @@ module.exports = merge(baseWebpackConfig, {
       {
         resource: resolveSrc('plugin.json'),
         use: MpxWebpackPlugin.pluginLoader()
+      },
+      {
+        test: /\.mpx$/,
+        use: MpxWebpackPlugin.loader(mpxLoaderConfig)
       }
     ]
   },

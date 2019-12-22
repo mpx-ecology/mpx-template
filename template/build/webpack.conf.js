@@ -13,14 +13,6 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-const mpxLoaderConfig = {
-  transRpx: {
-    mode: 'only',
-    comment: 'use rpx',
-    include: resolve('src')
-  }
-}
-
 const webpackConf = {
   entry: {
     app: resolveSrc('app.mpx')
@@ -37,42 +29,7 @@ const webpackConf = {
           formatter: require('eslint-friendly-formatter')
         }
       },
-      {% endif %}{% if transWeb %}
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      {
-        test: /\.mpx$/,
-        resourceQuery: /(app|page|component)/,
-        use: [
-          {
-            loader: 'vue-loader',
-            options: {
-              transformToRequire: {
-                'mpx-image': 'src',
-                'mpx-audio': 'src',
-                'mpx-video': 'src'
-              }
-            }
-          },
-          MpxWebpackPlugin.loader(mpxLoaderConfig)
-        ]
-      },
-      {
-        test: /\.styl$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'stylus-loader'
-        ]
-      },
-      {% endif %}
-      {
-        test: /\.mpx$/,
-        use: MpxWebpackPlugin.loader(mpxLoaderConfig)
-      },
-      {% if tsSupport %}
+      {% endif %}{% if tsSupport %}
       {
         test: /\.ts$/,
         use: [

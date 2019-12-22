@@ -18,12 +18,61 @@ const mainSubDir = '{% if isPlugin %}miniprogram{% elif cloudFunc %}miniprogram{
 function resolveDist (file, subPathStr = mainSubDir) {
   return path.resolve(__dirname, '../dist', subPathStr, file || '')
 }
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
 
 const webpackConfigArr = []
 const userSelectedMode = '<$ mode $>'
 
+const mpxLoaderConfig = {
+  transRpx: {
+    mode: 'only',
+    comment: 'use rpx',
+    include: resolve('src')
+  }
+}
+
+{% if transWeb %}
+ const transWebModuleRules = [
+  {
+    test: /\.vue$/,
+    loader: 'vue-loader'
+  },
+  {
+    test: /\.mpx$/,
+    use: [
+      {
+        loader: 'vue-loader',
+        options: {
+          transformToRequire: {
+            'mpx-image': 'src',
+            'mpx-audio': 'src',
+            'mpx-video': 'src'
+          }
+        }
+      },
+      MpxWebpackPlugin.loader(mpxLoaderConfig)
+    ]
+  },
+  {
+    test: /\.styl$/,
+    use: [
+      'style-loader',
+      'css-loader',
+      'stylus-loader'
+    ]
+  }
+]
+{% endif %}
+const transModuleRules = [
+  {
+    test: /\.mpx$/,
+    use: MpxWebpackPlugin.loader(mpxLoaderConfig)
+  }
+]
+
 {% if mode === 'wx' and not cross %}
-// 微信小程序需要拷贝project.config.json，如果npm script参数里有--wx，拷贝到/dist下，如果指定--wx，拷贝到/dist/wx下
 const webpackWxConfig = merge(webpackMainConfig, {
   plugins: [
     new CopyWebpackPlugin([
@@ -45,6 +94,7 @@ webpackConfigArr.push(require('./webpack.plugin.conf'))
 
 webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
   name: 'main-compiler',
+  module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
@@ -55,6 +105,7 @@ webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpa
   output: {
     path: resolveDist()
   },
+  module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
@@ -74,6 +125,7 @@ modeArr.forEach(item => {
     output: {
       path: resolveDist('', item)
     },
+    module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
     plugins: [
       new MpxWebpackPlugin(Object.assign({
         mode: item,
