@@ -94,7 +94,7 @@ webpackConfigArr.push(require('./webpack.plugin.conf'))
 
 webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
   name: 'main-compiler',
-  module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
+  module: { rules: transModuleRules },
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
@@ -105,7 +105,7 @@ webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpa
   output: {
     path: resolveDist()
   },
-  module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
+  module: { rules: transModuleRules },
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
   ]
