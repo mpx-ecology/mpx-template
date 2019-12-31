@@ -94,6 +94,9 @@ webpackConfigArr.push(require('./webpack.plugin.conf'))
 
 webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
   name: 'main-compiler',
+  output: {
+    path: resolveDist()
+  },
   module: { rules: transModuleRules },
   plugins: [
     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
