@@ -1,9 +1,11 @@
 const path = require('path')
-const merge = require('webpack-merge')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-const baseWebpackConfig = require('./webpack.conf')
 
 const pluginSubDir = 'plugin'
+
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
 
 function resolveSrc (file) {
   return path.resolve(__dirname, '../src', pluginSubDir, file || '')
@@ -21,14 +23,37 @@ const mpxLoaderConfig = {
   }
 }
 
-module.exports = merge(baseWebpackConfig, {
+const pluginConfig = {
   name: 'plugin-compile',
   // entry point of our application
   entry: {
     plugin: resolveSrc('plugin.json')
   },
+  output: {
+    path: resolveDist()
+  },
   module: {
     rules: [
+      {
+        test: /\.(js|mpx)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('src')],
+        options: {
+          formatter: require('eslint-friendly-formatter')
+        }
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        include: [resolve('src'), resolve('test'), resolve('node_modules/@mpxjs')],
+        exclude: [resolve('node_modules/@mpxjs/webpack-plugin')]
+      },
+      {
+        test: /\.json$/,
+        resourceQuery: /__component/,
+        type: 'javascript/auto'
+      },
       {
         resource: resolveSrc('plugin.json'),
         use: MpxWebpackPlugin.pluginLoader()
@@ -44,7 +69,14 @@ module.exports = merge(baseWebpackConfig, {
       mode: '<$ mode $>'
     })
   ],
-  output: {
-    path: resolveDist(),
+  performance: {
+    hints: false
+  },
+  mode: 'none',
+  resolve: {
+    extensions: ['.js', '.mpx'],
+    modules: ['node_modules']
   }
-})
+}
+
+module.exports = pluginConfig
