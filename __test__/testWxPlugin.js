@@ -1,4 +1,11 @@
 const shell = require('shelljs')
+const assert = require('assert')
+const fs = require('fs')
+const path = require('path')
+
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
 
 shell.cp('testfile/wx-plugin-meta.js', './meta.js').code !== 0 && shell.exit(1)
 shell.exec('mpx init demo-wx-plugin --offline .').code !== 0 && shell.exit(1)
