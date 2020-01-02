@@ -34,8 +34,9 @@ const pluginConfig = {
   },
   module: {
     rules: [
+      {% if needEslint %}
       {
-        test: /\.(js|mpx)$/,
+        test: /\.(js{% if tsSupport %}|ts{% endif %}|mpx)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src')],
@@ -43,6 +44,15 @@ const pluginConfig = {
           formatter: require('eslint-friendly-formatter')
         }
       },
+      {% endif %}{% if tsSupport %}
+      {
+        test: /\.ts$/,
+        use: [
+          'babel-loader',
+          'ts-loader'
+        ]
+      },
+      {% endif %}
       {
         test: /\.js$/,
         loader: 'babel-loader',
