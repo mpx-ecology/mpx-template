@@ -5,6 +5,9 @@ const chalk = require('chalk')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const program = require('commander')
+{% if transWeb %}
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+{% endif %}
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 const mpxWebpackPluginConfig = require('./mpx.plugin.conf')
@@ -129,7 +132,21 @@ modeArr.forEach(item => {
       path: resolveDist('', item)
     },
     module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
+    {% if transWeb %}
+    optimization: {
+      usedExports: true,
+      sideEffects: true,
+      providedExports: true
+    },
+    {% endif %}
     plugins: [
+      {% if transWeb %}
+      new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: resolve('src/index.html'),
+        inject: true
+      }),
+      {% endif %}
       new MpxWebpackPlugin(Object.assign({
         mode: item,
         srcMode: userSelectedMode

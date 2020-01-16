@@ -1,8 +1,5 @@
 const path = require('path')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-{% if transWeb %}
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-{% endif %}
 
 const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
 function resolveSrc (file) {
@@ -62,20 +59,6 @@ const webpackConf = {
       }
     ]
   },
-  {% if transWeb %}
-  optimization: {
-    usedExports: true,
-    sideEffects: true,
-    providedExports: true
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: resolveSrc('index.html'),
-      inject: true
-    })
-  ],
-  {% endif %}
   performance: {
     hints: false
   },

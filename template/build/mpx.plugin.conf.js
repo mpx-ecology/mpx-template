@@ -15,5 +15,8 @@ module.exports = {
   enableAutoScope: false,
 
   // 批量指定文件mode，和webpack的rules相同
-  modeRules: {}
+  modeRules: {},
+
+  // 给模板和json中定义一些全局环境变量
+  defs: {}
 }
