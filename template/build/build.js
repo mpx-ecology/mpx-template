@@ -143,7 +143,7 @@ modeArr.forEach(item => {
       {% if transWeb %}
       new HtmlWebpackPlugin({
         filename: 'index.html',
-        template: resolveSrc('index.html'),
+        template: resolve('src/index.html'),
         inject: true
       }),
       {% endif %}
