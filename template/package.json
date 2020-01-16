@@ -30,6 +30,7 @@
     "@mpxjs/api-proxy": "^2.3.0",
     {% if transWeb %}
     "vue": "^2.6.10",
+    "vue-i18n": "^8.15.3",
     {% endif %}
     "@mpxjs/core": "^2.3.0"
   },
