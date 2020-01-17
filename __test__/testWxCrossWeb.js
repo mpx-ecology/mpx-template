@@ -18,7 +18,7 @@ assert(fs.existsSync(resolve('demo-wx-cross-web/dist/wx/project.config.json')))
 assert(fs.existsSync(resolve('demo-wx-cross-web/static/wx/project.config.json')))
 assert(!fs.existsSync(resolve('demo-wx-cross-web/static/wx/index.html')))
 
-shell.exec('npm run build:cross').code !== 0 && shell.exit(1)
+shell.exec('cd demo-wx-cross-web && npm run build:cross').code !== 0 && shell.exit(1)
 
 assert(fs.existsSync(resolve('demo-wx-cross-web/dist/ali/mini.project.json')))
 
