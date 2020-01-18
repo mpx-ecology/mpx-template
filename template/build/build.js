@@ -132,21 +132,7 @@ modeArr.forEach(item => {
       path: resolveDist('', item)
     },
     module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
-    {% if transWeb %}
-    optimization: {
-      usedExports: true,
-      sideEffects: true,
-      providedExports: true
-    },
-    {% endif %}
     plugins: [
-      {% if transWeb %}
-      new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: resolve('src/index.html'),
-        inject: true
-      }),
-      {% endif %}
       new MpxWebpackPlugin(Object.assign({
         mode: item,
         srcMode: userSelectedMode
@@ -158,7 +144,20 @@ modeArr.forEach(item => {
         }
       ])
     ]
-  })
+  }{% if transWeb %}, item === 'web' ? {
+    optimization: {
+      usedExports: true,
+      sideEffects: true,
+      providedExports: true
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: resolve('src/index.html'),
+        inject: true
+      })
+    ]
+  } : null{% endif %})
   webpackConfigArr.push(webpackCrossConfig)
 })
 {% endif %}
