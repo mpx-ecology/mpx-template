@@ -5,6 +5,7 @@
   "main": "meta.js",
   "dependencies": {},
   "devDependencies": {
+    "bdd-stdin": "^0.2.0",
     "shelljs": "^0.8.3"
   },
   "scripts": {
