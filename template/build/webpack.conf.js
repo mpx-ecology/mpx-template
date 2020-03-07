@@ -64,7 +64,7 @@ const webpackConf = {
   },
   mode: 'none',
   resolve: {
-    extensions: ['.js', '.mpx'{% if transWeb %}, '.vue'{% endif %}{% if tsSupport %}, '.ts'{% endif %}],
+    extensions: ['.js', '.mpx', '.wxml'{% if transWeb %}, '.vue'{% endif %}{% if tsSupport %}, '.ts'{% endif %}],
     modules: ['node_modules']
   }
 }
