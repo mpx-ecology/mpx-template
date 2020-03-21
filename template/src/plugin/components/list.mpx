@@ -18,9 +18,3 @@
   .list
     background-color red
 </style>
-
-<script type="application/json">
-  {
-    "component": true
-  }
-</script>

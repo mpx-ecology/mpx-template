@@ -9,15 +9,15 @@
 
 </style>
 
-<script type="application/json">
-  {
-    "pages": [
-      "./pages/index"
+<script name="json">
+  module.exports = {
+    pages: [
+      './pages/index'
     ],
-    "plugins": {
-      "myPlugin": {
-        "version": "dev",
-        "provider": "<$ appid $>"
+    plugins: {
+      'myPlugin': {
+        'version': 'dev',
+        'provider': '<$ appid $>'
       }
     }
   }
