@@ -175,8 +175,13 @@ function runWebpack (cfg) {
     cfg.plugins.unshift(new webpack.DefinePlugin(program.production ? prodEnv : devEnv))
   }
 
+  // production mode set mode be 'production' for webpack
+  // watch mode set cache be true for webpack
   if (program.production || program.watch) {
-    const extendCfg = program.production ? { mode: 'production' } : { cache: true }
+    const extendCfg = {}
+    if (program.production) { extendCfg.mode = 'production' }
+    if (program.watch){ extendCfg.cache = true }
+
     if (Array.isArray(cfg)) {
       cfg = cfg.map(item => merge(item, extendCfg))
     } else {

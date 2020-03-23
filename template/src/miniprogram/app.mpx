@@ -22,3 +22,19 @@
     }
   }
 </script>
+
+<!--JSON还可通过以下形式编写-->
+
+<!--<script name="json">-->
+<!--  module.exports = {-->
+<!--    pages: [-->
+<!--      './pages/index'-->
+<!--    ],-->
+<!--    plugins: {-->
+<!--      'myPlugin': {-->
+<!--        'version': 'dev',-->
+<!--        'provider': '<$ appid $>'-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->

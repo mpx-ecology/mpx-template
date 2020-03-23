@@ -5,18 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devbuild": "node ./build/build.js",
     "watch": "node ./build/build.js -w",
+    "watch:prod": "node ./build/build.js -w -p",
     "build": "node ./build/build.js -p",
-    "prod": "node ./build/build.js -p",
+    "build:dev": "node ./build/build.js",
     {% if cross %}
     "watch:cross": "{% if transWeb %}npx npm-run-all --parallel 'watch --wx --ali --swan --web' httpserver{% else %}npm run watch --wx --ali --swan{% endif %}",
+    "watch:prod:cross": "{% if transWeb %}npx npm-run-all --parallel 'watch:prod --wx --ali --swan --web' httpserver{% else %}npm run watch:prod --wx --ali --swan{% endif %}",
     "build:cross": "npm run build --wx --ali --swan{% if transWeb %} --web{% endif %}",
-    "prod:cross": "npm run prod --wx --ali --swan{% if transWeb %} --web{% endif %}",
+    "build:dev:cross": "npm run build:dev --wx --ali --swan{% if transWeb %} --web{% endif %}",
     {% endif %}
     {% if transWeb %}
+    "watch:web": "npx npm-run-all --parallel watchwebpure httpserver",
     "watchwebpure": "npm run watch --web",
-    "watchweb": "npx npm-run-all --parallel watchwebpure httpserver",
     "httpserver": "npx http-server dist/web",
     {% endif %}
     {% if needEslint %}
