@@ -17,11 +17,21 @@
 
 </style>
 
-<script name="json">
-  // 推荐使用这种形式来写json，可以写注释，通过defs注入的常量做一些判断之类的操作
-  module.exports = {
-    pages: [
-      './pages/index'
+<script type="application/json">
+  {
+    "pages": [
+      "./pages/index"
     ]
   }
 </script>
+
+<!--JSON还可通过以下形式编写-->
+
+<!--<script name="json">-->
+<!--  // 可以写注释，通过defs注入的常量做一些判断之类的操作-->
+<!--  module.exports = {-->
+<!--    pages: [-->
+<!--      './pages/index'-->
+<!--    ]-->
+<!--  }-->
+<!--</script>-->
