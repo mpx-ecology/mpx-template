@@ -14,8 +14,12 @@ module.exports = {
   // 支付宝小程序没有微信小程序类似的组件样式隔离机制，如果遇到样式问题，将本选项置为true将自动为支付宝添加scope，会带来略微的体积上涨
   enableAutoScope: false,
 
-  // 批量指定文件mode，和webpack的rules相同
-  modeRules: {},
+  // 批量指定文件mode，用法如下，指定平台，提供include/exclude指定文件，即include的文件会默认被认为是该平台的，include/exclude的规则和webpack的rules的相同
+  modeRules: {
+    // ali: {
+    //   include: [resolve('node_modules/vant-aliapp')]
+    // }
+  },
 
   // 给模板和json中定义一些全局环境变量
   defs: {},
