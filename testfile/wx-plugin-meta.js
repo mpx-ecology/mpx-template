@@ -5,8 +5,7 @@ module.exports = {
     mode: 'wx',
     cross: false,
     isPlugin: true,
-    needEslint: true,
-    babel7Support: false,
+    needEslint: true
   },
-  ...realMeta,
+  ...realMeta
 }

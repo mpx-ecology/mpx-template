@@ -6,8 +6,7 @@ module.exports = {
     cross: true,
     transWeb: false,
     isPlugin: false,
-    needEslint: true,
-    babel7Support: true,
+    needEslint: true
   },
-  ...realMeta,
+  ...realMeta
 }
