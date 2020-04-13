@@ -11,10 +11,5 @@
       "es6",
       "dom.iterable"
     ]
-  },
-  "exclude": [
-    "build",
-    "dist",
-    "config"
-  ]
+  }
 }
