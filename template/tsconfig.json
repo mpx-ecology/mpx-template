@@ -10,7 +10,6 @@
     "lib": [
       "esnext",
       "dom",
-      "es6",
       "dom.iterable"
     ]
   },
