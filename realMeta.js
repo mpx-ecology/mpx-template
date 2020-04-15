@@ -32,11 +32,11 @@ module.exports = {
       type: 'confirm',
       default: false
     },
-    babel7Support:{
-      message: '是否需要使用Babel7？',
-      type: 'confirm',
-      default: false
-    },
+    // babel7Support:{
+    //   message: '是否需要使用Babel7？',
+    //   type: 'confirm',
+    //   default: false
+    // },
     name: {
       type: 'string',
       required: true,
@@ -111,8 +111,8 @@ module.exports = {
     'tsconfig.json': 'tsSupport',
     '.eslintrc.js': 'needEslint',
     '**/*.ts': 'tsSupport',
-    '.babelrc': '!babel7Support',
-    'babel.config.json': 'babel7Support',
+    '.babelrc': true,
+    'babel.config.json': false,
     'functions/*': 'cloudFunc'
   },
   complete: function (data, { chalk }) {
