@@ -22,5 +22,12 @@
     "@babel/syntax-dynamic-import",
     "@babel/syntax-import-meta",
     "@babel/transform-runtime"
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/env"
+      ]
+    }
+  }
 }
