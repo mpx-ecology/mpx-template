@@ -2,7 +2,7 @@
  * @file unit test example
  * docs of miniprogram-simulate: https://github.com/wechat-miniprogram/miniprogram-simulate
  */
-const {loadComponent} = require('../../util')
+const {loadComponent} = require('../util')
 const simulate = require('miniprogram-simulate')
 
 describe('test list component', () => {

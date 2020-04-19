@@ -18,5 +18,13 @@
       }
     ],
     "stage-2"
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "env",
+        "stage-2"
+      ]
+    }
+  }
 }
