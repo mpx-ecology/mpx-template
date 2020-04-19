@@ -51,7 +51,7 @@
     "vue-template-compiler": "^2.6.10",
     "style-loader": "^1.0.1",
     {% endif %}
-    {% if needUnitTest and !babel7Support %}
+    {% if needUnitTest and not babel7Support %}
     "jest": "^24.9.0",
     "miniprogram-simulate": "^1.1.6",
     "babel-jest": "^22.4.4",
