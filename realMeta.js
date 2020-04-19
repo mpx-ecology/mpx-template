@@ -68,6 +68,11 @@ module.exports = {
       type: 'confirm',
       message: '是否需要ESlint',
       default: true
+    },
+    needUnitTest: {
+      type: 'confirm',
+      message: '是否需要单元测试',
+      default: false
     }
   },
   computed: {
@@ -113,6 +118,8 @@ module.exports = {
     '**/*.ts': 'tsSupport',
     '.babelrc': '!babel7Support',
     'babel.config.json': 'babel7Support',
+    'test/*': 'needUnitTest',
+    'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc'
   },
   complete: function (data, { chalk }) {
