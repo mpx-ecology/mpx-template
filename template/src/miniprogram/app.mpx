@@ -23,7 +23,7 @@
   }
 </script>
 
-<!--JSON还可通过以下形式编写-->
+<!--也可以通过以下形式用js输出json-->
 
 <!--<script name="json">-->
 <!--  module.exports = {-->
