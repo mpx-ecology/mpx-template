@@ -7,6 +7,7 @@ module.exports = {
     isPlugin: true,
     needEslint: true,
     babel7Support: false,
+    needUnitTest: false
   },
   ...realMeta,
 }
