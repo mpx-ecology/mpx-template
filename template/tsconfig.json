@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "esnext",
+    "module": "esnext",
     "allowJs": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
     "lib": [
+      "esnext",
       "dom",
-      "es6",
       "dom.iterable"
     ]
-  }
+  },
+  "exclude": [
+    "build",
+    "dist",
+    "config"
+  ]
 }

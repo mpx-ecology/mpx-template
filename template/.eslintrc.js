@@ -16,5 +16,19 @@ module.exports = {
     'getApp': true,
     'App': true,
     '__mpx_mode__': true
-  }
+  },
+  {% if tsSupport %}
+  overrides: [
+    {
+      files: ["**/*.ts"],
+      parser: "@typescript-eslint/parser",
+      extends: [
+        "standard",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+      ],
+      plugins: ["@typescript-eslint"],
+    },
+  ],
+  {% endif %}
 }
