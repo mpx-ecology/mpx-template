@@ -2,14 +2,10 @@
 <script lang="ts" src="./app.ts"></script>
 {% else %}
 <script>
-  {% if cross %}
   import mpx, { createApp } from '@mpxjs/core'
   import apiProxy from '@mpxjs/api-proxy'
 
   mpx.use(apiProxy, { usePromise: true })
-  {% else %}
-  import { createApp } from '@mpxjs/core'
-  {% endif %}
   // app.js
   createApp({
     onLaunch () {
