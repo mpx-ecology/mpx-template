@@ -14,10 +14,10 @@
 </script>
 {% endif %}
 
-<script name="json">
-  module.exports = {
-    usingComponents: {
-      'list': '../components/list'
+<script type="application/json">
+  {
+    "usingComponents": {
+      "list": "../components/list"
     }
   }
 </script>

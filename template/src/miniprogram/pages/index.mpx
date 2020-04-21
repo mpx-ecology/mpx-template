@@ -13,10 +13,10 @@
 <style>
 </style>
 
-<script name="json">
-  module.exports = {
-    'usingComponents': {
-      'list': 'plugin://myPlugin/list'
+<script type="application/json">
+  {
+    "usingComponents": {
+      "list": "plugin://myPlugin/list"
     }
   }
 </script>
