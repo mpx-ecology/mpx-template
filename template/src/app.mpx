@@ -7,6 +7,8 @@
   import apiProxy from '@mpxjs/api-proxy'
 
   mpx.use(apiProxy, { usePromise: true })
+  {% else %}
+  import { createApp } from '@mpxjs/core'
   {% endif %}
   // app.js
   createApp({
