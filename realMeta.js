@@ -27,6 +27,12 @@ module.exports = {
       type: 'confirm',
       default: false
     },
+    isPlugin: {
+      when: 'mode === "wx" && cross === false && cloudFunc === false',
+      type: 'confirm',
+      message: '是否是个插件项目?（不清楚请选 No ！什么是插件项目请看微信官方文档！）',
+      default: false
+    },
     tsSupport: {
       message: '是否需要使用TS？',
       type: 'confirm',
@@ -35,6 +41,16 @@ module.exports = {
     babel7Support:{
       message: '是否需要使用Babel7？',
       type: 'confirm',
+      default: false
+    },
+    needEslint: {
+      type: 'confirm',
+      message: '是否需要ESlint',
+      default: true
+    },
+    needUnitTest: {
+      type: 'confirm',
+      message: '是否需要单元测试',
       default: false
     },
     name: {
@@ -52,22 +68,11 @@ module.exports = {
       type: 'string',
       message: '作者'
     },
-    isPlugin: {
-      when: 'mode === "wx" && cross === false && cloudFunc === false',
-      type: 'confirm',
-      message: '是否是个插件项目?（不清楚请选 No ！什么是插件项目请看微信官方文档！）',
-      default: false
-    },
     appid: {
       when: 'mode === "wx"',
       required: true,
       message: '请输入小程序的Appid',
       default: 'touristappid'
-    },
-    needEslint: {
-      type: 'confirm',
-      message: '是否需要ESlint',
-      default: true
     }
   },
   computed: {
@@ -113,6 +118,8 @@ module.exports = {
     '**/*.ts': 'tsSupport',
     '.babelrc': '!babel7Support',
     'babel.config.json': 'babel7Support',
+    'test/*': 'needUnitTest',
+    'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc'
   },
   complete: function (data, { chalk }) {

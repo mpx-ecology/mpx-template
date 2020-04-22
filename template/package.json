@@ -4,7 +4,6 @@
   "description": "<$ description $>",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "node ./build/build.js -w",
     "watch:prod": "node ./build/build.js -w -p",
     "build": "node ./build/build.js -p",
@@ -23,21 +22,25 @@
     {% if needEslint %}
     "lint": "eslint --ext .js,.mpx src/",
     {% endif %}
+    {% if needUnitTest %}
+    "test": "npm run build && jest",
+    "puretest": "jest",
+    {% endif %}
     "help": "node ./build/build.js --help"
   },
   "author": "<$ author $>",
   "license": "ISC",
   "dependencies": {
-    "@mpxjs/api-proxy": "^2.3.0",
+    "@mpxjs/api-proxy": "^2.5.10",
     {% if transWeb %}
     "vue": "^2.6.10",
     "vue-i18n": "^8.15.3",
     {% endif %}
-    "@mpxjs/core": "^2.4.0"
+    "@mpxjs/core": "^2.5.11"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.3",
-    "@mpxjs/webpack-plugin": "^2.4.1",
+    "@mpxjs/webpack-plugin": "^2.5.11",
     {% if transWeb %}
     "http-server": "^0.12.0",
     "npm-run-all": "^4.1.5",
@@ -47,6 +50,15 @@
     "vue-router": "^3.1.3",
     "vue-template-compiler": "^2.6.10",
     "style-loader": "^1.0.1",
+    {% endif %}
+    {% if needUnitTest and not babel7Support %}
+    "jest": "^24.9.0",
+    "miniprogram-simulate": "^1.1.6",
+    "babel-jest": "^22.4.4",
+    {% elif needUnitTest and babel7Support %}
+    "jest": "^24.9.0",
+    "miniprogram-simulate": "^1.1.6",
+    "babel-jest": "^25.3.0",
     {% endif %}
     {% if needEslint %}
     "eslint-loader": "^2.1.1",

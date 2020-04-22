@@ -10,7 +10,7 @@ function resolve (dir) {
 // 复制预设的问题答案，创建项目并尝试构建要求无error
 shell.cp('testfile/wx-cross-noweb-meta.js', './meta.js').code !== 0 && shell.exit(1)
 shell.exec('mpx init demo-wx-cross-noweb --offline .').code !== 0 && shell.exit(1)
-shell.exec('cd demo-wx-cross-noweb && npm i && npm run build && npm run build:cross').code !== 0 && shell.exit(1)
+shell.exec('cd demo-wx-cross-noweb && npm i && npm run build && npm run build:cross && npm run puretest').code !== 0 && shell.exit(1)
 
 // 检查相应平台的配置文件是否在对的位置
 assert(fs.existsSync(resolve('demo-wx-cross-noweb/dist/wx/project.config.json')))
