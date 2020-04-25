@@ -17,9 +17,7 @@ module.exports = {
       when: 'mode === "wx" && cross === true',
       message: '是否需要支持输出web',
       type: 'confirm',
-      default: (data) => {
-        return data.cross
-      }
+      default: false
     },
     cloudFunc: {
       when: 'mode === "wx" && cross === false',
