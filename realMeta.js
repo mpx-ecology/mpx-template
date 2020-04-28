@@ -116,7 +116,7 @@ module.exports = {
     '**/*.ts': 'tsSupport',
     '.babelrc': '!babel7Support',
     'babel.config.json': 'babel7Support',
-    'test/*': 'needUnitTest',
+    'test/**/*': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc'
   },
