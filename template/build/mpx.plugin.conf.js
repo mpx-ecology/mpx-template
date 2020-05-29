@@ -30,6 +30,15 @@ module.exports = {
   // 给模板和json中定义一些全局环境变量
   defs: {},
 
+  // 是否转换px到rpx
+  transRpxRules: [
+    {
+      mode: 'only',
+      comment: 'use rpx',
+      include: resolve('src')
+    },
+  ],
+
   {% if needUnitTest %}
   // 是否生成用于测试的源文件/dist的映射表
   generateBuildMap: true,
