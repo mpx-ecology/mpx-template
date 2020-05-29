@@ -37,7 +37,7 @@ const mpxLoaderConfig = {
 }
 
 {% if transWeb %}
- const transWebModuleRules = [
+const transWebModuleRules = [
   {
     test: /\.vue$/,
     loader: 'vue-loader'
@@ -67,6 +67,7 @@ const mpxLoaderConfig = {
     ]
   }
 ]
+
 {% endif %}
 const transModuleRules = [
   {
@@ -90,8 +91,8 @@ const webpackWxConfig = merge(webpackMainConfig, {
     ])
   ]
 })
-{% endif %}
 
+{% endif %}
 {% if isPlugin %}
 webpackConfigArr.push(require('./webpack.plugin.conf'))
 
