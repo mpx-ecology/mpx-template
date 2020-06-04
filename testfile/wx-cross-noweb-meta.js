@@ -10,5 +10,5 @@ module.exports = {
     babel7Support: true,
     needUnitTest: true
   },
-  ...realMeta,
+  ...realMeta
 }

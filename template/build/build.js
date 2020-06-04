@@ -11,30 +11,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 const mpxWebpackPluginConfig = require('./mpx.plugin.conf')
+const getConfig = require('../config/index')
+{% if needDll %}
+const getDllManifests = require('./getDllManifests')
+const dllConfig = require('./dll.config')
+{% endif %}
 
 let webpackMainConfig = require('./webpack.conf')
-
-var prodEnv = require('../config/prod.env')
-var devEnv = require('../config/dev.env')
 
 const mainSubDir = '{% if isPlugin %}miniprogram{% elif cloudFunc %}miniprogram{% endif %}'
 function resolveDist (file, subPathStr = mainSubDir) {
   return path.resolve(__dirname, '../dist', subPathStr, file || '')
 }
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+function resolve (file) {
+  return path.resolve(__dirname, '..', file || '')
 }
 
 const webpackConfigArr = []
 const userSelectedMode = '<$ mode $>'
 
-const mpxLoaderConfig = {
-  transRpx: {
-    mode: 'only',
-    comment: 'use rpx',
-    include: resolve('src')
-  }
-}
+const mpxLoaderConfig = {}
 
 {% if transWeb %}
  const transWebModuleRules = [
@@ -75,20 +71,48 @@ const transModuleRules = [
   }
 ]
 
+program
+  .option('-w, --watch', 'watch mode')
+  .option('-p, --production', 'production release')
+  .parse(process.argv)
+
+const config = getConfig(program.production)
+{% if needDll %}
+const dllManifests = getDllManifests(program.production)
+{% endif %}
+
 {% if mode === 'wx' and not cross %}
+const plugins = []
+const copyList = [
+  {
+    from: resolve('project.config.json')
+  }{% if cloudFunc %},
+  {
+    context: resolve(`functions`),
+    from: '**/*',
+    to: 'functions/'
+  }{% endif %}
+]
+{% if needDll %}
+const localDllManifests = dllManifests.filter((manifest) => {
+  return !manifest.mode
+})
+localDllManifests.forEach((manifest) => {
+  plugins.push(new webpack.DllReferencePlugin({
+    context: dllConfig.context,
+    manifest: manifest.content
+  }))
+  copyList.push({
+    context: path.join(dllConfig.path, 'lib'),
+    from: manifest.content.name,
+    to: manifest.content.name
+  })
+})
+{% endif %}
+plugins.push(new CopyWebpackPlugin(copyList))
+
 const webpackWxConfig = merge(webpackMainConfig, {
-  plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../project.config.json'),
-        to: path.resolve(__dirname, '../dist/project.config.json')
-      }{% if cloudFunc %},
-      {
-        from: path.resolve(__dirname, '../functions'),
-        to: path.resolve(__dirname, '../dist/functions')
-      }{% endif %}
-    ])
-  ]
+  plugins
 })
 {% endif %}
 
@@ -118,7 +142,7 @@ webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpa
 }))
 {% else %}
 // 支持的平台，若后续@mpxjs/webpack-plugin支持了更多平台，补充在此即可
-const supportedCrossMode = ['wx', 'ali', 'swan', 'qq', 'tt'{% if transWeb %}, 'web'{% endif %}]
+const supportedCrossMode = config.supportedModes
 // 提供npm argv找到期望构建的平台，必须在上面支持的平台列表里
 const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
 const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
@@ -126,24 +150,42 @@ const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').m
 if (modeArr.length === 0) modeArr.push(userSelectedMode)
 
 modeArr.forEach(item => {
+  const plugins = [
+    new MpxWebpackPlugin(Object.assign({
+      mode: item,
+      srcMode: userSelectedMode
+    }, mpxWebpackPluginConfig))
+  ]
+  const copyList = [{
+    context: resolve(`static/${item}`),
+    from: '**/*'
+  }]
+  {% if needDll %}
+  const localDllManifests = dllManifests.filter((manifest) => {
+    return manifest.mode === item || !manifest.mode
+  })
+
+  localDllManifests.forEach((manifest) => {
+    plugins.push(new webpack.DllReferencePlugin({
+      context: dllConfig.context,
+      manifest: manifest.content
+    }))
+    copyList.push({
+      context: path.join(dllConfig.path, 'lib'),
+      from: manifest.content.name,
+      to: manifest.content.name
+    })
+  })
+  {% endif %}
+  plugins.push(new CopyWebpackPlugin(copyList))
+
   const webpackCrossConfig = merge(webpackMainConfig, {
     name: item + '-compiler',
     output: {
       path: resolveDist('', item)
     },
     module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
-    plugins: [
-      new MpxWebpackPlugin(Object.assign({
-        mode: item,
-        srcMode: userSelectedMode
-      }, mpxWebpackPluginConfig)),
-      new CopyWebpackPlugin([
-        {
-          from: `static/${item}/**.*`,
-          to: `../../dist/${item}/[name].[ext]`
-        }
-      ])
-    ]
+    plugins
   }{% if transWeb %}, item === 'web' ? {
     optimization: {
       usedExports: true,
@@ -157,22 +199,19 @@ modeArr.forEach(item => {
         inject: true
       })
     ]
-  } : null{% endif %})
+  } : undefined{% endif %})
   webpackConfigArr.push(webpackCrossConfig)
 })
 {% endif %}
 
-program
-  .option('-w, --watch', 'watch mode')
-  .option('-p, --production', 'production release')
-  .parse(process.argv)
+
 
 function runWebpack (cfg) {
   // env
   if (Array.isArray(cfg)) {
-    cfg.forEach(item => item.plugins.unshift(new webpack.DefinePlugin(program.production ? prodEnv : devEnv)))
+    cfg.forEach(item => item.plugins.unshift(new webpack.DefinePlugin(config.env)))
   } else {
-    cfg.plugins.unshift(new webpack.DefinePlugin(program.production ? prodEnv : devEnv))
+    cfg.plugins.unshift(new webpack.DefinePlugin(config.env))
   }
 
   // production mode set mode be 'production' for webpack
