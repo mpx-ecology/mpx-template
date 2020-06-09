@@ -10,12 +10,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 {% endif %}
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
+
 const mpxWebpackPluginConfig = require('./mpx.plugin.conf')
-
-let webpackMainConfig = require('./webpack.conf')
-
-var prodEnv = require('../config/prod.env')
-var devEnv = require('../config/dev.env')
+const webpackMainConfig = require('./webpack.conf')
+const prodEnv = require('../config/prod.env')
+const devEnv = require('../config/dev.env')
 
 const mainSubDir = '{% if isPlugin %}miniprogram{% elif cloudFunc %}miniprogram{% endif %}'
 function resolveDist (file, subPathStr = mainSubDir) {
@@ -31,7 +30,7 @@ const userSelectedMode = '<$ mode $>'
 const mpxLoaderConfig = {}
 
 {% if transWeb %}
- const transWebModuleRules = [
+const transWebModuleRules = [
   {
     test: /\.vue$/,
     loader: 'vue-loader'
@@ -61,6 +60,7 @@ const mpxLoaderConfig = {}
     ]
   }
 ]
+
 {% endif %}
 const transModuleRules = [
   {
@@ -84,8 +84,8 @@ const webpackWxConfig = merge(webpackMainConfig, {
     ])
   ]
 })
-{% endif %}
 
+{% endif %}
 {% if isPlugin %}
 webpackConfigArr.push(require('./webpack.plugin.conf'))
 
@@ -231,7 +231,7 @@ function callback (err, stats) {
   }
 }
 
-var spinner = ora('building...')
+const spinner = ora('building...')
 spinner.start()
 
 try {
