@@ -84,7 +84,8 @@ const dllManifests = getDllManifests(program.production)
 const plugins = []
 const copyList = [
   {
-    from: resolve('project.config.json')
+    from: resolve('project.config.json'),
+    to: mainSubDir ? '..' : ''
   }{% if cloudFunc %},
   {
     context: resolve(`functions`),
@@ -157,7 +158,8 @@ modeArr.forEach(item => {
   ]
   const copyList = [{
     context: resolve(`static/${item}`),
-    from: '**/*'
+    from: '**/*',
+    to: mainSubDir ? '..' : ''
   }]
   {% if needDll %}
   const localDllManifests = dllManifests.filter((manifest) => {
@@ -202,8 +204,6 @@ modeArr.forEach(item => {
   webpackConfigArr.push(webpackCrossConfig)
 })
 {% endif %}
-
-
 
 function runWebpack (cfg) {
   // env
