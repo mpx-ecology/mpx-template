@@ -27,13 +27,7 @@ function resolve (dir) {
 const webpackConfigArr = []
 const userSelectedMode = '<$ mode $>'
 
-const mpxLoaderConfig = {
-  transRpx: {
-    mode: 'only',
-    comment: 'use rpx',
-    include: resolve('src')
-  }
-}
+const mpxLoaderConfig = {}
 
 {% if transWeb %}
 const transWebModuleRules = [
