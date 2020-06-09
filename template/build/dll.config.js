@@ -1,27 +1,19 @@
 const path = require('path')
+const getConfig = require('../config')
+const context = getConfig(true).context
 
-const mainSubDir = ''
-
-function resolveSrc (file) {
-  return path.resolve(__dirname, '../src', mainSubDir, file || '')
-}
-
-function resolveDll (file) {
-  return path.resolve(__dirname, '../dll', file || '')
-}
-
-module.exports = {
-  cacheGroups: [
-    {
-      entries: [],
-      // name: 'dll-test',
-      // modes: ['wx', 'ali'],
-      // root: 'subpackageA'
+module.exports = [
+  {
+    cacheGroups: [
+      {
+        entries: [path.join(context, 'lib/dll')],
+        name: 'dll',
+      }
+    ],
+    webpackCfg: {
+      mode: 'none'
     }
-  ],
-  context: resolveSrc(),
-  path: resolveDll(),
-  webpackCfg: {
-    mode: 'none'
   }
-}
+]
+
+

@@ -1,17 +1,16 @@
 const fs = require('fs')
 const getConfig = require('../config/index')
-const dllConfig = require('./dll.config')
 const path = require('path')
-const chalk = require('chalk')
 
 module.exports = function getDllManifests (isProduction) {
-  const supportedModes = getConfig(isProduction).supportedModes
+  const config = getConfig(isProduction)
+  const supportedModes = config.supportedModes
   const result = []
-  if (fs.existsSync(dllConfig.path)) {
-    const files = fs.readdirSync(dllConfig.path)
+  if (fs.existsSync(config.dllPath)) {
+    const files = fs.readdirSync(config.dllPath)
     files.forEach((file) => {
       if (/\.manifest\.json$/.test(file)) {
-        const content = JSON.parse(fs.readFileSync(path.join(dllConfig.path, file), 'utf8'))
+        const content = JSON.parse(fs.readFileSync(path.join(config.dllPath, file), 'utf8'))
         const filename = path.basename(content.name)
         const modeReg = new RegExp(`^(${supportedModes.join('|')})\\.`)
         let mode = ''
@@ -24,9 +23,6 @@ module.exports = function getDllManifests (isProduction) {
         })
       }
     })
-  } else {
-    console.log(chalk.yellow('  No valid dll manifest found, exec "npm run build:dll" firstly.\n'))
   }
   return result
 }
-

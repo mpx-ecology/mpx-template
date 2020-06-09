@@ -127,7 +127,8 @@ module.exports = {
     'build/buildDll.js': 'needDll',
     'build/dll.config.js': 'needDll',
     'build/getDllEntries.js': 'needDll',
-    'build/getDllManifests.js': 'needDll'
+    'build/getDllManifests.js': 'needDll',
+    'src/lib/dll.js': 'needDll'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green

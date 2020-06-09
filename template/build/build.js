@@ -14,7 +14,6 @@ const mpxWebpackPluginConfig = require('./mpx.plugin.conf')
 const getConfig = require('../config/index')
 {% if needDll %}
 const getDllManifests = require('./getDllManifests')
-const dllConfig = require('./dll.config')
 {% endif %}
 
 let webpackMainConfig = require('./webpack.conf')
@@ -99,11 +98,11 @@ const localDllManifests = dllManifests.filter((manifest) => {
 })
 localDllManifests.forEach((manifest) => {
   plugins.push(new webpack.DllReferencePlugin({
-    context: dllConfig.context,
+    context: config.context,
     manifest: manifest.content
   }))
   copyList.push({
-    context: path.join(dllConfig.path, 'lib'),
+    context: path.join(config.dllPath, 'lib'),
     from: manifest.content.name,
     to: manifest.content.name
   })
@@ -167,11 +166,11 @@ modeArr.forEach(item => {
 
   localDllManifests.forEach((manifest) => {
     plugins.push(new webpack.DllReferencePlugin({
-      context: dllConfig.context,
+      context: config.context,
       manifest: manifest.content
     }))
     copyList.push({
-      context: path.join(dllConfig.path, 'lib'),
+      context: path.join(config.dllPath, 'lib'),
       from: manifest.content.name,
       to: manifest.content.name
     })

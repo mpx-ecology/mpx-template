@@ -9,7 +9,7 @@ module.exports = {
     needEslint: false,
     babel7Support: false,
     needUnitTest: false,
-    needDll: false,
+    needDll: true,
     tsSupport: false,
     cloudFunc: false
   },
