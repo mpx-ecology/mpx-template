@@ -8,10 +8,10 @@ module.exports = {
   moduleNameMapper: {
     // webpack的alias需要在此处理
   },
-  testPathIgnorePatterns: ["dist", "node_modules"],
+  testPathIgnorePatterns: ['dist', 'node_modules'],
   testURL: 'http://test.api.com',
-  'setupFiles': ['<rootDir>/test/setup'],
-  'transform': {
+  setupFiles: ['<rootDir>/test/setup'],
+  transform: {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest'
   },
   transformIgnorePatterns: ['node_modules/(?!(@mpxjs))']

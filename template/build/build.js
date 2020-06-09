@@ -32,7 +32,7 @@ const userSelectedMode = '<$ mode $>'
 const mpxLoaderConfig = {}
 
 {% if transWeb %}
- const transWebModuleRules = [
+const transWebModuleRules = [
   {
     test: /\.vue$/,
     loader: 'vue-loader'
@@ -62,6 +62,7 @@ const mpxLoaderConfig = {}
     ]
   }
 ]
+
 {% endif %}
 const transModuleRules = [
   {
@@ -114,8 +115,8 @@ plugins.push(new CopyWebpackPlugin(copyList))
 const webpackWxConfig = merge(webpackMainConfig, {
   plugins
 })
-{% endif %}
 
+{% endif %}
 {% if isPlugin %}
 webpackConfigArr.push(require('./webpack.plugin.conf'))
 
@@ -275,7 +276,7 @@ function callback (err, stats) {
   }
 }
 
-var spinner = ora('building...')
+const spinner = ora('building...')
 spinner.start()
 
 try {
