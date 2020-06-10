@@ -2,7 +2,7 @@ const devEnv = require('./dev.env')
 const prodEnv = require('./prod.env')
 const path = require('path')
 
-const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
+const mainSubDir = '{% if isPlugin %}miniprogram{% elif cloudFunc %}miniprogram{% endif %}'
 
 function resolveSrc (file) {
   return path.resolve(__dirname, '../src', mainSubDir, file || '')
