@@ -36,7 +36,7 @@ module.exports = {
       type: 'confirm',
       default: false
     },
-    babel7Support:{
+    babel7Support: {
       message: '是否需要使用Babel7？',
       type: 'confirm',
       default: false
@@ -45,6 +45,11 @@ module.exports = {
       type: 'confirm',
       message: '是否需要ESlint',
       default: true
+    },
+    needDll: {
+      type: 'confirm',
+      message: '是否需要配置Dll',
+      default: false
     },
     needUnitTest: {
       type: 'confirm',
@@ -118,7 +123,12 @@ module.exports = {
     'babel.config.json': 'babel7Support',
     'test/**/*': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
-    'functions/*': 'cloudFunc'
+    'functions/*': 'cloudFunc',
+    'build/buildDll.js': 'needDll',
+    'build/dll.config.js': 'needDll',
+    'build/getDllEntries.js': 'needDll',
+    'build/getDllManifests.js': 'needDll',
+    'src/lib/dll.js': 'needDll'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
