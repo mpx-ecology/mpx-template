@@ -21,6 +21,7 @@
     "@babel/proposal-throw-expressions",
     "@babel/syntax-dynamic-import",
     "@babel/syntax-import-meta",
+    "@babel/transform-async-to-generator",
     "@babel/transform-runtime"
   ],
   "env": {
