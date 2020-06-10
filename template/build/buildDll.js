@@ -37,6 +37,8 @@ dllConfigs.forEach((dllConfig) => {
         new webpack.DllPlugin({
           path: path.join(config.dllPath, manifestName),
           name: dllName,
+          format: dllConfig.format,
+          entryOnly: dllConfig.entryOnly,
           type: 'commonjs2',
           context: config.context
         })
