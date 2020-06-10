@@ -6,9 +6,12 @@ module.exports = {
     cross: true,
     transWeb: true,
     isPlugin: false,
-    needEslint: true,
-    babel7Support: true,
-    needUnitTest: true
+    needEslint: false,
+    babel7Support: false,
+    needUnitTest: false,
+    needDll: true,
+    tsSupport: false,
+    cloudFunc: false
   },
   ...realMeta
 }

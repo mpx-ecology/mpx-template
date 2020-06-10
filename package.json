@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "mpx template repo",
   "main": "meta.js",
-  "dependencies": {},
   "devDependencies": {
     "bdd-stdin": "^0.2.0",
     "shelljs": "^0.8.3"
