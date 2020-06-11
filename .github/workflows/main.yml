@@ -1,0 +1,32 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    name: Test on node ${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        node: [10, 12, 14]
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        # The Node.js version to configure
+        node-version: ${{ matrix.node }}
+    - name: install deps
+      run: npm ci
+
+    - name: install global tool
+      run: npm i -g @mpxjs/cli
+
+    - name: test
+      run: |
+        node __test__/testWxCrossWeb.js
+        node __test__/testWxCrossNoWeb.js
+        node __test__/testWxPlugin.js
+        node __test__/testWxNoCross.js
