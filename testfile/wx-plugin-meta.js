@@ -9,5 +9,5 @@ module.exports = {
     babel7Support: false,
     needUnitTest: false
   },
-  ...realMeta,
+  ...realMeta
 }
