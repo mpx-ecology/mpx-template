@@ -15,6 +15,7 @@
     "urlCheck": true,
     "es6": false,
     "postcss": true,
+    "checkSiteMap": true,
     "minified": false,
     "autoAudits": false
   },
