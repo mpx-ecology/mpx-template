@@ -16,6 +16,7 @@
     "es6": false,
     "postcss": true,
     "minified": false,
+    "checkSiteMap": true,
     "autoAudits": false
   },
   "appid": "<$ appid $>",
