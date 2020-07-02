@@ -241,7 +241,12 @@ function runWebpack (cfg) {
 
 function callback (err, stats) {
   spinner.stop()
-  if (err) return console.error(err)
+  if (err) {
+    if (process.env.CI) {
+      process.exitCode = 1
+    }
+    return console.error(err)
+  }
   if (Array.isArray(stats.stats)) {
     stats.stats.forEach(item => {
       console.log(item.compilation.name + '打包结果：')
@@ -267,7 +272,9 @@ function callback (err, stats) {
 
   if (!program.watch && stats.hasErrors()) {
     console.log(chalk.red('  Build failed with errors.\n'))
-    process.exitCode = 1
+    if (process.env.CI) {
+      process.exitCode = 1
+    }
   }
 
   console.log(chalk.cyan('  Build complete.\n'))
