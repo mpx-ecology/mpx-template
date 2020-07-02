@@ -267,7 +267,7 @@ function callback (err, stats) {
 
   if (!program.watch && stats.hasErrors()) {
     console.log(chalk.red('  Build failed with errors.\n'))
-    process.exit(1)
+    process.exitCode = 1
   }
 
   console.log(chalk.cyan('  Build complete.\n'))
