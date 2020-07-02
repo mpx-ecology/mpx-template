@@ -4,30 +4,29 @@
       "@babel/env",
       {
         "modules": false,
-        "useBuiltIns": "usage",
-        "targets": {
-          "browsers": ["chrome >= 53", "ios >= 8"]
-        }
+        "shippedProposals": true,
+        "targets": "ios > 8, chrome > 52"
       }
     ]
   ],
   "plugins": [
-    ["@babel/proposal-class-properties", { "loose": true }],
-    ["@babel/proposal-decorators", { "legacy": true }],
-    "@babel/proposal-export-namespace-from",
-    "@babel/proposal-function-sent",
-    "@babel/proposal-json-strings",
-    "@babel/proposal-numeric-separator",
-    "@babel/proposal-throw-expressions",
-    "@babel/syntax-dynamic-import",
-    "@babel/syntax-import-meta",
-    "@babel/transform-async-to-generator",
-    "@babel/transform-runtime"
+    [
+      "@babel/transform-runtime",
+      {
+        "corejs": 2
+      }
+    ]
   ],
   "env": {
     "test": {
       "presets": [
-        "@babel/env"
+        [
+          "@babel/env",
+          {
+            "shippedProposals": true,
+            "targets": "ios > 8, chrome > 52"
+          }
+        ]
       ]
     }
   }

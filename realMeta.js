@@ -39,7 +39,7 @@ module.exports = {
     babel7Support: {
       message: '是否需要使用Babel7？',
       type: 'confirm',
-      default: false
+      default: true
     },
     needEslint: {
       type: 'confirm',
