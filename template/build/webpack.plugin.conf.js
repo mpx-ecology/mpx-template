@@ -15,14 +15,6 @@ function resolveDist (file) {
   return path.resolve(__dirname, '../dist', pluginSubDir, file || '')
 }
 
-const mpxLoaderConfig = {
-  transRpx: {
-    mode: 'only',
-    comment: 'use rpx',
-    include: resolveSrc()
-  }
-}
-
 const pluginConfig = {
   name: 'plugin-compile',
   // entry point of our application
@@ -70,13 +62,18 @@ const pluginConfig = {
       },
       {
         test: /\.mpx$/,
-        use: MpxWebpackPlugin.loader(mpxLoaderConfig)
+        use: MpxWebpackPlugin.loader()
       }
     ]
   },
   plugins: [
     new MpxWebpackPlugin({
-      mode: '<$ mode $>'
+      mode: '<$ mode $>',
+      transRpxRules: {
+        mode: 'only',
+        comment: 'use rpx',
+        include: resolveSrc()
+      }
     })
   ],
   performance: {
