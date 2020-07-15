@@ -5,7 +5,7 @@
       {
         "modules": false,
         "shippedProposals": true,
-        "targets": "ios > 8, chrome > 52"
+        "targets": "ios >= 9, chrome >= 47"
       }
     ]
   ],
