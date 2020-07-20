@@ -13,7 +13,7 @@
     [
       "@babel/transform-runtime",
       {
-        "corejs": 2
+        "corejs": 3
       }
     ]
   ],
