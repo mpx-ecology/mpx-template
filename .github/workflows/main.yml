@@ -29,4 +29,7 @@ jobs:
         node __test__/testWxCrossWeb.js
         node __test__/testWxCrossNoWeb.js
         node __test__/testWxPlugin.js
+        node __test__/testDllCross.js
+        node __test__/testDllNoCross.js
         node __test__/testWxNoCross.js
+        node __test__/testWxCloudNoCross.js
