@@ -29,6 +29,6 @@ assert(fs.existsSync(resolve(`${projectFolder}/dist/miniprogram`)))
 assert(fs.existsSync(resolve(`${projectFolder}/dist/functions`)))
 
 // 检查项目配置中对小程序路径和云函数路径是否正确
-const projectConfig = require(`${projectFolder}/dist/project.config.json`)
+const projectConfig = require(resolve(`${projectFolder}/dist/project.config.json`))
 assert(projectConfig.miniprogramRoot === 'miniprogram')
 assert(projectConfig.cloudfunctionRoot === 'functions')
