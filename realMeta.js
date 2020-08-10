@@ -114,7 +114,7 @@ module.exports = {
     'src/index.html': 'transWeb',
     'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
     'src/*': 'mode !== "wx" || !isPlugin',
-    'project.config.json': 'mode === "wx" && !cross',
+    'static/wx': 'mode === "wx" && !cross',
     'static/**/*': 'cross',
     'tsconfig.json': 'tsSupport',
     '.eslintrc.js': 'needEslint',
