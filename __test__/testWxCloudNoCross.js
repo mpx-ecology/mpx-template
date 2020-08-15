@@ -17,10 +17,10 @@ shell.exec(`cd ${projectFolder} && npm i && npm run build`).code !== 0 && shell.
 checkStatic(projectFolder)
 
 // dist里有miniprogram文件夹
-assert(fs.existsSync(resolve(`${projectFolder}/dist/wx/miniprogram`)))
+assert(fs.existsSync(`${projectFolder}/dist/wx/miniprogram`))
 
 // dist里有functions文件夹
-assert(fs.existsSync(resolve(`${projectFolder}/dist/wx/functions`)))
+assert(fs.existsSync(`${projectFolder}/dist/wx/functions`))
 
 // 检查项目配置中对小程序路径和云函数路径是否正确
 const projectConfig = require(resolve(`${projectFolder}/dist/wx/project.config.json`))
