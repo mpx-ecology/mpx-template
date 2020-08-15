@@ -1,6 +1,8 @@
 const shell = require('shelljs')
 const path = require('path')
 const { checkStatic } = require('./util')
+const assert = require('assert')
+const fs = require('fs')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
