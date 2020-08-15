@@ -12,7 +12,7 @@ function resolveSrc (file) {
 }
 
 function resolveDist (file) {
-  return path.resolve(__dirname, '../dist', pluginSubDir, file || '')
+  return path.resolve(__dirname, '../dist/wx', pluginSubDir, file || '')
 }
 
 const pluginConfig = {

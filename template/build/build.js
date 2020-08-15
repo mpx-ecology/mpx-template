@@ -25,10 +25,10 @@ if (config.needDll) {
   getDllManifests = require('./getDllManifests')
   dllManifests = getDllManifests(program.production)
 }
-const mainSubDir = config.isPlugin === 'true' ? 'miniprogram' : ''
+const mainSubDir = (config.isPlugin === 'true' || config.cloudFunc === 'true') ? 'miniprogram' : ''
 
-function resolveDist (file, subPathStr = mainSubDir) {
-  return path.resolve(__dirname, '../dist', subPathStr, file || '')
+function resolveDist (platform, subPathStr = mainSubDir) {
+  return path.resolve(__dirname, '../dist', platform, subPathStr, '')
 }
 function resolve (file) {
   return path.resolve(__dirname, '..', file || '')
@@ -131,7 +131,7 @@ const generateWebpackConfig = (item, index, arr) => {
   const webpackCrossConfig = merge(webpackMainConfig, {
     name: item + '-compiler',
     output: {
-      path: resolveDist('', item + (config.cloudFunc === 'true' ? '/miniprogram' : ''))
+      path: resolveDist(item)
     },
     module: { rules: extendRules },
     plugins
