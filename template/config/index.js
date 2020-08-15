@@ -12,16 +12,16 @@ const mpxLoaderConfig = {}
 // 改动需谨慎，有的选项存在互斥关系，比如跨平台开发，就不能开发插件
 // 若需修改以启用新的能力，建议试试新建项目按问题生成模板后把这部分内容拷贝过来
 const basicConf = {
-  mode: '{{ mode }}',
-  cross: '{{ cross }}',
-  transWeb: '{{ transWeb }}',
-  cloudFunc: '{{ cloudFunc }}',
-  isPlugin: '{{ isPlugin }}',
-  tsSupport: '{{ tsSupport }}',
-  babel7Support: '{{ babel7Support }}',
-  needEslint: '{{ needEslint }}',
-  needDll: '{{ needDll }}',
-  needUnitTest: '{{ needUnitTest }}'
+  mode: '<$ mode $>',
+  cross: '<$ cross $>',
+  transWeb: '<$ transWeb $>',
+  cloudFunc: '<$ cloudFunc $>',
+  isPlugin: '<$ isPlugin $>',
+  tsSupport: '<$ tsSupport $>',
+  babel7Support: '<$ babel7Support $>',
+  needEslint: '<$ needEslint $>',
+  needDll: '<$ needDll $>',
+  needUnitTest: '<$ needUnitTest $>'
 }
 
 function resolveSrc (file) {

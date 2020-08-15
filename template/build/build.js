@@ -90,7 +90,7 @@ const copyList = [
   }
 ]
 
-if (config.needDll) {
+if (config.needDll === 'true') {
   const localDllManifests = dllManifests.filter((manifest) => {
     return !manifest.mode
   })
@@ -113,7 +113,7 @@ const webpackWxConfig = merge(webpackMainConfig, {
   plugins
 })
 
-if (config.isPlugin) {
+if (config.isPlugin === 'true') {
   webpackConfigArr.push(require('./webpack.plugin.conf'))
 
   webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {

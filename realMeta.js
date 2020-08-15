@@ -124,11 +124,11 @@ module.exports = {
     'test/**/*': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc',
-    // 'build/buildDll.js': 'needDll',
-    // 'build/dll.config.js': 'needDll',
-    // 'build/getDllEntries.js': 'needDll',
-    // 'build/getDllManifests.js': 'needDll',
-    // 'src/lib/dll.js': 'needDll'
+    'build/buildDll.js': 'needDll',
+    'build/dll.config.js': 'needDll',
+    'build/getDllEntries.js': 'needDll',
+    'build/getDllManifests.js': 'needDll',
+    'src/lib/dll.js': 'needDll'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
