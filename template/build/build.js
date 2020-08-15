@@ -106,32 +106,32 @@ const webpackWxConfig = merge(webpackMainConfig, {
   plugins
 })
 
-// {% if isPlugin %}
-// webpackConfigArr.push(require('./webpack.plugin.conf'))
-//
-// webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
-//   name: 'main-compiler',
-//   output: {
-//     path: resolveDist()
-//   },
-//   module: { rules: transModuleRules },
-//   plugins: [
-//     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
-//   ]
-// }))
-//
-// {% elif not cross %}
-// webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpackMainConfig{% endif %}, {
-//   output: {
-//     path: resolveDist()
-//   },
-//   module: { rules: transModuleRules },
-//   plugins: [
-//     new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
-//   ]
-// }))
-// {% else %}
+if (config.isPlugin) {
+  webpackConfigArr.push(require('./webpack.plugin.conf'))
 
+  webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
+    name: 'main-compiler',
+    output: {
+      path: resolveDist()
+    },
+    module: { rules: transModuleRules },
+    plugins: [
+      new MpxWebpackPlugin(Object.assign({ mode: userSelectedMode }, mpxWebpackPluginConfig))
+    ]
+  }))
+
+} else if (config.cross === 'false') {
+  const baseConfig = config.mode === 'wx' ? webpackWxConfig : webpackMainConfig
+  webpackConfigArr.push(merge(baseConfig, {
+    output: {
+      path: resolveDist()
+    },
+    module: { rules: transModuleRules },
+    plugins: [
+      new MpxWebpackPlugin(Object.assign({ mode: userSelectedMode }, mpxWebpackPluginConfig))
+    ]
+  }))
+}
 
 // 支持的平台，若后续@mpxjs/webpack-plugin支持了更多平台，补充在此即可
 const supportedCrossMode = config.supportedModes
