@@ -37,29 +37,34 @@ function resolve (file) {
 const mpxLoaderConfig = config.mpxLoaderConfig
 
 const webpackConfigArr = []
-const userSelectedMode = '<$ mode $>'
+const userSelectedMode = 'wx'
 
-const transWebModuleRules = [
+const mpxLoaderRule = config.transWeb ? {
+  test: /\.mpx$/,
+  use: [
+    {
+      loader: 'vue-loader',
+      options: {
+        transformToRequire: {
+          'mpx-image': 'src',
+          'mpx-audio': 'src',
+          'mpx-video': 'src'
+        }
+      }
+    },
+    MpxWebpackPlugin.loader(mpxLoaderConfig)
+  ]
+} : {
+  test: /\.mpx$/,
+  use: MpxWebpackPlugin.loader(mpxLoaderConfig)
+}
+
+const extendRules = config.transWeb ? [
   {
     test: /\.vue$/,
     loader: 'vue-loader'
   },
-  {
-    test: /\.mpx$/,
-    use: [
-      {
-        loader: 'vue-loader',
-        options: {
-          transformToRequire: {
-            'mpx-image': 'src',
-            'mpx-audio': 'src',
-            'mpx-video': 'src'
-          }
-        }
-      },
-      MpxWebpackPlugin.loader(mpxLoaderConfig)
-    ]
-  },
+  mpxLoaderRule,
   {
     test: /\.styl$/,
     use: [
@@ -68,76 +73,10 @@ const transWebModuleRules = [
       'stylus-loader'
     ]
   }
-]
-
-const transModuleRules = [
-  {
-    test: /\.mpx$/,
-    use: MpxWebpackPlugin.loader(mpxLoaderConfig)
-  }
-]
-
-const plugins = []
-const copyList = [
-  {
-    from: resolve('project.config.json'),
-    to: mainSubDir ? '..' : ''
-  },
-  {
-    context: resolve(`src/functions`),
-    from: '**/*',
-    to: 'functions/'
-  }
-]
-
-if (config.needDll === 'true') {
-  const localDllManifests = dllManifests.filter((manifest) => {
-    return !manifest.mode
-  })
-  localDllManifests.forEach((manifest) => {
-    plugins.push(new webpack.DllReferencePlugin({
-      context: config.context,
-      manifest: manifest.content
-    }))
-    copyList.push({
-      context: path.join(config.dllPath, 'lib'),
-      from: manifest.content.name,
-      to: manifest.content.name
-    })
-  })
-}
-
-plugins.push(new CopyWebpackPlugin(copyList))
-
-const webpackWxConfig = merge(webpackMainConfig, {
-  plugins
-})
+] : [mpxLoaderRule]
 
 if (config.isPlugin === 'true') {
   webpackConfigArr.push(require('./webpack.plugin.conf'))
-
-  webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
-    name: 'main-compiler',
-    output: {
-      path: resolveDist()
-    },
-    module: { rules: transModuleRules },
-    plugins: [
-      new MpxWebpackPlugin(Object.assign({ mode: userSelectedMode }, mpxWebpackPluginConfig))
-    ]
-  }))
-
-} else if (config.cross === 'false') {
-  const baseConfig = config.mode === 'wx' ? webpackWxConfig : webpackMainConfig
-  webpackConfigArr.push(merge(baseConfig, {
-    output: {
-      path: resolveDist()
-    },
-    module: { rules: transModuleRules },
-    plugins: [
-      new MpxWebpackPlugin(Object.assign({ mode: userSelectedMode }, mpxWebpackPluginConfig))
-    ]
-  }))
 }
 
 // 支持的平台，若后续@mpxjs/webpack-plugin支持了更多平台，补充在此即可
@@ -161,6 +100,14 @@ modeArr.forEach(item => {
     to: mainSubDir ? '..' : ''
   }]
 
+  if (config.cloudFunc === 'true') {
+    copyList.push({
+      context: resolve(`src/functions`),
+      from: '**/*',
+      to: 'functions/'
+    })
+  }
+
   if (config.needDll) {
     const localDllManifests = dllManifests.filter((manifest) => {
       return manifest.mode === item || !manifest.mode
@@ -180,14 +127,12 @@ modeArr.forEach(item => {
   }
   plugins.push(new CopyWebpackPlugin(copyList))
 
-  const rules = (config.transWeb === 'true' && item === 'web') ? transWebModuleRules : transModuleRules
-
   const webpackCrossConfig = merge(webpackMainConfig, {
     name: item + '-compiler',
     output: {
       path: resolveDist('', item)
     },
-    module: { rules },
+    module: { rules: extendRules },
     plugins
   }, item === 'web' ? {
     optimization: {
