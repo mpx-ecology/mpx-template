@@ -51,7 +51,8 @@ const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').m
 
 if (modeArr.length === 0) modeArr.push(userSelectedMode)
 
-modeArr.forEach(item => {
+// 根据目标平台生成最终的webpack配置并推入webpackConfigArr数组
+const generateWebpackConfig = (item, index, arr) => {
   const plugins = [
     new MpxWebpackPlugin(Object.assign({
       mode: item,
@@ -61,14 +62,14 @@ modeArr.forEach(item => {
   const copyList = [{
     context: resolve(`static/${item}`),
     from: '**/*',
-    to: mainSubDir ? '..' : ''
+    to: (mainSubDir || config.cloudFunc === 'true') ? '..' : ''
   }]
 
   if (config.cloudFunc === 'true') {
     copyList.push({
       context: resolve(`src/functions`),
       from: '**/*',
-      to: 'functions/'
+      to: '../functions/'
     })
   }
 
@@ -130,7 +131,7 @@ modeArr.forEach(item => {
   const webpackCrossConfig = merge(webpackMainConfig, {
     name: item + '-compiler',
     output: {
-      path: resolveDist('', item)
+      path: resolveDist('', item + (config.cloudFunc === 'true' ? '/miniprogram' : ''))
     },
     module: { rules: extendRules },
     plugins
@@ -149,7 +150,9 @@ modeArr.forEach(item => {
     ]
   } : undefined)
   webpackConfigArr.push(webpackCrossConfig)
-})
+}
+
+modeArr.forEach(generateWebpackConfig)
 
 function runWebpack (cfg) {
   // env
