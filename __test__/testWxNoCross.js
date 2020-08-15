@@ -12,4 +12,4 @@ shell.cp('testfile/wx-no-cross-meta.js', './meta.js').code !== 0 && shell.exit(1
 shell.exec('mpx init demo-wx-no-cross --offline .').code !== 0 && shell.exit(1)
 shell.exec('cd demo-wx-no-cross && npm i && npm run build').code !== 0 && shell.exit(1)
 
-checkStatic(projectFolder, {isCross: true})
+checkStatic(projectFolder)
