@@ -16,19 +16,19 @@ const checkStatic = (projectFolder, options = {mode: 'wx', isCross: false}) => {
 
   if (mode === 'wx') {
     // check exist in static folder
-    assert(!fs.existsSync(`${projectFolder}/static/wx`))
-    assert(!fs.existsSync(`${projectFolder}/static/wx/project.config.json`))
+    assert(fs.existsSync(`${projectFolder}/static/wx`))
+    assert(fs.existsSync(`${projectFolder}/static/wx/project.config.json`))
 
     // check exist in dist folder
-    assert(!fs.existsSync(`${projectFolder}/dist/wx`))
-    assert(!fs.existsSync(`${projectFolder}/dist/wx/project.config.json`))
+    assert(fs.existsSync(`${projectFolder}/dist/wx`))
+    assert(fs.existsSync(`${projectFolder}/dist/wx/project.config.json`))
 
     if (isCross) {
-      assert(!fs.existsSync(`${projectFolder}/static/ali`))
-      assert(!fs.existsSync(`${projectFolder}/static/ali/mini.project.json`))
+      assert(fs.existsSync(`${projectFolder}/static/ali`))
+      assert(fs.existsSync(`${projectFolder}/static/ali/mini.project.json`))
 
-      assert(!fs.existsSync(`${projectFolder}/dist/ali`))
-      assert(!fs.existsSync(`${projectFolder}/dist/ali/mini.project.json`))
+      assert(fs.existsSync(`${projectFolder}/dist/ali`))
+      assert(fs.existsSync(`${projectFolder}/dist/ali/mini.project.json`))
     }
   } else {
     // todo
