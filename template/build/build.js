@@ -10,8 +10,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 const mpxWebpackPluginConfig = require('../config/mpx.conf')
 const getConfig = require('../config/index')
-const getDllManifests = require('./getDllManifests')
 const webpackMainConfig = require('./webpack.conf')
+
+let getDllManifests
+let dllManifests
 
 program
   .option('-w, --watch', 'watch mode')
@@ -19,8 +21,10 @@ program
   .parse(process.argv)
 
 const config = getConfig(program.production)
-const dllManifests = getDllManifests(program.production)
-
+if (config.needDll) {
+  getDllManifests = require('./getDllManifests')
+  dllManifests = getDllManifests(program.production)
+}
 const mainSubDir = config.isPlugin === 'true' ? 'miniprogram' : ''
 
 function resolveDist (file, subPathStr = mainSubDir) {
@@ -86,20 +90,23 @@ const copyList = [
   }
 ]
 
-const localDllManifests = dllManifests.filter((manifest) => {
-  return !manifest.mode
-})
-localDllManifests.forEach((manifest) => {
-  plugins.push(new webpack.DllReferencePlugin({
-    context: config.context,
-    manifest: manifest.content
-  }))
-  copyList.push({
-    context: path.join(config.dllPath, 'lib'),
-    from: manifest.content.name,
-    to: manifest.content.name
+if (config.needDll) {
+  const localDllManifests = dllManifests.filter((manifest) => {
+    return !manifest.mode
   })
-})
+  localDllManifests.forEach((manifest) => {
+    plugins.push(new webpack.DllReferencePlugin({
+      context: config.context,
+      manifest: manifest.content
+    }))
+    copyList.push({
+      context: path.join(config.dllPath, 'lib'),
+      from: manifest.content.name,
+      to: manifest.content.name
+    })
+  })
+}
+
 plugins.push(new CopyWebpackPlugin(copyList))
 
 const webpackWxConfig = merge(webpackMainConfig, {
