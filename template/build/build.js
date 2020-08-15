@@ -39,42 +39,6 @@ const mpxLoaderConfig = config.mpxLoaderConfig
 const webpackConfigArr = []
 const userSelectedMode = 'wx'
 
-const mpxLoaderRule = config.transWeb ? {
-  test: /\.mpx$/,
-  use: [
-    {
-      loader: 'vue-loader',
-      options: {
-        transformToRequire: {
-          'mpx-image': 'src',
-          'mpx-audio': 'src',
-          'mpx-video': 'src'
-        }
-      }
-    },
-    MpxWebpackPlugin.loader(mpxLoaderConfig)
-  ]
-} : {
-  test: /\.mpx$/,
-  use: MpxWebpackPlugin.loader(mpxLoaderConfig)
-}
-
-const extendRules = config.transWeb ? [
-  {
-    test: /\.vue$/,
-    loader: 'vue-loader'
-  },
-  mpxLoaderRule,
-  {
-    test: /\.styl$/,
-    use: [
-      'style-loader',
-      'css-loader',
-      'stylus-loader'
-    ]
-  }
-] : [mpxLoaderRule]
-
 if (config.isPlugin === 'true') {
   webpackConfigArr.push(require('./webpack.plugin.conf'))
 }
@@ -126,6 +90,42 @@ modeArr.forEach(item => {
     })
   }
   plugins.push(new CopyWebpackPlugin(copyList))
+
+  const mpxLoaderRule = (config.transWeb && item === 'web') ? {
+    test: /\.mpx$/,
+    use: [
+      {
+        loader: 'vue-loader',
+        options: {
+          transformToRequire: {
+            'mpx-image': 'src',
+            'mpx-audio': 'src',
+            'mpx-video': 'src'
+          }
+        }
+      },
+      MpxWebpackPlugin.loader(mpxLoaderConfig)
+    ]
+  } : {
+    test: /\.mpx$/,
+    use: MpxWebpackPlugin.loader(mpxLoaderConfig)
+  }
+
+  const extendRules = (config.transWeb && item === 'web') ? [
+    {
+      test: /\.vue$/,
+      loader: 'vue-loader'
+    },
+    mpxLoaderRule,
+    {
+      test: /\.styl$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        'stylus-loader'
+      ]
+    }
+  ] : [mpxLoaderRule]
 
   const webpackCrossConfig = merge(webpackMainConfig, {
     name: item + '-compiler',
