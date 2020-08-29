@@ -24,9 +24,23 @@ jobs:
     - name: install global tool
       run: npm i -g @mpxjs/cli
 
-    - name: test
-      run: |
-        node __test__/testWxCrossWeb.js
-        node __test__/testWxCrossNoWeb.js
-        node __test__/testWxPlugin.js
-        node __test__/testWxNoCross.js
+    - name: test wx base and cross platform with web
+      run: node __test__/testWxCrossWeb.js
+
+    - name: test wx base and cross platform without web
+      run: node __test__/testWxCrossNoWeb.js
+
+    - name: test develop wx plugin
+      run: node __test__/testWxPlugin.js
+
+    - name: test cross platform and use dll
+      run: node __test__/testDllCross.js
+
+    - name: test no cross platform and use dll
+      run: node __test__/testDllNoCross.js
+
+    - name: test wx base and no cross platform
+      run: node __test__/testWxNoCross.js
+
+    - name: test wx base and cross platform without web
+      run: node __test__/testWxCloudNoCross.js

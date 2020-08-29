@@ -1,7 +1,7 @@
 const path = require('path')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 
-const mainSubDir = '{% if isPlugin %}miniprogram{% elif cloudFunc %}miniprogram{% endif %}'
+const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
 function resolveSrc (file) {
   return path.resolve(__dirname, '../src', mainSubDir, file || '')
 }

@@ -89,9 +89,8 @@ const copyList = [
     to: mainSubDir ? '..' : ''
   }{% if cloudFunc %},
   {
-    context: resolve(`functions`),
-    from: '**/*',
-    to: 'functions/'
+    from: path.resolve(__dirname, '../functions'),
+    to: path.resolve(__dirname, '../dist/functions')
   }{% endif %}
 ]
 {% if needDll %}

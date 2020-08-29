@@ -111,6 +111,7 @@
     "webpack": "^4.16.1",
     "webpack-cli": "^3.1.0",
     "webpack-merge": "^4.1.2",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack-bundle-analyzer": "^3.3.2",
+    "commander": "^6.0.0"
   }
 }
