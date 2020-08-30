@@ -2,7 +2,7 @@ const devEnv = require('./dev.env')
 const prodEnv = require('./prod.env')
 const path = require('path')
 
-const mainSubDir = '{% if isPlugin %}miniprogram{% endif %}'
+const mainSubDir = '{% if isPlugin %}miniprogram{% elif cloudFunc %}miniprogram{% endif %}'
 
 // mpx的loader配置在这里传入
 // 配置项文档：https://www.mpxjs.cn/api/compile.html#mpxwebpackplugin-loader
