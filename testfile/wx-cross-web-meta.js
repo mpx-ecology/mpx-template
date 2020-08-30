@@ -5,6 +5,7 @@ module.exports = {
     mode: 'wx',
     cross: true,
     transWeb: true,
+    cloudFunc: false,
     isPlugin: false,
     needEslint: true,
     babel7Support: true,

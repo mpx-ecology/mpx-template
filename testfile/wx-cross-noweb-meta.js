@@ -6,6 +6,7 @@ module.exports = {
     cross: true,
     transWeb: false,
     isPlugin: false,
+    cloudFunc: false,
     needEslint: true,
     babel7Support: true,
     needUnitTest: true
