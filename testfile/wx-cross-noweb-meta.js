@@ -9,7 +9,9 @@ module.exports = {
     cloudFunc: false,
     needEslint: true,
     babel7Support: true,
-    needUnitTest: true
+    needUnitTest: true,
+    needDll: true,
+    tsSupport: false
   },
   ...realMeta
 }
