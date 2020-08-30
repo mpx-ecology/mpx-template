@@ -109,11 +109,14 @@ module.exports = {
     }
   },
   filters: {
-    'src/@(miniprogram|plugin)/**/*': 'isPlugin',
+    'src/@(miniprogram)/**/*': 'isPlugin || cloudFunc',
+    'src/@(plugin)/**/*': 'isPlugin',
+    'src/@(functions)/**/*': 'cloudFunc',
     'build/webpack.plugin.conf.js': 'isPlugin',
     'src/index.html': 'transWeb',
     'src/!(miniprogram|plugin)/**/*': 'mode !== "wx" || !isPlugin',
-    'src/*': 'mode !== "wx" || !isPlugin',
+    'src/!(miniprogram|functions)/**/*': 'mode !== "wx" || !cloudFunc',
+    'src/*': 'mode !== "wx" || (!isPlugin && !cloudFunc)',
     'static/wx/*': 'mode === "wx"',
     'static/ali/*': 'cross',
     'tsconfig.json': 'tsSupport',
