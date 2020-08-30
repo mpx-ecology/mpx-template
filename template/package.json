@@ -106,8 +106,8 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "url-loader": "^1.0.1",
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
     "webpack-merge": "^4.1.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "commander": "^6.0.0"
