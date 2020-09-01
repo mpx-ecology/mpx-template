@@ -13,13 +13,13 @@
   {
     "pages": [
       "./pages/index"
-    ],
+    ]{% if isPlugin %},
     "plugins": {
       "myPlugin": {
         "version": "dev",
         "provider": "<$ appid $>"
       }
-    }
+    }{% endif %}
   }
 </script>
 

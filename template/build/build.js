@@ -5,39 +5,89 @@ const chalk = require('chalk')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const program = require('commander')
-{% if transWeb %}
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-{% endif %}
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-const mpxWebpackPluginConfig = require('./mpx.plugin.conf')
-const getConfig = require('../config/index')
-{% if needDll %}
-const getDllManifests = require('./getDllManifests')
-{% endif %}
+const mpxWebpackPluginConfig = require('../config/mpx.conf')
+const config = require('../config/index')
+const webpackMainConfig = require('./webpack.conf')
 
-let webpackMainConfig = require('./webpack.conf')
+let getDllManifests
+let dllManifests
 
-const mainSubDir = '{% if isPlugin %}miniprogram{% elif cloudFunc %}miniprogram{% endif %}'
-function resolveDist (file, subPathStr = mainSubDir) {
-  return path.resolve(__dirname, '../dist', subPathStr, file || '')
+program
+  .option('-w, --watch', 'watch mode')
+  .option('-p, --production', 'production release')
+  .parse(process.argv)
+
+const basicConfig = config.basicConf
+if (basicConfig.needDll) {
+  getDllManifests = require('./getDllManifests')
+  dllManifests = getDllManifests(program.production)
 }
-function resolve (file) {
-  return path.resolve(__dirname, '..', file || '')
-}
+
+const mainSubDir = config.mainSubDir
+const resolveDist = config.resolveDist
+const resolve = config.resolve
+const mpxLoaderConfig = config.mpxLoaderConfig
 
 const webpackConfigArr = []
-const userSelectedMode = '<$ mode $>'
+const userSelectedMode = 'wx'
 
-const mpxLoaderConfig = {}
+if (basicConfig.isPlugin === 'true') {
+  webpackConfigArr.push(require('./webpack.plugin.conf'))
+}
 
-{% if transWeb %}
-const transWebModuleRules = [
-  {
-    test: /\.vue$/,
-    loader: 'vue-loader'
-  },
-  {
+// 支持的平台，若后续@mpxjs/webpack-plugin支持了更多平台，补充在此即可
+const supportedCrossMode = config.supportedModes
+// 提供npm argv找到期望构建的平台，必须在上面支持的平台列表里
+const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
+const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
+
+if (modeArr.length === 0) modeArr.push(userSelectedMode)
+
+// 根据目标平台生成最终的webpack配置并推入webpackConfigArr数组
+const generateWebpackConfig = (item, index, arr) => {
+  const plugins = [
+    new MpxWebpackPlugin(Object.assign({
+      mode: item,
+      srcMode: userSelectedMode
+    }, mpxWebpackPluginConfig))
+  ]
+  const copyList = [{
+    context: resolve(`static/${item}`),
+    from: '**/*',
+    to: mainSubDir ? '..' : ''
+  }]
+
+  if (basicConfig.cloudFunc === 'true') {
+    copyList.push({
+      context: resolve(`src/functions`),
+      from: '**/*',
+      to: '../functions/'
+    })
+  }
+
+  if (basicConfig.needDll) {
+    const localDllManifests = dllManifests.filter((manifest) => {
+      return manifest.mode === item || !manifest.mode
+    })
+
+    localDllManifests.forEach((manifest) => {
+      plugins.push(new webpack.DllReferencePlugin({
+        context: config.context,
+        manifest: manifest.content
+      }))
+      copyList.push({
+        context: path.join(config.dllPath, 'lib'),
+        from: manifest.content.name,
+        to: manifest.content.name
+      })
+    })
+  }
+  plugins.push(new CopyWebpackPlugin(copyList))
+
+  const mpxLoaderRule = (basicConfig.transWeb && item === 'web') ? {
     test: /\.mpx$/,
     use: [
       {
@@ -52,142 +102,35 @@ const transWebModuleRules = [
       },
       MpxWebpackPlugin.loader(mpxLoaderConfig)
     ]
-  },
-  {
-    test: /\.styl$/,
-    use: [
-      'style-loader',
-      'css-loader',
-      'stylus-loader'
-    ]
-  }
-]
-
-{% endif %}
-const transModuleRules = [
-  {
+  } : {
     test: /\.mpx$/,
     use: MpxWebpackPlugin.loader(mpxLoaderConfig)
   }
-]
 
-program
-  .option('-w, --watch', 'watch mode')
-  .option('-p, --production', 'production release')
-  .parse(process.argv)
-
-const config = getConfig(program.production)
-{% if needDll %}
-const dllManifests = getDllManifests(program.production)
-{% endif %}
-
-{% if mode === 'wx' and not cross %}
-const plugins = []
-const copyList = [
-  {
-    from: resolve('project.config.json'),
-    to: mainSubDir ? '..' : ''
-  }{% if cloudFunc %},
-  {
-    from: path.resolve(__dirname, '../functions'),
-    to: path.resolve(__dirname, '../dist/functions')
-  }{% endif %}
-]
-{% if needDll %}
-const localDllManifests = dllManifests.filter((manifest) => {
-  return !manifest.mode
-})
-localDllManifests.forEach((manifest) => {
-  plugins.push(new webpack.DllReferencePlugin({
-    context: config.context,
-    manifest: manifest.content
-  }))
-  copyList.push({
-    context: path.join(config.dllPath, 'lib'),
-    from: manifest.content.name,
-    to: manifest.content.name
-  })
-})
-{% endif %}
-plugins.push(new CopyWebpackPlugin(copyList))
-
-const webpackWxConfig = merge(webpackMainConfig, {
-  plugins
-})
-
-{% endif %}
-{% if isPlugin %}
-webpackConfigArr.push(require('./webpack.plugin.conf'))
-
-webpackConfigArr.push(merge(userSelectedMode === 'wx' ? webpackWxConfig : webpackMainConfig, {
-  name: 'main-compiler',
-  output: {
-    path: resolveDist()
-  },
-  module: { rules: transModuleRules },
-  plugins: [
-    new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
-  ]
-}))
-
-{% elif not cross %}
-webpackConfigArr.push(merge({% if mode === 'wx' %}webpackWxConfig{% else %}webpackMainConfig{% endif %}, {
-  output: {
-    path: resolveDist()
-  },
-  module: { rules: transModuleRules },
-  plugins: [
-    new MpxWebpackPlugin(Object.assign({mode: userSelectedMode}, mpxWebpackPluginConfig))
-  ]
-}))
-{% else %}
-// 支持的平台，若后续@mpxjs/webpack-plugin支持了更多平台，补充在此即可
-const supportedCrossMode = config.supportedModes
-// 提供npm argv找到期望构建的平台，必须在上面支持的平台列表里
-const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
-const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedCrossMode.includes(item))
-
-if (modeArr.length === 0) modeArr.push(userSelectedMode)
-
-modeArr.forEach(item => {
-  const plugins = [
-    new MpxWebpackPlugin(Object.assign({
-      mode: item,
-      srcMode: userSelectedMode
-    }, mpxWebpackPluginConfig))
-  ]
-  const copyList = [{
-    context: resolve(`static/${item}`),
-    from: '**/*',
-    to: mainSubDir ? '..' : ''
-  }]
-  {% if needDll %}
-  const localDllManifests = dllManifests.filter((manifest) => {
-    return manifest.mode === item || !manifest.mode
-  })
-
-  localDllManifests.forEach((manifest) => {
-    plugins.push(new webpack.DllReferencePlugin({
-      context: config.context,
-      manifest: manifest.content
-    }))
-    copyList.push({
-      context: path.join(config.dllPath, 'lib'),
-      from: manifest.content.name,
-      to: manifest.content.name
-    })
-  })
-  {% endif %}
-  plugins.push(new CopyWebpackPlugin(copyList))
+  const extendRules = (basicConfig.transWeb && item === 'web') ? [
+    {
+      test: /\.vue$/,
+      loader: 'vue-loader'
+    },
+    mpxLoaderRule,
+    {
+      test: /\.styl$/,
+      use: [
+        'style-loader',
+        'css-loader',
+        'stylus-loader'
+      ]
+    }
+  ] : [mpxLoaderRule]
 
   const webpackCrossConfig = merge(webpackMainConfig, {
     name: item + '-compiler',
     output: {
-      path: resolveDist('', item)
+      path: resolveDist(item)
     },
-    module: { rules: {% if transWeb %}item === 'web' ? transWebModuleRules : transModuleRules{% else %}transModuleRules{% endif %} },
+    module: { rules: extendRules },
     plugins
-  }{% if transWeb %}, item === 'web' ? {
+  }, item === 'web' ? {
     optimization: {
       usedExports: true,
       sideEffects: true,
@@ -200,25 +143,31 @@ modeArr.forEach(item => {
         inject: true
       })
     ]
-  } : undefined{% endif %})
+  } : undefined)
   webpackConfigArr.push(webpackCrossConfig)
-})
-{% endif %}
+}
+
+modeArr.forEach(generateWebpackConfig)
 
 function runWebpack (cfg) {
   // env
   if (Array.isArray(cfg)) {
-    cfg.forEach(item => item.plugins.unshift(new webpack.DefinePlugin(config.env)))
+    cfg.forEach(item => item.plugins.unshift(new webpack.DefinePlugin(config.getEnv(program.production))))
   } else {
-    cfg.plugins.unshift(new webpack.DefinePlugin(config.env))
+    cfg.plugins.unshift(new webpack.DefinePlugin(config.getEnv(program.production)))
   }
 
   // production mode set mode be 'production' for webpack
   // watch mode set cache be true for webpack
   if (program.production || program.watch) {
     const extendCfg = {}
-    if (program.production) { extendCfg.mode = 'production' }
-    if (program.watch){ extendCfg.cache = true }
+    if (program.production) {
+      extendCfg.mode = 'production'
+    }
+    if (program.watch){
+      extendCfg.cache = true
+      extendCfg.devtool = 'source-map' // 仅在watch模式下生产sourcemap
+    }
 
     if (Array.isArray(cfg)) {
       cfg = cfg.map(item => merge(item, extendCfg))
@@ -227,8 +176,8 @@ function runWebpack (cfg) {
     }
   }
   if (process.env.npm_config_report) {
-    var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-    var mainCfg = Array.isArray(cfg) ? cfg[0] : cfg
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+    const mainCfg = Array.isArray(cfg) ? cfg[0] : cfg
     mainCfg.plugins.push(new BundleAnalyzerPlugin())
   }
   if (program.watch) {
@@ -246,28 +195,15 @@ function callback (err, stats) {
     }
     return console.error(err)
   }
-  if (Array.isArray(stats.stats)) {
-    stats.stats.forEach(item => {
-      console.log(item.compilation.name + '打包结果：')
-      process.stdout.write(item.toString({
-        colors: true,
-        modules: false,
-        children: false,
-        chunks: false,
-        chunkModules: false,
-        entrypoints: false
-      }) + '\n\n')
-    })
-  } else {
-    process.stdout.write(stats.toString({
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false,
-      entrypoints: false
-    }) + '\n\n')
-  }
+
+  process.stdout.write(stats.toString({
+    colors: true,
+    modules: false,
+    children: false,
+    chunks: false,
+    chunkModules: false,
+    entrypoints: false
+  }) + '\n\n')
 
   if (!program.watch && stats.hasErrors()) {
     console.log(chalk.red('  Build failed with errors.\n'))
@@ -286,13 +222,9 @@ const spinner = ora('building...')
 spinner.start()
 
 try {
-  {% if cross %}
   modeArr.forEach(item => {
     rm.sync(path.resolve(__dirname, `../dist/${item}/*`))
   })
-  {% else %}
-  rm.sync(path.resolve(__dirname, `../dist/*`))
-  {% endif %}
 } catch (e) {
   console.error(e)
   console.log('\n\n删除dist文件夹遇到了一些问题，如果遇到问题请手工删除dist重来\n\n')

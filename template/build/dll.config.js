@@ -1,6 +1,6 @@
 const path = require('path')
-const getConfig = require('../config')
-const context = getConfig(true).context
+const config = require('../config')
+const context = config.context
 
 module.exports = [
   {

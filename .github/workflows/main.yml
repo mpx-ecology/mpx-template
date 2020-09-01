@@ -42,5 +42,5 @@ jobs:
     - name: test wx base and no cross platform
       run: node __test__/testWxNoCross.js
 
-    - name: test wx base and cross platform without web
+    - name: test wx base and use cloud function
       run: node __test__/testWxCloudNoCross.js

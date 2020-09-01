@@ -6,8 +6,7 @@ const chalk = require('chalk')
 const merge = require('webpack-merge')
 const getDllEntries = require('./getDllEntries')
 const dllConfigs = normalizeArr(require('./dll.config'))
-const getConfig = require('../config/index')
-const config = getConfig(true)
+const config = require('../config/index')
 
 function normalizeArr (arrCfg) {
   if (Array.isArray(arrCfg) && arrCfg.length) {
