@@ -120,7 +120,6 @@ module.exports = {
     'static/wx/*': 'mode === "wx"',
     'static/ali/*': 'cross',
     'tsconfig.json': 'tsSupport',
-    '.eslintrc.js': 'needEslint',
     '**/*.ts': 'tsSupport',
     '.babelrc': '!babel7Support',
     'babel.config.json': 'babel7Support',
