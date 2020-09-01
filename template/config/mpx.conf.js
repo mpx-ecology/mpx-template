@@ -1,8 +1,5 @@
-const path = require('path')
-
-function resolve (dir = '') {
-  return path.join(__dirname, '..', dir)
-}
+const config = require('../config/index')
+const resolve = config.resolve
 
 // 可以在此配置mpx webpack plugin，会assign进build.js里new创建plugin的config里
 // 配置项文档： https://www.mpxjs.cn/api/compile.html#mpxwebpackplugin-options
@@ -40,10 +37,8 @@ module.exports = {
     },
   ],
 
-  {% if needUnitTest %}
   // 是否生成用于测试的源文件/dist的映射表
-  generateBuildMap: true,
-  {% endif %}
+  generateBuildMap: config.basicConf.needUnitTest,
 
   // 多语言i18n能力 以下是简单示例，更多详情请参考文档：https://didi.github.io/mpx/i18n.html
   // i18n: {

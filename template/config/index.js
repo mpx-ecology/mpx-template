@@ -2,8 +2,6 @@ const devEnv = require('./dev.env')
 const prodEnv = require('./prod.env')
 const path = require('path')
 
-const mainSubDir = (config.isPlugin === 'true' || config.cloudFunc === 'true') ? 'miniprogram' : ''
-
 // mpx的loader配置在这里传入
 // 配置项文档：https://www.mpxjs.cn/api/compile.html#mpxwebpackplugin-loader
 const mpxLoaderConfig = {}
@@ -24,21 +22,30 @@ const basicConf = {
   needUnitTest: '<$ needUnitTest $>'
 }
 
+// 小程序主入口所在目录，插件模式和云开发会在src/miniprogram下面
+const mainSubDir = (basicConf.isPlugin === 'true' || basicConf.cloudFunc === 'true') ? 'miniprogram' : ''
+
 function resolveSrc (file) {
   return path.resolve(__dirname, '../src', mainSubDir, file || '')
+}
+
+function resolveDist (platform, subPathStr = mainSubDir) {
+  return path.resolve(__dirname, '../dist', platform, subPathStr, '')
 }
 
 function resolve (file) {
   return path.resolve(__dirname, '..', file || '')
 }
 
-module.exports = function getConfig (isProduction) {
-  return {
-    ...basicConf,
-    mpxLoaderConfig,
-    context: resolveSrc(),
-    dllPath: resolve('dll'),
-    env: isProduction ? prodEnv : devEnv,
-    supportedModes:['wx', 'ali', 'swan', 'qq', 'tt', 'web']
-  }
+module.exports = {
+  basicConf,
+  mainSubDir,
+  mpxLoaderConfig,
+  context: resolveSrc(),
+  resolveSrc,
+  resolveDist,
+  resolve,
+  dllPath: resolve('dll'),
+  getEnv: (isProduction) => { return isProduction ? prodEnv : devEnv },
+  supportedModes: ['wx', 'ali', 'swan', 'qq', 'tt', 'web']
 }

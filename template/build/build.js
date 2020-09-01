@@ -9,7 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 const mpxWebpackPluginConfig = require('../config/mpx.conf')
-const getConfig = require('../config/index')
+const config = require('../config/index')
 const webpackMainConfig = require('./webpack.conf')
 
 let getDllManifests
@@ -20,26 +20,21 @@ program
   .option('-p, --production', 'production release')
   .parse(process.argv)
 
-const config = getConfig(program.production)
-if (config.needDll) {
+const basicConfig = config.basicConf
+if (basicConfig.needDll) {
   getDllManifests = require('./getDllManifests')
   dllManifests = getDllManifests(program.production)
 }
-const mainSubDir = (config.isPlugin === 'true' || config.cloudFunc === 'true') ? 'miniprogram' : ''
 
-function resolveDist (platform, subPathStr = mainSubDir) {
-  return path.resolve(__dirname, '../dist', platform, subPathStr, '')
-}
-function resolve (file) {
-  return path.resolve(__dirname, '..', file || '')
-}
-
+const mainSubDir = config.mainSubDir
+const resolveDist = config.resolveDist
+const resolve = config.resolve
 const mpxLoaderConfig = config.mpxLoaderConfig
 
 const webpackConfigArr = []
 const userSelectedMode = 'wx'
 
-if (config.isPlugin === 'true') {
+if (basicConfig.isPlugin === 'true') {
   webpackConfigArr.push(require('./webpack.plugin.conf'))
 }
 
@@ -62,10 +57,10 @@ const generateWebpackConfig = (item, index, arr) => {
   const copyList = [{
     context: resolve(`static/${item}`),
     from: '**/*',
-    to: (mainSubDir || config.cloudFunc === 'true') ? '..' : ''
+    to: mainSubDir ? '..' : ''
   }]
 
-  if (config.cloudFunc === 'true') {
+  if (basicConfig.cloudFunc === 'true') {
     copyList.push({
       context: resolve(`src/functions`),
       from: '**/*',
@@ -73,7 +68,7 @@ const generateWebpackConfig = (item, index, arr) => {
     })
   }
 
-  if (config.needDll) {
+  if (basicConfig.needDll) {
     const localDllManifests = dllManifests.filter((manifest) => {
       return manifest.mode === item || !manifest.mode
     })
@@ -92,7 +87,7 @@ const generateWebpackConfig = (item, index, arr) => {
   }
   plugins.push(new CopyWebpackPlugin(copyList))
 
-  const mpxLoaderRule = (config.transWeb && item === 'web') ? {
+  const mpxLoaderRule = (basicConfig.transWeb && item === 'web') ? {
     test: /\.mpx$/,
     use: [
       {
@@ -112,7 +107,7 @@ const generateWebpackConfig = (item, index, arr) => {
     use: MpxWebpackPlugin.loader(mpxLoaderConfig)
   }
 
-  const extendRules = (config.transWeb && item === 'web') ? [
+  const extendRules = (basicConfig.transWeb && item === 'web') ? [
     {
       test: /\.vue$/,
       loader: 'vue-loader'
@@ -157,9 +152,9 @@ modeArr.forEach(generateWebpackConfig)
 function runWebpack (cfg) {
   // env
   if (Array.isArray(cfg)) {
-    cfg.forEach(item => item.plugins.unshift(new webpack.DefinePlugin(config.env)))
+    cfg.forEach(item => item.plugins.unshift(new webpack.DefinePlugin(config.getEnv(program.production))))
   } else {
-    cfg.plugins.unshift(new webpack.DefinePlugin(config.env))
+    cfg.plugins.unshift(new webpack.DefinePlugin(config.getEnv(program.production)))
   }
 
   // production mode set mode be 'production' for webpack
