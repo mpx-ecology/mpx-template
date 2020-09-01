@@ -161,8 +161,13 @@ function runWebpack (cfg) {
   // watch mode set cache be true for webpack
   if (program.production || program.watch) {
     const extendCfg = {}
-    if (program.production) { extendCfg.mode = 'production' }
-    if (program.watch){ extendCfg.cache = true }
+    if (program.production) {
+      extendCfg.mode = 'production'
+    }
+    if (program.watch){
+      extendCfg.cache = true
+      extendCfg.devtool = 'source-map' // 仅在watch模式下生产sourcemap
+    }
 
     if (Array.isArray(cfg)) {
       cfg = cfg.map(item => merge(item, extendCfg))
