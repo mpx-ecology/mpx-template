@@ -1,9 +1,8 @@
 const fs = require('fs')
-const getConfig = require('../config/index')
 const path = require('path')
+const config = require('../config/index')
 
-module.exports = function getDllManifests (isProduction) {
-  const config = getConfig(isProduction)
+module.exports = function getDllManifests () {
   const supportedModes = config.supportedModes
   const result = []
   if (fs.existsSync(config.dllPath)) {
