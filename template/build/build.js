@@ -21,7 +21,7 @@ program
   .parse(process.argv)
 
 const basicConfig = config.basicConf
-if (basicConfig.needDll) {
+if (basicConfig.needDll === 'true') {
   getDllManifests = require('./getDllManifests')
   dllManifests = getDllManifests(program.production)
 }
