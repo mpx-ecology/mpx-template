@@ -68,7 +68,7 @@ const generateWebpackConfig = (item, index, arr) => {
     })
   }
 
-  if (basicConfig.needDll) {
+  if (basicConfig.needDll === 'true') {
     const localDllManifests = dllManifests.filter((manifest) => {
       return manifest.mode === item || !manifest.mode
     })
@@ -87,7 +87,7 @@ const generateWebpackConfig = (item, index, arr) => {
   }
   plugins.push(new CopyWebpackPlugin(copyList))
 
-  const mpxLoaderRule = (basicConfig.transWeb && item === 'web') ? {
+  const mpxLoaderRule = (basicConfig.transWeb === 'true' && item === 'web') ? {
     test: /\.mpx$/,
     use: [
       {
@@ -107,7 +107,7 @@ const generateWebpackConfig = (item, index, arr) => {
     use: MpxWebpackPlugin.loader(mpxLoaderConfig)
   }
 
-  const extendRules = (basicConfig.transWeb && item === 'web') ? [
+  const extendRules = (basicConfig.transWeb === 'true' && item === 'web') ? [
     {
       test: /\.vue$/,
       loader: 'vue-loader'
