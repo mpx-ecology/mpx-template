@@ -196,14 +196,28 @@ function callback (err, stats) {
     return console.error(err)
   }
 
-  process.stdout.write(stats.toString({
-    colors: true,
-    modules: false,
-    children: false,
-    chunks: false,
-    chunkModules: false,
-    entrypoints: false
-  }) + '\n\n')
+  if (Array.isArray(stats.stats)) {
+    stats.stats.forEach(item => {
+      console.log(item.compilation.name + '打包结果：')
+      process.stdout.write(item.toString({
+        colors: true,
+        modules: false,
+        children: false,
+        chunks: false,
+        chunkModules: false,
+        entrypoints: false
+      }) + '\n\n')
+    })
+  } else {
+    process.stdout.write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false,
+      entrypoints: false
+    }) + '\n\n')
+  }
 
   if (!program.watch && stats.hasErrors()) {
     console.log(chalk.red('  Build failed with errors.\n'))
