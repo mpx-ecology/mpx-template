@@ -23,7 +23,7 @@ const basicConf = {
 }
 
 // 小程序主入口所在目录，插件模式和云开发会在src/miniprogram下面
-const mainSubDir = (basicConf.isPlugin === 'true' || basicConf.cloudFunc === 'true') ? 'miniprogram' : ''
+const mainSubDir = (basicConf.isPlugin || basicConf.cloudFunc) ? 'miniprogram' : ''
 
 function resolveSrc (file) {
   return path.resolve(__dirname, '../src', mainSubDir, file || '')
