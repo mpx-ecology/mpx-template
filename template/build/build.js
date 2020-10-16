@@ -21,7 +21,7 @@ program
   .parse(process.argv)
 
 const basicConfig = config.basicConf
-if (basicConfig.needDll === 'true') {
+if (basicConfig.needDll) {
   getDllManifests = require('./getDllManifests')
   dllManifests = getDllManifests(program.production)
 }
@@ -34,7 +34,7 @@ const mpxLoaderConfig = config.mpxLoaderConfig
 const webpackConfigArr = []
 const userSelectedMode = 'wx'
 
-if (basicConfig.isPlugin === 'true') {
+if (basicConfig.isPlugin) {
   webpackConfigArr.push(require('./webpack.plugin.conf'))
 }
 
@@ -60,7 +60,7 @@ const generateWebpackConfig = (item, index, arr) => {
     to: mainSubDir ? '..' : ''
   }]
 
-  if (basicConfig.cloudFunc === 'true') {
+  if (basicConfig.cloudFunc) {
     copyList.push({
       context: resolve(`src/functions`),
       from: '**/*',
@@ -68,7 +68,7 @@ const generateWebpackConfig = (item, index, arr) => {
     })
   }
 
-  if (basicConfig.needDll === 'true') {
+  if (basicConfig.needDll) {
     const localDllManifests = dllManifests.filter((manifest) => {
       return manifest.mode === item || !manifest.mode
     })
@@ -87,7 +87,7 @@ const generateWebpackConfig = (item, index, arr) => {
   }
   plugins.push(new CopyWebpackPlugin(copyList))
 
-  const mpxLoaderRule = (basicConfig.transWeb === 'true' && item === 'web') ? {
+  const mpxLoaderRule = (basicConfig.transWeb && item === 'web') ? {
     test: /\.mpx$/,
     use: [
       {
@@ -107,7 +107,7 @@ const generateWebpackConfig = (item, index, arr) => {
     use: MpxWebpackPlugin.loader(mpxLoaderConfig)
   }
 
-  const extendRules = (basicConfig.transWeb === 'true' && item === 'web') ? [
+  const extendRules = (basicConfig.transWeb && item === 'web') ? [
     {
       test: /\.vue$/,
       loader: 'vue-loader'
