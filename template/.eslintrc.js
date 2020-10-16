@@ -17,6 +17,9 @@ module.exports = {
     App: true,
     __mpx_mode__: true
   },
+  rules: {
+    camelcase: ['error', { 'allow': ['__mpx_mode__'] }]
+  },
   {% if tsSupport %}
   overrides: [
     {
