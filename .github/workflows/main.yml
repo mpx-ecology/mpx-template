@@ -18,8 +18,12 @@ jobs:
         with:
           # The Node.js version to configure
           node-version: ${{ matrix.node }}
+
       - name: install deps
         run: npm i
+
+      - name: install global tool
+        run: npm i -g @mpxjs/cli
 
       - name: test basic project
         run: node __test__/test-basic.js
