@@ -19,7 +19,7 @@ jobs:
           # The Node.js version to configure
           node-version: ${{ matrix.node }}
       - name: install deps
-        run: npm ci
+        run: npm i
 
       - name: test basic project
         run: node __test__/test-basic.js

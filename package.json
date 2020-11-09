@@ -4,7 +4,7 @@
   "description": "mpx template repo",
   "main": "meta.js",
   "devDependencies": {
-    "@mpxjs/cli": "^2.5.30",
+    "@mpxjs/cli": "^2.6.32",
     "shelljs": "^0.8.3"
   },
   "scripts": {
