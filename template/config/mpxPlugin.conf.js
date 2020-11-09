@@ -1,14 +1,14 @@
-const config = require('../config/index')
-const resolve = config.resolve
+const userConf = require('./user.conf')
+const resolve = require('../build/utils').resolve
 
-// 可以在此配置mpx webpack plugin，会assign进build.js里new创建plugin的config里
+// 可以在此配置mpx webpack plugin
 // 配置项文档： https://www.mpxjs.cn/api/compile.html#mpxwebpackplugin-options
 module.exports = {
   // resolve的模式
   resolveMode: 'webpack', // 可选值 webpack / native，默认是webpack，原生迁移建议使用native
 
   // 当resolveMode为native时可通过该字段指定项目根目录
-  // projectRoot: path.resolve(__dirname, '../src'),
+  // projectRoot: resolve('src'),
 
   // 可选值 full / changed，不传默认为change，当设置为changed时在watch模式下将只会对内容发生变化的文件进行写入，以提升小程序开发者工具编译性能
   writeMode: 'changed',
@@ -38,7 +38,7 @@ module.exports = {
   ],
 
   // 是否生成用于测试的源文件/dist的映射表
-  generateBuildMap: config.basicConf.needUnitTest,
+  generateBuildMap: userConf.needUnitTest,
 
   // 多语言i18n能力 以下是简单示例，更多详情请参考文档：https://didi.github.io/mpx/i18n.html
   // i18n: {

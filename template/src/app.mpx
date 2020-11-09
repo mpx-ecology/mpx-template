@@ -6,7 +6,7 @@
   import apiProxy from '@mpxjs/api-proxy'
 
   mpx.use(apiProxy, { usePromise: true })
-  // app.js
+
   createApp({
     onLaunch () {
     }
@@ -15,7 +15,7 @@
 {% endif %}
 
 <style>
-
+  /*此处编写全局样式*/
 </style>
 
 <script type="application/json">

@@ -4,7 +4,7 @@
   "description": "mpx template repo",
   "main": "meta.js",
   "devDependencies": {
-    "bdd-stdin": "^0.2.0",
+    "@mpxjs/cli": "^2.5.30",
     "shelljs": "^0.8.3"
   },
   "scripts": {

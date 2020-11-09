@@ -1,4 +1,6 @@
-module.exports = {
+const { userConf } = require('./config/index')
+
+const eslintConf = {
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
@@ -19,9 +21,10 @@ module.exports = {
   },
   rules: {
     camelcase: ['error', { 'allow': ['__mpx_mode__'] }]
-  },
-  {% if tsSupport %}
-  overrides: [
+  }
+}
+if (userConf.tsSupport) {
+  eslintConf.overrides = [
     {
       files: ['**/*.ts'],
       parser: '@typescript-eslint/parser',
@@ -32,6 +35,7 @@ module.exports = {
       ],
       plugins: ['@typescript-eslint'],
     },
-  ],
-  {% endif %}
+  ]
 }
+
+module.exports = eslintConf

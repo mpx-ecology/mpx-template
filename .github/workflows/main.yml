@@ -13,37 +13,34 @@ jobs:
         node: [10, 12, 14]
 
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        # The Node.js version to configure
-        node-version: ${{ matrix.node }}
-    - name: install deps
-      run: npm ci
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          # The Node.js version to configure
+          node-version: ${{ matrix.node }}
+      - name: install deps
+        run: npm ci
 
-    - name: install global tool
-      run: npm i -g @mpxjs/cli
+      - name: test basic project
+        run: node __test__/test-basic.js
 
-    - name: test basic wx project
-      run: node __test__/testWxBasic.js
+      - name: test cross project
+        run: node __test__/test-cross.js
 
-    - name: test wx base and cross platform with web
-      run: node __test__/testWxCrossWeb.js
+      - name: test cross web project
+        run: node __test__/test-cross-web.js
 
-    - name: test wx base and cross platform without web
-      run: node __test__/testWxCrossNoWeb.js
+      - name: test plugin project
+        run: node __test__/test-plugin.js
 
-    - name: test develop wx plugin
-      run: node __test__/testWxPlugin.js
+      - name: test cloud project
+        run: node __test__/test-cloud.js
 
-    - name: test cross platform and use dll
-      run: node __test__/testDllCross.js
+      - name: test ts project
+        run: node __test__/test-ts.js
 
-    - name: test no cross platform and use dll
-      run: node __test__/testDllNoCross.js
+      - name: test dll project
+        run: node __test__/test-dll.js
 
-    - name: test wx base and no cross platform
-      run: node __test__/testWxNoCross.js
-
-    - name: test wx base and use cloud function
-      run: node __test__/testWxCloudNoCross.js
+      - name: test dll cross project
+        run: node __test__/test-dll-cross.js

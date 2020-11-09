@@ -4,16 +4,16 @@
   </view>
 </template>
 
+{% if tsSupport %}
+<script lang="ts" src="./index.ts"></script>
+{% else %}
 <script>
   import { createPage } from '@mpxjs/core'
-
   createPage({
     onLoad () {}
   })
 </script>
-
-<style>
-</style>
+{% endif %}
 
 <script type="application/json">
   {

@@ -5,6 +5,5 @@ mpx.use(apiProxy, { usePromise: true })
 
 createApp({
   onLaunch () {
-    // onLaunch
   }
 })

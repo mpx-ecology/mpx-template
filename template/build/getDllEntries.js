@@ -1,17 +1,11 @@
 const path = require('path')
-
-function normalizeArr (arrCfg) {
-  if (Array.isArray(arrCfg) && arrCfg.length) {
-    return arrCfg
-  } else if (arrCfg) {
-    return [arrCfg]
-  }
-}
+const { normalizeArr } = require('./utils')
 
 module.exports = function getEntries (cacheGroups, modes) {
   const entries = {}
   let count = 0
-  modes = normalizeArr(modes) || ['']
+  modes = normalizeArr(modes)
+  if (modes.length === 0) modes = ['']
   cacheGroups = normalizeArr(cacheGroups)
   if (cacheGroups) {
     cacheGroups.forEach((cacheGroup) => {
