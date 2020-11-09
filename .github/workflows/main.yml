@@ -22,7 +22,7 @@ jobs:
       - name: install deps
         run: npm i
 
-      - name: install global tool
+      - name: install mpx cli
         run: npm i -g @mpxjs/cli
 
       - name: test basic project
