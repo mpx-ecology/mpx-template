@@ -137,6 +137,7 @@ module.exports = {
     console.log(green('complete!'))
   },
   getMockData: function (mockList) {
+    if (!mockList) return
     const mockData = {
       mode: 'wx',
       cross: false,
@@ -149,7 +150,7 @@ module.exports = {
       needDll: false,
       tsSupport: false
     }
-    if (mockList && mockList.length) {
+    if (mockList.length) {
       mockList.forEach((item) => {
         if (mockData.hasOwnProperty(item) && item !== 'mode') {
           mockData[item] = true
