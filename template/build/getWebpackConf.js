@@ -5,23 +5,23 @@ const getPlugins = require('./getPlugins')
 const { resolveSrc, resolveDist } = require('./utils')
 
 module.exports = function getWebpackConfs (options) {
-  const { plugin, subDir, mode } = options
+  const { plugin, subDir, mode, production, watch } = options
   const entry = plugin ? {
     plugin: resolveSrc('plugin.json', subDir)
   } : {
     app: resolveSrc('app.mpx', subDir)
   }
   const output = {
-    path: resolveDist(options.mode, subDir)
+    path: resolveDist(mode, subDir)
   }
   const name = plugin ? 'plugin-compiler' : `${mode}-compiler`
   const rules = getRules(options)
   const plugins = getPlugins(options)
   const extendConfs = {}
-  if (options.production) {
+  if (production) {
     extendConfs.mode = 'production'
   }
-  if (options.watch) {
+  if (watch) {
     extendConfs.cache = true
     extendConfs.devtool = 'source-map' // 仅在watch模式下生产sourcemap
   }
