@@ -21,12 +21,21 @@ module.exports = function getRules (options) {
     mode,
     srcMode
   })))
-
-  const copyList = [{
-    context: resolve(`static/${mode}`),
-    from: '**/*',
-    to: subDir ? '..' : ''
-  }]
+  const copyList = [
+    {
+      context: resolve(`static/${mode}`),
+      from: '**/*',
+      to: subDir ? '..' : ''
+    },
+    {
+      context: resolve(`static`),
+      from: '**/*',
+      to: subDir ? '..' : '',
+      globOptions: {
+        ignore: ['**/wx/**', '**/ali/**', '**/qq/**', '**/tt/**', '**/swan/**']
+      }
+    }
+  ]
 
   if (options.cloudFunc) {
     copyList.push({
