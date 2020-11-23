@@ -1,4 +1,4 @@
-let { mpxPluginConf, dllConf } = require('../config/index')
+let { mpxPluginConf, dllConf, supportedModes } = require('../config/index')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 const { resolve, resolveSrc } = require('./utils')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -12,6 +12,9 @@ const path = require('path')
 module.exports = function getRules (options) {
   const { mode, srcMode, subDir, production, report } = options
   const plugins = []
+  const copyIgnoreArr = supportedModes.map((item) => {
+    return `**/${item}/**`
+  })
 
   if (typeof mpxPluginConf === 'function') {
     mpxPluginConf = mpxPluginConf(options)
@@ -32,7 +35,7 @@ module.exports = function getRules (options) {
       from: '**/*',
       to: subDir ? '..' : '',
       globOptions: {
-        ignore: ['**/wx/**', '**/ali/**', '**/qq/**', '**/tt/**', '**/swan/**']
+        ignore: copyIgnoreArr
       }
     }
   ]
