@@ -8,7 +8,6 @@ const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 const webpack = require('webpack')
 const path = require('path')
 
-
 module.exports = function getRules (options) {
   const { mode, srcMode, subDir, production, report } = options
   const plugins = []
@@ -89,5 +88,4 @@ module.exports = function getRules (options) {
   }
 
   return plugins
-
 }
