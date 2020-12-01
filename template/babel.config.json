@@ -4,8 +4,7 @@
       "@babel/env",
       {
         "modules": false,
-        "shippedProposals": true,
-        "targets": "ios >= 9, chrome >= 47"
+        "shippedProposals": true
       }
     ]
   ],
@@ -13,7 +12,8 @@
     [
       "@babel/transform-runtime",
       {
-        "corejs": 3
+        "corejs": 3,
+        "version": "^7.10.4"
       }
     ]
   ],
@@ -23,8 +23,7 @@
         [
           "@babel/env",
           {
-            "shippedProposals": true,
-            "targets": "ios > 8, chrome > 52"
+            "shippedProposals": true
           }
         ]
       ]

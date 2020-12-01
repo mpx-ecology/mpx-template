@@ -37,6 +37,10 @@
     "vue-i18n": "^8.15.3",
     "@mpxjs/core": "^2.6.31"
   },
+  "browserslist": [
+    "ios >= 9",
+    "chrome >= 47"
+  ],
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.3",
     "@mpxjs/webpack-plugin": "^2.6.31",
