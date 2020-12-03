@@ -87,12 +87,20 @@ module.exports = function getRules (options) {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
+      // 如输出web时需要支持其他预编译语言，可以在此添加rule配置
       {
         test: /\.styl(us)?$/,
         use: [
           'vue-style-loader',
           'css-loader',
           'stylus-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
         ]
       }
     ])
