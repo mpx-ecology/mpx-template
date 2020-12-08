@@ -1,14 +1,24 @@
 <template>
   <view>
-    {% if isPlugin %}<list></list>{% endif %}
+{% if isPlugin %}
+    <list></list>
+{% endif %}
   </view>
 </template>
 
 {% if tsSupport %}
-<script lang="ts" src="./index.ts"></script>
+<script lang="ts">
+import { createPage } from '@mpxjs/core'
+
+createPage({
+  onLoad () {
+  }
+})
+</script>
 {% else %}
 <script>
   import { createPage } from '@mpxjs/core'
+
   createPage({
     onLoad () {}
   })
@@ -18,7 +28,9 @@
 <script type="application/json">
   {
     "usingComponents": {
-      {% if isPlugin %}"list": "plugin://myPlugin/list"{% endif %}
+{% if isPlugin %}
+      "list": "plugin://myPlugin/list"
+{% endif %}
     }
   }
 </script>

@@ -2,10 +2,7 @@
   <list></list>
 </template>
 
-{% if tsSupport %}
-<script lang="ts" src="./index.ts"></script>
-{% else %}
-<script>
+<script{% if tsSupport %} lang="ts"{% endif %}>
   import { createPage } from '@mpxjs/core'
   {% if needDll %}
   import dll from '../lib/dll'
@@ -16,7 +13,6 @@
     onLoad () {}
   })
 </script>
-{% endif %}
 
 <script type="application/json">
   {

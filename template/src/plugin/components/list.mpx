@@ -4,10 +4,7 @@
   </view>
 </template>
 
-{% if tsSupport %}
-<script lang="ts" src="./list.ts"></script>
-{% else %}
-<script>
+<script{% if tsSupport %} lang="ts"{% endif %}>
   import { createComponent } from '@mpxjs/core'
 
   createComponent({
@@ -16,7 +13,6 @@
     }
   })
 </script>
-{% endif %}
 
 <style lang="stylus">
   .list
