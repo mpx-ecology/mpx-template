@@ -4,16 +4,19 @@
   </view>
 </template>
 
+{% if tsSupport %}
+<script lang="ts" src="./list.ts"></script>
+{% else %}
+<script>
+  import { createComponent } from '@mpxjs/core'
 
-<script{% if tsSupport %} lang="ts"{% endif %}>
-import { createComponent } from '@mpxjs/core'
-
-createComponent({
-  data: {
-    listData: ['手机', '电视', '电脑']
-  }
-})
+  createComponent({
+    data: {
+      listData: ['手机', '电视', '电脑']
+    }
+  })
 </script>
+{% endif %}
 
 <style lang="stylus">
   .list

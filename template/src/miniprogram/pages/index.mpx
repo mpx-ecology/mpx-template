@@ -7,18 +7,10 @@
 </template>
 
 {% if tsSupport %}
-<script lang="ts">
-import { createPage } from '@mpxjs/core'
-
-createPage({
-  onLoad () {
-  }
-})
-</script>
+<script lang="ts" src="./index.ts"></script>
 {% else %}
 <script>
   import { createPage } from '@mpxjs/core'
-
   createPage({
     onLoad () {}
   })

@@ -1,4 +1,7 @@
-<script{% if tsSupport %} lang="ts"{% endif %}>
+{% if tsSupport %}
+<script lang="ts" src="./app.ts"></script>
+{% else %}
+<script>
   import mpx, { createApp } from '@mpxjs/core'
   import apiProxy from '@mpxjs/api-proxy'
 
@@ -9,6 +12,7 @@
     }
   })
 </script>
+{% endif %}
 
 <style>
   /*此处编写全局样式*/
