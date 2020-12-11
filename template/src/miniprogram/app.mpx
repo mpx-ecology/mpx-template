@@ -28,7 +28,8 @@
         "version": "dev",
         "provider": "<$ appid $>"
       }
-    }{% endif %}
+    }
+{% endif %}
   }
 </script>
 

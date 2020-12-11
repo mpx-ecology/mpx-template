@@ -74,7 +74,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "ts-loader": "^6.0.0",
-    "typescript": "^4.1.0-beta",
+    "typescript": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     {% if babel7Support %}
