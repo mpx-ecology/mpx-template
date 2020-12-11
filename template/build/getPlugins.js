@@ -15,11 +15,14 @@ module.exports = function getRules (options) {
     return `**/${item}/**`
   })
 
+  let currentMpxPluginConf
   if (typeof mpxPluginConf === 'function') {
-    mpxPluginConf = mpxPluginConf(options)
+    currentMpxPluginConf = mpxPluginConf(options)
+  } else {
+    currentMpxPluginConf = mpxPluginConf
   }
 
-  plugins.push(new MpxWebpackPlugin(Object.assign({}, mpxPluginConf, {
+  plugins.push(new MpxWebpackPlugin(Object.assign({}, currentMpxPluginConf, {
     mode,
     srcMode
   })))

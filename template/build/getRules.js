@@ -61,8 +61,11 @@ module.exports = function getRules (options) {
     })
   }
 
+  let currentMpxLoaderConf
   if (typeof mpxLoaderConf === 'function') {
-    mpxLoaderConf = mpxLoaderConf(options)
+    currentMpxLoaderConf = mpxLoaderConf(options)
+  } else {
+    currentMpxLoaderConf = mpxLoaderConf
   }
 
   if (mode === 'web') {
@@ -80,7 +83,7 @@ module.exports = function getRules (options) {
               }
             }
           },
-          MpxWebpackPlugin.loader(mpxLoaderConf)
+          MpxWebpackPlugin.loader(currentMpxLoaderConf)
         ]
       },
       {
@@ -108,7 +111,7 @@ module.exports = function getRules (options) {
     rules = rules.concat([
       {
         test: /\.mpx$/,
-        use: MpxWebpackPlugin.loader(mpxLoaderConf)
+        use: MpxWebpackPlugin.loader(currentMpxLoaderConf)
       }
     ])
   }
