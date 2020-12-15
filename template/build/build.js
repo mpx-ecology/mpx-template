@@ -65,7 +65,6 @@ if (program.watch) {
   webpack(webpackConfs, callback)
 }
 
-
 function callback (err, stats) {
   spinner.stop()
   if (err) {
