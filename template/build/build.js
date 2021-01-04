@@ -16,6 +16,16 @@ program
 const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
 const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedModes.includes(item))
 
+// 暂时兼容npm7的写法
+if (!npmConfigArgvOriginal.length) {
+  const env = process.env
+  supportedCrossMode.forEach(key => {
+    if (env[`npm_config_${key}`] === 'true') {
+      modeArr.push(key)
+    }
+  })
+}
+
 if (!modeArr.length) modeArr.push(userConf.srcMode)
 
 let webpackConfs = []
