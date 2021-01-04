@@ -21,6 +21,9 @@ module.exports = function getWebpackConfs (options) {
   if (production) {
     extendConfs.mode = 'production'
   }
+  extendConfs.optimization = {
+    nodeEnv: production ? 'production' : 'development'
+  }
   if (watch) {
     extendConfs.cache = true
     extendConfs.devtool = 'source-map' // 仅在watch模式下生产sourcemap

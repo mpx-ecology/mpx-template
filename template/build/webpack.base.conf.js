@@ -24,7 +24,7 @@ module.exports = {
                 options.plugins.some(p => p instanceof SourceMapDevToolPlugin)),
             // terserOptions参考 https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
             terserOptions: {
-              // terser的默认行为会把某些对象方法转为箭头函数，导致ios9等不支持箭头函数的环境不支持，详情见 https://github.com/terser/terser#compress-options
+              // terser的默认行为会把某些对象方法转为箭头函数，导致ios9等不支持箭头函数的环境白屏，详情见 https://github.com/terser/terser#compress-options
               compress: {
                 arrows: false
               }
