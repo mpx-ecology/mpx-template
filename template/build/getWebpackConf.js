@@ -26,7 +26,11 @@ module.exports = function getWebpackConfs (options) {
   }
   if (watch) {
     extendConfs.cache = true
-    extendConfs.devtool = 'source-map' // 仅在watch模式下生产sourcemap
+    // 仅在watch模式下生产sourcemap
+    // 百度小程序不开启sourcemap，开启会有模板渲染问题
+    if (mode !== 'swan') {
+      extendConfs.devtool = 'source-map'
+    }
   }
 
   return merge(webpackBaseConf, {
