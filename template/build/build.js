@@ -19,7 +19,7 @@ const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').m
 // 暂时兼容npm7的写法
 if (!npmConfigArgvOriginal.length) {
   const env = process.env
-  supportedCrossMode.forEach(key => {
+  supportedModes.forEach(key => {
     if (env[`npm_config_${key}`] === 'true') {
       modeArr.push(key)
     }
