@@ -42,15 +42,18 @@ modeArr.forEach((mode) => {
 })
 
 if (userConf.isPlugin) {
-  const options = Object.assign({}, userConf, {
-    plugin: true,
-    mode: 'wx',
-    production: program.production,
-    watch: program.watch,
-    report: process.env.npm_config_report,
-    subDir: 'plugin'
+  // 目前支持的plugin构建平台
+  modeArr.filter(m => ['wx', 'ali'].includes(m)).forEach(mode => {
+    const options = Object.assign({}, userConf, {
+      plugin: true,
+      mode,
+      production: program.production,
+      watch: program.watch,
+      report: process.env.npm_config_report,
+      subDir: 'plugin'
+    })
+    webpackConfs.push(getWebpackConf(options))
   })
-  webpackConfs.push(getWebpackConf(options))
 }
 
 if (webpackConfs.length === 1) {
