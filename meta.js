@@ -118,7 +118,7 @@ module.exports = {
     'src/!(miniprogram|functions)/**/*': 'srcMode !== "wx" || !cloudFunc',
     'src/*': 'srcMode !== "wx" || (!isPlugin && !cloudFunc)',
     'static/wx/*': 'srcMode === "wx"',
-    'static/ali/*': 'cross',
+    'static/!(wx)/*': 'cross',
     'tsconfig.json': 'tsSupport',
     '**/*.ts': 'tsSupport',
     '.babelrc': '!babel7Support',
@@ -127,10 +127,11 @@ module.exports = {
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc',
     'build/buildDll.js': 'needDll',
-    'build/dll.config.js': 'needDll',
+    'config/dll.conf.js': 'needDll',
     'build/getDllEntries.js': 'needDll',
     'build/getDllManifests.js': 'needDll',
-    'src/lib/dll.js': 'needDll'
+    'src/lib/dll.js': 'needDll',
+    '.eslintrc.js': 'needEslint'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
