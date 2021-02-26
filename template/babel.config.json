@@ -17,6 +17,7 @@
       }
     ]
   ],
+  "sourceType": "unambiguous",
   "env": {
     "test": {
       "presets": [
