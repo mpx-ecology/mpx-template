@@ -41,9 +41,9 @@ module.exports = {
       default: false
     },
     isPlugin: {
-      when: 'srcMode === "ali" || srcMode === "wx"',
+      when: 'srcMode === "wx" && cross === false',
       type: 'confirm',
-      message: '是否是个插件项目?（不清楚请选 No ！什么是插件项目请看微信或支付宝官方文档！）',
+      message: '是否是个插件项目?（不清楚请选 No ！什么是插件项目请看微信官方文档！）',
       default: false
     },
     tsSupport: {
