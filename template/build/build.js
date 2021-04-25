@@ -17,7 +17,7 @@ const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process
 const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedModes.includes(item))
 
 // 暂时兼容npm7的写法
-if (!npmConfigArgvOriginal.length) {
+if (!modeArr.length) {
   const env = process.env
   supportedModes.forEach(key => {
     if (env[`npm_config_${key}`] === 'true') {
@@ -27,6 +27,24 @@ if (!npmConfigArgvOriginal.length) {
 }
 
 if (!modeArr.length) modeArr.push(userConf.srcMode)
+
+// 开启子进程
+if (userConf.openChildProcess && modeArr.length > 1 && program.production) {
+  const spawn = require('child_process').spawn
+  while (modeArr.length > 1) {
+    const mode = modeArr.pop()
+    const newEnv = Object.assign({}, process.env)
+
+    supportedModes.forEach(key => {
+      delete newEnv[`npm_config_${key}`]
+    })
+    const ls = spawn('npm', ['run', 'build', `--${mode}`], { stdio: 'inherit', env: newEnv })
+    ls.on('close', (code) => {
+      process.exitCode = code
+    })
+  }
+}
+
 
 let webpackConfs = []
 
