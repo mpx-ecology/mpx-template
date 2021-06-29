@@ -17,7 +17,8 @@ const eslintConf = {
     wx: true,
     getApp: true,
     App: true,
-    __mpx_mode__: true
+    __mpx_mode__: true,
+    requirePlugin: true
   },
   rules: {
     camelcase: ['error', { 'allow': ['__mpx_mode__'] }]
