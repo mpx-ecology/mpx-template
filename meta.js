@@ -28,6 +28,12 @@ module.exports = {
       type: 'confirm',
       default: true
     },
+    openChildProcess: {
+      when: 'cross === true',
+      message: '是否需要开启子进程进行生产环境的编译',
+      type: 'confirm',
+      default: false
+    },
     transWeb: {
       when: 'srcMode === "wx" && cross === true',
       message: '是否需要支持输出web',
