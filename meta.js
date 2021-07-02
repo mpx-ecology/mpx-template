@@ -19,7 +19,7 @@ module.exports = {
       type: 'list',
       required: true,
       message: '请选择小程序项目所属平台（目前仅微信下支持跨平台输出）',
-      choices: ['wx', 'ali', 'swan', 'qq', 'tt'],
+      choices: ['wx', 'ali', 'swan', 'qq', 'tt', 'dd'],
       default: 'wx'
     },
     cross: {
@@ -91,6 +91,8 @@ module.exports = {
           return 'qq:for'
         case 'tt':
           return 'tt:for'
+        case 'dd':
+          return 'dd:for'
       }
     },
     dirKey () {
@@ -105,6 +107,8 @@ module.exports = {
           return 'qq:key'
         case 'tt':
           return 'tt:key'
+        case 'dd':
+          return 'dd:key'
       }
     }
   },
