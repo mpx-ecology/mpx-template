@@ -2,19 +2,20 @@ const webpackBaseConf = require('./webpack.base.conf')
 const merge = require('webpack-merge')
 const getRules = require('./getRules')
 const getPlugins = require('./getPlugins')
-const { resolveSrc, resolveDist } = require('./utils')
+const { resolveSrc, resolveDist, getRootPath } = require('./utils')
 
 module.exports = function getWebpackConfs (options) {
-  const { plugin, subDir, mode, production, watch } = options
+  const { plugin, subDir, mode, env, production, watch } = options
   const entry = plugin ? {
     plugin: resolveSrc('plugin.json', subDir)
   } : {
     app: resolveSrc('app.mpx', subDir)
   }
+  const rootPath = getRootPath(mode, env)
   const output = {
-    path: resolveDist(mode, subDir)
+    path: resolveDist(rootPath, subDir)
   }
-  const name = plugin ? 'plugin-compiler' : `${mode}-compiler`
+  const name = plugin ? `${rootPath}-plugin-compiler` : `${rootPath}-compiler`
   const rules = getRules(options)
   const plugins = getPlugins(options)
   const extendConfs = {}
