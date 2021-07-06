@@ -14,7 +14,7 @@ program
 
 const env = process.env
 
-const modeStr = env.npm_config_mode || env.npm_config_modes
+const modeStr = env.npm_config_mode || env.npm_config_modes || ''
 
 const report = env.npm_config_report
 
