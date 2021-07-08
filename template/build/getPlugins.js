@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
 
@@ -86,6 +87,8 @@ module.exports = function getPlugins (options) {
       inject: true
     }))
   }
+
+  plugins.push(new ProgressBarPlugin())
 
   if (report) {
     plugins.push(new BundleAnalyzerPlugin())

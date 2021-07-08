@@ -105,6 +105,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-merge": "^4.1.2",
     "webpack-bundle-analyzer": "^3.3.2",
+    "progress-bar-webpack-plugin": "^2.1.0",
     "commander": "^6.0.0"
   }
 }
