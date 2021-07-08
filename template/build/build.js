@@ -1,4 +1,3 @@
-const ora = require('ora')
 const rm = require('rimraf')
 const chalk = require('chalk')
 const webpack = require('webpack')
