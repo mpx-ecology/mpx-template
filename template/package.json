@@ -77,6 +77,7 @@
     "typescript": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
+    "autoprefixer": "^10.2.6",
     {% if babel7Support %}
     "@babel/core": "^7.10.4",
     "@babel/plugin-transform-runtime": "^7.10.4",
