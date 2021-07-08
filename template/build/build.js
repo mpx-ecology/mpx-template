@@ -1,4 +1,3 @@
-const ora = require('ora')
 const rm = require('rimraf')
 const chalk = require('chalk')
 const webpack = require('webpack')
@@ -69,8 +68,6 @@ if (webpackConfs.length === 1) {
   webpackConfs = webpackConfs[0]
 }
 
-const spinner = ora('building...')
-spinner.start()
 
 try {
   modes.forEach(({ mode, env }) => {
@@ -88,7 +85,6 @@ if (program.watch) {
 }
 
 function callback (err, stats) {
-  spinner.stop()
   if (err) {
     process.exitCode = 1
     return console.error(err)
