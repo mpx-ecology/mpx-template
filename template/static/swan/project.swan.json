@@ -1,0 +1,10 @@
+{
+  "compilation-args": {
+    "common": {
+      "ignoreTransJs": true,
+      "ignoreUglify": true
+    },
+    "options": [],
+    "selected": -3
+  }
+}
