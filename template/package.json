@@ -18,7 +18,7 @@
     "serve": "npx http-server dist/web",
     {% endif %}
     {% if needEslint %}
-    "lint": "eslint --ext .js,.mpx src/",
+    "lint": "eslint --ext .js,.ts,.mpx src/",
     {% endif %}
     {% if needUnitTest %}
     "test": "jest",
