@@ -30,7 +30,7 @@ module.exports = {
     },
     openChildProcess: {
       when: 'cross === true',
-      message: '是否需要开启子进程进行生产环境的编译',
+      message: '是否需要开启子进程进行编译',
       type: 'confirm',
       default: false
     },

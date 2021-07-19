@@ -29,7 +29,15 @@ if (!modeArr.length) {
 if (!modeArr.length) modeArr.push(userConf.srcMode)
 
 // 开启子进程
-if (userConf.openChildProcess && modeArr.length > 1 && program.production) {
+if (userConf.openChildProcess && modeArr.length > 1) {
+  let scriptType = ''
+  const isProduct = program.production
+  const isWatch = program.watch
+  if (!isProduct && isWatch) scriptType = 'watch'
+  if (isProduct && !isWatch) scriptType = 'build'
+  if (isProduct && isWatch) scriptType = 'watch:prod'
+  if (!isProduct && !isWatch) scriptType = 'build:dev'
+
   const spawn = require('child_process').spawn
   while (modeArr.length > 1) {
     const mode = modeArr.pop()
@@ -38,7 +46,7 @@ if (userConf.openChildProcess && modeArr.length > 1 && program.production) {
     supportedModes.forEach(key => {
       delete newEnv[`npm_config_${key}`]
     })
-    const ls = spawn('npm', ['run', 'build', `--${mode}`], { stdio: 'inherit', env: newEnv })
+    const ls = spawn('npm', ['run', scriptType, `--${mode}`], { stdio: 'inherit', env: newEnv })
     ls.on('close', (code) => {
       process.exitCode = code
     })
