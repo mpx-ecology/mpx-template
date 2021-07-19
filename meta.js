@@ -19,7 +19,7 @@ module.exports = {
       type: 'list',
       required: true,
       message: '请选择小程序项目所属平台（目前仅微信下支持跨平台输出）',
-      choices: ['wx', 'ali', 'swan', 'qq', 'tt'],
+      choices: ['wx', 'ali', 'swan', 'qq', 'tt', 'qa', 'jd', 'dd'],
       default: 'wx'
     },
     cross: {
@@ -87,30 +87,22 @@ module.exports = {
   computed: {
     dirFor () {
       switch (this.srcMode) {
-        case 'wx':
-          return 'wx:for'
         case 'ali':
           return 'a:for'
         case 'swan':
           return 's-for'
-        case 'qq':
-          return 'qq:for'
-        case 'tt':
-          return 'tt:for'
+        default:
+          return `${this.srcMode}:for`
       }
     },
     dirKey () {
       switch (this.srcMode) {
-        case 'wx':
-          return 'wx:key'
         case 'ali':
           return 'a:key'
         case 'swan':
           return 's-key'
-        case 'qq':
-          return 'qq:key'
-        case 'tt':
-          return 'tt:key'
+        default:
+          return `${this.srcMode}:key`
       }
     }
   },

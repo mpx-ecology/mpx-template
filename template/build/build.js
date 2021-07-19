@@ -5,31 +5,38 @@ const webpack = require('webpack')
 const program = require('commander')
 const { userConf, supportedModes } = require('../config/index')
 const getWebpackConf = require('./getWebpackConf')
-const { resolveDist } = require('./utils')
+const { resolveDist, getRootPath } = require('./utils')
 
 program
   .option('-w, --watch', 'watch mode')
   .option('-p, --production', 'production release')
   .parse(process.argv)
 
-// 提供npm argv找到期望构建的平台，必须在上面支持的平台列表里
-const npmConfigArgvOriginal = (process.env.npm_config_argv && JSON.parse(process.env.npm_config_argv).original) || []
-const modeArr = npmConfigArgvOriginal.filter(item => typeof item === 'string').map(item => item.replace('--', '')).filter(item => supportedModes.includes(item))
+const env = process.env
 
-// 暂时兼容npm7的写法
-if (!modeArr.length) {
-  const env = process.env
-  supportedModes.forEach(key => {
-    if (env[`npm_config_${key}`] === 'true') {
-      modeArr.push(key)
+const modeStr = env.npm_config_mode || env.npm_config_modes || ''
+
+const report = env.npm_config_report
+
+const modes = modeStr.split(/[,|]/)
+  .map((mode) => {
+    const modeArr = mode.split(':')
+    if (supportedModes.includes(modeArr[0])) {
+      return {
+        mode: modeArr[0],
+        env: modeArr[1]
+      }
     }
+  }).filter((item) => item)
+
+if (!modes.length) {
+  modes.push({
+    mode: userConf.srcMode
   })
 }
 
-if (!modeArr.length) modeArr.push(userConf.srcMode)
-
 // 开启子进程
-if (userConf.openChildProcess && modeArr.length > 1) {
+if (userConf.openChildProcess && modes.length > 1) {
   let scriptType = ''
   const isProduct = program.production
   const isWatch = program.watch
@@ -39,29 +46,24 @@ if (userConf.openChildProcess && modeArr.length > 1) {
   if (!isProduct && !isWatch) scriptType = 'build:dev'
 
   const spawn = require('child_process').spawn
-  while (modeArr.length > 1) {
-    const mode = modeArr.pop()
-    const newEnv = Object.assign({}, process.env)
-
-    supportedModes.forEach(key => {
-      delete newEnv[`npm_config_${key}`]
-    })
-    const ls = spawn('npm', ['run', scriptType, `--${mode}`], { stdio: 'inherit', env: newEnv })
+  while (modes.length > 1) {
+    const modeObj = modes.pop()
+    const ls = spawn('npm', ['run', scriptType, `--modes=${modeObj.mode}`], { stdio: 'inherit'})
     ls.on('close', (code) => {
       process.exitCode = code
     })
   }
 }
 
-
 let webpackConfs = []
 
-modeArr.forEach((mode) => {
+modes.forEach(({ mode, env }) => {
   const options = Object.assign({}, userConf, {
     mode,
+    env,
     production: program.production,
     watch: program.watch,
-    report: process.env.npm_config_report,
+    report,
     subDir: (userConf.isPlugin || userConf.cloudFunc) ? 'miniprogram' : ''
   })
   webpackConfs.push(getWebpackConf(options))
@@ -69,13 +71,14 @@ modeArr.forEach((mode) => {
 
 if (userConf.isPlugin) {
   // 目前支持的plugin构建平台
-  modeArr.filter(m => ['wx', 'ali'].includes(m)).forEach(mode => {
+  modes.filter(({ mode }) => ['wx', 'ali'].includes(mode)).forEach(({ mode, env }) => {
     const options = Object.assign({}, userConf, {
       plugin: true,
       mode,
+      env,
       production: program.production,
       watch: program.watch,
-      report: process.env.npm_config_report,
+      report,
       subDir: 'plugin'
     })
     webpackConfs.push(getWebpackConf(options))
@@ -90,8 +93,8 @@ const spinner = ora('building...')
 spinner.start()
 
 try {
-  modeArr.forEach(item => {
-    rm.sync(resolveDist(item, '*'))
+  modes.forEach(({ mode, env }) => {
+    rm.sync(resolveDist(getRootPath(mode, env), '*'))
   })
 } catch (e) {
   console.error(e)

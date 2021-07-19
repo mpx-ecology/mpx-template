@@ -21,9 +21,14 @@ function normalizeArr (arrCfg) {
   return []
 }
 
+function getRootPath (mode, env) {
+  return env ? `${mode}:${env}` : mode
+}
+
 module.exports = {
   resolve,
   resolveSrc,
   resolveDist,
-  normalizeArr
+  normalizeArr,
+  getRootPath
 }

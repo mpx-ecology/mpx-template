@@ -8,8 +8,8 @@ const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 const webpack = require('webpack')
 const path = require('path')
 
-module.exports = function getRules (options) {
-  const { mode, srcMode, subDir, production, report } = options
+module.exports = function getPlugins (options) {
+  const { mode, env, srcMode, subDir, production, report } = options
   const plugins = []
   const copyIgnoreArr = supportedModes.map((item) => {
     return `**/${item}/**`
@@ -24,6 +24,7 @@ module.exports = function getRules (options) {
 
   plugins.push(new MpxWebpackPlugin(Object.assign({}, currentMpxPluginConf, {
     mode,
+    env,
     srcMode
   })))
   const copyList = [
