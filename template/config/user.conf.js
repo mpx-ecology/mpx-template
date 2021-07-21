@@ -10,6 +10,7 @@ function formatOption (option) {
 module.exports = {
   srcMode: formatOption('<$ srcMode $>'),
   cross: formatOption('<$ cross $>'),
+  openChildProcess: formatOption('<$ openChildProcess $>'),
   transWeb: formatOption('<$ transWeb $>'),
   cloudFunc: formatOption('<$ cloudFunc $>'),
   isPlugin: formatOption('<$ isPlugin $>'),
