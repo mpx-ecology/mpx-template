@@ -48,7 +48,8 @@ if (userConf.openChildProcess && modes.length > 1) {
   const spawn = require('child_process').spawn
   while (modes.length > 1) {
     const modeObj = modes.pop()
-    const ls = spawn('npm', ['run', scriptType, `--modes=${modeObj.mode}`, `--mode=${modeObj.mode} `], { stdio: 'inherit' })
+    const modeAndEnv = modeObj.env ? `${modeObj.mode}:${modeObj.env}` : modeObj.mode
+    const ls = spawn('npm', ['run', scriptType, `--modes=${modeAndEnv}`, `--mode=${modeAndEnv}`], { stdio: 'inherit' })
     ls.on('close', (code) => {
       process.exitCode = code
     })
