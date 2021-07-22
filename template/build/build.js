@@ -34,6 +34,26 @@ if (!modes.length) {
   })
 }
 
+// 开启子进程
+if (userConf.openChildProcess && modes.length > 1) {
+  let scriptType = ''
+  const isProduct = program.production
+  const isWatch = program.watch
+  if (!isProduct && isWatch) scriptType = 'watch'
+  if (isProduct && !isWatch) scriptType = 'build'
+  if (isProduct && isWatch) scriptType = 'watch:prod'
+  if (!isProduct && !isWatch) scriptType = 'build:dev'
+
+  const spawn = require('child_process').spawn
+  while (modes.length > 1) {
+    const modeObj = modes.pop()
+    const ls = spawn('npm', ['run', scriptType, `--modes=${modeObj.mode}`, `--mode=${modeObj.mode} `], { stdio: 'inherit' })
+    ls.on('close', (code) => {
+      process.exitCode = code
+    })
+  }
+}
+
 let webpackConfs = []
 
 modes.forEach(({ mode, env }) => {
