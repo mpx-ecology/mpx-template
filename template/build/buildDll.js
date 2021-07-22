@@ -1,6 +1,5 @@
 const webpack = require('webpack')
 const path = require('path')
-const ora = require('ora')
 const rm = require('rimraf')
 const chalk = require('chalk')
 const merge = require('webpack-merge')
@@ -39,11 +38,8 @@ normalizeArr(dllConf.groups).forEach((item) => {
 })
 
 if (webpackCfgs.length) {
-  const spinner = ora('Building dll...')
-  spinner.start()
   rm.sync(dllConf.path)
   webpack(webpackCfgs.length === 1 ? webpackCfgs[0] : webpackCfgs, (err, stats) => {
-    spinner.stop()
     if (err) {
       process.exitCode = 1
       return console.error(err)

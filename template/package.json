@@ -95,7 +95,6 @@
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
-    "ora": "^2.0.0",
     "path": "^0.12.7",
     "rimraf": "^2.6.2",
     "stylus": "^0.54.5",
