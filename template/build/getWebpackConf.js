@@ -7,7 +7,7 @@ const { resolveSrc, resolveDist } = require('./utils')
 module.exports = function getWebpackConfs (options) {
   const { plugin, subDir, mode, production, watch } = options
   const entry = plugin ? {
-    plugin: resolveSrc('plugin.json', subDir)
+    plugin: resolveSrc('plugin.json?isMpxPlugin', subDir)
   } : {
     app: resolveSrc('app.mpx', subDir)
   }
