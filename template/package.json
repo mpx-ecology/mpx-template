@@ -95,7 +95,6 @@
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
-    "ora": "^2.0.0",
     "path": "^0.12.7",
     "rimraf": "^2.6.2",
     "stylus": "^0.54.5",
@@ -105,6 +104,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-merge": "^4.1.2",
     "webpack-bundle-analyzer": "^3.3.2",
+    "progress-bar-webpack-plugin": "^2.1.0",
     "commander": "^6.0.0"
   }
 }
