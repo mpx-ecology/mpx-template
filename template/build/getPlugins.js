@@ -22,12 +22,11 @@ module.exports = function getPlugins (options) {
   } else {
     currentMpxPluginConf = mpxPluginConf
   }
-
   plugins.push(new MpxWebpackPlugin(Object.assign({}, currentMpxPluginConf, {
     mode,
-    env,
     srcMode
-  })))
+  }, env && { env })))
+
   const copyList = [
     {
       context: resolve(`static/${mode}`),

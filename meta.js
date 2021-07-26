@@ -26,7 +26,9 @@ module.exports = {
       when: 'srcMode === "wx"',
       message: '是否需要跨小程序平台',
       type: 'confirm',
-      default: true
+      default: (data) => {
+        return data.srcMode === 'wx'
+      }
     },
     openChildProcess: {
       when: 'cross === true',
@@ -35,10 +37,12 @@ module.exports = {
       default: false
     },
     transWeb: {
-      when: 'srcMode === "wx" && cross === true',
+      when: 'cross === true',
       message: '是否需要支持输出web',
       type: 'confirm',
-      default: true
+      default: (data) => {
+        return data.cross
+      }
     },
     cloudFunc: {
       when: 'srcMode === "wx" && cross === false',
@@ -78,8 +82,7 @@ module.exports = {
       default: false
     },
     appid: {
-      when: 'srcMode === "wx"',
-      required: true,
+      type: 'string',
       message: '请输入小程序的Appid',
       default: 'touristappid'
     }
@@ -110,13 +113,13 @@ module.exports = {
     'src/@(miniprogram)/**/*': 'isPlugin || cloudFunc',
     'src/@(plugin)/**/*': 'isPlugin',
     'src/@(functions)/**/*': 'cloudFunc',
-    'build/webpack.plugin.conf.js': 'isPlugin',
     'src/index.html': 'transWeb',
-    'src/!(miniprogram|plugin)/**/*': 'srcMode !== "wx" || !isPlugin',
-    'src/!(miniprogram|functions)/**/*': 'srcMode !== "wx" || !cloudFunc',
-    'src/*': 'srcMode !== "wx" || (!isPlugin && !cloudFunc)',
+    'src/!(miniprogram|plugin|functions)/**/*': '!isPlugin && !cloudFunc',
+    'src/*': '!isPlugin && !cloudFunc',
     'static/wx/*': 'srcMode === "wx"',
-    'static/!(wx)/*': 'cross',
+    'static/ali/*': 'srcMode === "ali" || cross',
+    'static/tt/*': 'srcMode === "tt" || cross',
+    'static/swan/*': 'srcMode === "swan" || cross',
     'tsconfig.json': 'tsSupport',
     '**/*.ts': 'tsSupport',
     '.babelrc': '!babel7Support',
@@ -138,7 +141,7 @@ module.exports = {
   getMockData: function (mockList) {
     if (!mockList) return
     const mockData = {
-      mode: 'wx',
+      srcMode: 'wx',
       cross: false,
       transWeb: false,
       cloudFunc: false,
@@ -151,9 +154,8 @@ module.exports = {
     }
     if (mockList.length) {
       mockList.forEach((item) => {
-        if (mockData.hasOwnProperty(item) && item !== 'mode') {
-          mockData[item] = true
-        }
+        const [key, value] = item.split('=')
+        mockData[key] = value || true
       })
     }
     return mockData
