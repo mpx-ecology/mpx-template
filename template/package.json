@@ -9,16 +9,16 @@
     "build": "node ./build/build.js -p",
     "build:dev": "node ./build/build.js",
     {% if cross %}
-    "watch:cross": "npm run watch --wx --ali{% if transWeb %} --web{% endif %}",
-    "build:cross": "npm run build --wx --ali{% if transWeb %} --web{% endif %}",
+    "watch:cross": "npm run watch --modes=wx,ali{% if transWeb %},web{% endif %}",
+    "build:cross": "npm run build --modes=wx,ali{% if transWeb %},web{% endif %}",
     {% endif %}
     {% if transWeb %}
     "watch:web:serve": "npx npm-run-all --parallel watch:web serve",
-    "watch:web": "npm run watch --web",
+    "watch:web": "npm run watch --mode=web",
     "serve": "npx http-server dist/web",
     {% endif %}
     {% if needEslint %}
-    "lint": "eslint --ext .js,.mpx src/",
+    "lint": "eslint --ext .js,.ts,.mpx src/",
     {% endif %}
     {% if needUnitTest %}
     "test": "jest",

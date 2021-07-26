@@ -14,14 +14,15 @@ const eslintConf = {
     'html'
   ],
   globals: {
-    wx: true,
-    getApp: true,
-    App: true,
-    __mpx_mode__: true,
-    requirePlugin: true
+    wx: 'readonly',
+    getApp: 'readonly',
+    App: 'readonly',
+    __mpx_mode__: 'readonly',
+    __mpx_env__: 'readonly',
+    requirePlugin: 'readonly'
   },
   rules: {
-    camelcase: ['error', { 'allow': ['__mpx_mode__'] }]
+    camelcase: ['error', { 'allow': ['__mpx_mode__', '__mpx_env__'] }]
   }
 }
 if (userConf.tsSupport) {
