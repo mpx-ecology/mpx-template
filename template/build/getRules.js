@@ -56,7 +56,8 @@ module.exports = function getRules (options) {
 
   if (plugin) {
     rules.push({
-      resource: resolveSrc('plugin.json', subDir),
+      test: /\.json$/,
+      resourceQuery: /plugin/,
       use: MpxWebpackPlugin.pluginLoader()
     })
   }
