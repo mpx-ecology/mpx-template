@@ -81,6 +81,11 @@ module.exports = {
       message: '是否需要单元测试',
       default: false
     },
+    needE2eTest: {
+      type: 'confirm',
+      message: '是否需要E2E测试',
+      default: false
+    },
     appid: {
       type: 'string',
       message: '请输入小程序的Appid',
@@ -124,7 +129,8 @@ module.exports = {
     '**/*.ts': 'tsSupport',
     '.babelrc': '!babel7Support',
     'babel.config.json': 'babel7Support',
-    'test/**/*': 'needUnitTest',
+    'test/unit/**/*': 'needUnitTest',
+    'test/e2e/**/*': 'needE2eTest',
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc',
     'build/buildDll.js': 'needDll',

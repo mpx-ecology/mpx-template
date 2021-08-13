@@ -2,11 +2,11 @@ const path = require('path')
 const simulate = require('miniprogram-simulate')
 
 function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+  return path.join(__dirname, '..', '..', dir)
 }
 
 function resolveDist (dir) {
-  return path.join(__dirname, '../dist/wx', dir)
+  return path.join(__dirname, '../../dist/wx', dir)
 }
 
 const outputMap = require(resolve('dist/outputMap.json'))

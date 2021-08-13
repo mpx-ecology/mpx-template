@@ -20,9 +20,13 @@
     {% if needEslint %}
     "lint": "eslint --ext .js,.ts,.mpx src/",
     {% endif %}
-    {% if needUnitTest %}
+    {% if needUnitTest or needE2eTest %}
     "test": "jest",
     "build:test": "npm run build && jest",
+    {% endif %}
+    {% if needUnitTest and needE2eTest %}
+    "test:e2e": "jest ./test/e2e/index.spec.js",
+    "test:unit": "jest ./test/unit/**/*.spec.js",
     {% endif %}
     {% if needDll %}
     "build:dll": "node ./build/buildDll.js",
@@ -59,6 +63,9 @@
     "jest": "^24.9.0",
     "miniprogram-simulate": "^1.1.6",
     "babel-jest": "^22.4.4",
+    {% endif %}
+    {% if needE2eTest %}
+    "miniprogram-automator": "^0.10.0",
     {% endif %}
     "eslint-loader": "^2.1.1",
     "babel-eslint": "^10.0.1",
