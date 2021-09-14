@@ -36,8 +36,13 @@
   "author": "<$ author $>",
   "license": "ISC",
   "dependencies": {
+    {% if transHummer %}
     "@mpxjs/api-proxy": "2.6.92-alpha.0",
     "@mpxjs/core": "2.6.94-alpha.1",
+    {% else %}
+    "@mpxjs/api-proxy": "^2.6.80",
+    "@mpxjs/core": "^2.6.94",
+    {% endif %}
     "@hummer/tenon-vue": "^1.5.1",
     "@hummer/tenon-store": "^1.4.0",
     "vue": "^2.6.10",
@@ -53,7 +58,11 @@
     "@hummer/tenon-style-loader": "^0.2.0",
     "@hummer/tenon-dev-server-webpack-plugin": "0.0.2",
     "terser-webpack-plugin": "^4.2.3",
+    {% if transHummer %}
     "@mpxjs/webpack-plugin": "2.6.94-alpha.0",
+    {% else %}
+    "@mpxjs/webpack-plugin": "^2.6.94",
+    {% endif %}
     "http-server": "^0.12.0",
     "npm-run-all": "^4.1.5",
     "html-webpack-plugin": "^3.2.0",
