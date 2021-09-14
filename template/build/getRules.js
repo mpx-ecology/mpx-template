@@ -108,6 +108,55 @@ module.exports = function getRules (options) {
         ]
       }
     ])
+  } else if (mode === 'tenon') {
+    rules = rules.concat([
+      {
+        test: /\.mpx$/,
+        use: [
+          {
+            loader: '@hummer/tenon-loader',
+            options: {
+              transformToRequire: {
+                'mpx-image': 'src',
+                'mpx-audio': 'src',
+                'mpx-video': 'src'
+              }
+            }
+          },
+          MpxWebpackPlugin.loader(currentMpxLoaderConf)
+        ]
+      },
+      {
+        test: /\.vue$/,
+        use: [{
+          loader: '@hummer/tenon-loader',
+          options: {
+            appendExtension: true
+          }
+        }]
+      },
+      // 如输出web时需要支持其他预编译语言，可以在此添加rule配置
+      {
+        test: /\.styl(us)?$/,
+        use: [
+          '@hummer/tenon-style-loader',
+          'stylus-loader'
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          '@hummer/tenon-style-loader',
+          'less-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          '@hummer/tenon-style-loader'
+        ]
+      }
+    ])
   } else {
     rules = rules.concat([
       {

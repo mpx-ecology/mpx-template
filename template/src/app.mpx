@@ -9,6 +9,9 @@
 
   createApp({
     onLaunch () {
+{% if transHummer %}
+      mpx.redirectTo({ url: require('./pages/index.mpx?resolve') })
+{% endif %}
     }
   })
 </script>

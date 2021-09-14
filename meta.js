@@ -44,6 +44,12 @@ module.exports = {
         return data.cross
       }
     },
+    transHummer: {
+      when: 'cross === true',
+      message: '(beta)是否需要支持输出 Hummer ?（Hummer文档：https://hummer.didi.cn/）',
+      type: 'confirm',
+      default: false
+    },
     cloudFunc: {
       when: 'srcMode === "wx" && cross === false',
       message: '是否需要使用小程序云开发能力',
@@ -144,6 +150,7 @@ module.exports = {
       srcMode: 'wx',
       cross: false,
       transWeb: false,
+      transHummer: false,
       cloudFunc: false,
       isPlugin: false,
       needEslint: true,
