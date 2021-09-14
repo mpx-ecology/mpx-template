@@ -38,10 +38,8 @@
   "dependencies": {
     "@mpxjs/api-proxy": "2.6.92-alpha.0",
     "@mpxjs/core": "2.6.94-alpha.1",
-    {% if transHummer %}
     "@hummer/tenon-vue": "^1.5.1",
     "@hummer/tenon-store": "^1.4.0",
-    {% endif %}
     "vue": "^2.6.10",
     "vue-i18n": "^8.15.3"
   },
@@ -54,6 +52,7 @@
     "@hummer/tenon-loader": "^1.1.0",
     "@hummer/tenon-style-loader": "^0.2.0",
     "@hummer/tenon-dev-server-webpack-plugin": "0.0.2",
+    "terser-webpack-plugin": "^4.2.3",
     "@mpxjs/webpack-plugin": "2.6.94-alpha.0",
     "http-server": "^0.12.0",
     "npm-run-all": "^4.1.5",
