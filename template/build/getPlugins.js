@@ -75,6 +75,7 @@ module.exports = function getPlugins (options) {
   plugins.push(new CopyWebpackPlugin(copyList))
 
   plugins.push(new webpack.DefinePlugin({
+    NODE_DEBUG_ENV: JSON.stringify(!production),
     'process.env': {
       NODE_ENV: production ? '"production"' : '"development"'
     }
