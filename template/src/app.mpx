@@ -8,13 +8,7 @@
   mpx.use(apiProxy, { usePromise: true })
 
   createApp({
-{% if transHummer %}
-    onShow () {
-      mpx.redirectTo({ url: require('./pages/index.mpx?resolve') })
-{% else %}
     onLaunch () {
-      // onLaunch is called when the app is launched
-{% endif %}
     }
   })
 </script>

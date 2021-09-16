@@ -9,17 +9,13 @@
     "build": "node ./build/build.js -p",
     "build:dev": "node ./build/build.js",
     {% if cross %}
-    "watch:cross": "npm run watch --modes=wx,ali{% if transWeb %},web{% endif %}{% if transHummer %},tenon{% endif %}",
-    "build:cross": "npm run build --modes=wx,ali{% if transWeb %},web{% endif %}{% if transHummer %},tenon{% endif %}",
+    "watch:cross": "npm run watch --modes=wx,ali{% if transWeb %},web{% endif %}",
+    "build:cross": "npm run build --modes=wx,ali{% if transWeb %},web{% endif %}",
     {% endif %}
     {% if transWeb %}
     "watch:web:serve": "npx npm-run-all --parallel watch:web serve",
     "watch:web": "npm run watch --mode=web",
     "serve": "npx http-server dist/web",
-    {% endif %}
-    {% if transHummer %}
-    "watch:tenon": "npm run watch --mode=tenon",
-    "build:tenon": "npm run build --mode=tenon",
     {% endif %}
     {% if needEslint %}
     "lint": "eslint --ext .js,.ts,.mpx src/",
@@ -36,17 +32,10 @@
   "author": "<$ author $>",
   "license": "ISC",
   "dependencies": {
-    {% if transHummer %}
-    "@mpxjs/api-proxy": "2.6.92-alpha.2",
-    "@mpxjs/core": "2.6.94-alpha.2",
-    {% else %}
-    "@mpxjs/api-proxy": "^2.6.80",
-    "@mpxjs/core": "^2.6.94",
-    {% endif %}
-    "@hummer/tenon-vue": "^1.5.1",
-    "@hummer/tenon-store": "^1.4.0",
+    "@mpxjs/api-proxy": "^2.5.10",
     "vue": "^2.6.10",
-    "vue-i18n": "^8.15.3"
+    "vue-i18n": "^8.15.3",
+    "@mpxjs/core": "^2.6.31"
   },
   "browserslist": [
     "ios >= 9",
@@ -54,15 +43,7 @@
   ],
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.3",
-    "@hummer/tenon-loader": "^1.1.0",
-    "@hummer/tenon-style-loader": "^0.2.0",
-    "@hummer/tenon-dev-server-webpack-plugin": "0.0.2",
-    "terser-webpack-plugin": "^4.2.3",
-    {% if transHummer %}
-    "@mpxjs/webpack-plugin": "2.6.94-alpha.2",
-    {% else %}
-    "@mpxjs/webpack-plugin": "^2.6.94",
-    {% endif %}
+    "@mpxjs/webpack-plugin": "^2.6.31",
     "http-server": "^0.12.0",
     "npm-run-all": "^4.1.5",
     "html-webpack-plugin": "^3.2.0",
