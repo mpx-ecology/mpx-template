@@ -37,8 +37,8 @@
   "license": "ISC",
   "dependencies": {
     {% if transHummer %}
-    "@mpxjs/api-proxy": "2.6.92-alpha.0",
-    "@mpxjs/core": "2.6.94-alpha.1",
+    "@mpxjs/api-proxy": "2.6.92-alpha.2",
+    "@mpxjs/core": "2.6.94-alpha.2",
     {% else %}
     "@mpxjs/api-proxy": "^2.6.80",
     "@mpxjs/core": "^2.6.94",
@@ -59,7 +59,7 @@
     "@hummer/tenon-dev-server-webpack-plugin": "0.0.2",
     "terser-webpack-plugin": "^4.2.3",
     {% if transHummer %}
-    "@mpxjs/webpack-plugin": "2.6.94-alpha.0",
+    "@mpxjs/webpack-plugin": "2.6.94-alpha.2",
     {% else %}
     "@mpxjs/webpack-plugin": "^2.6.94",
     {% endif %}
