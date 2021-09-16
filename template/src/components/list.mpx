@@ -1,6 +1,10 @@
 <template>
   <view class="list">
+{% if transHummer %}
+    <text <$ dirFor $>="{{listData}}" <$ dirKey $>="index">{{item}}</text>
+{% else %}
     <view <$ dirFor $>="{{listData}}" <$ dirKey $>="index">{{item}}</view>
+{% endif %}
   </view>
 </template>
 

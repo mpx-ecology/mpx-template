@@ -8,6 +8,10 @@ if (userConf.transWeb) {
   supportedModes.push('web')
 }
 
+if (userConf.transHummer) {
+  supportedModes.push('tenon')
+}
+
 const options = {
   userConf,
   mpxLoaderConf,

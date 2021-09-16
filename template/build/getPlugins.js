@@ -5,6 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
+const TenonLoaderPlugin = require('@hummer/tenon-loader').VueLoaderPlugin
+const HummerServerPlugin = require('@hummer/tenon-dev-server-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
@@ -73,6 +75,7 @@ module.exports = function getPlugins (options) {
   plugins.push(new CopyWebpackPlugin(copyList))
 
   plugins.push(new webpack.DefinePlugin({
+    NODE_DEBUG_ENV: JSON.stringify(!production),
     'process.env': {
       NODE_ENV: production ? '"production"' : '"development"'
     }
@@ -85,6 +88,12 @@ module.exports = function getPlugins (options) {
       template: resolveSrc('index.html', subDir),
       inject: true
     }))
+  }
+  if (mode === 'tenon') {
+    plugins.push(...[
+      new TenonLoaderPlugin(),
+      new HummerServerPlugin()
+    ])
   }
 
   plugins.push(new ProgressBarPlugin())
