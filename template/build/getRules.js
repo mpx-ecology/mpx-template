@@ -108,7 +108,7 @@ module.exports = function getRules (options) {
         ]
       }
     ])
-  } else if (mode === 'tenon') {
+  } {% if transHummer %}else if (mode === 'tenon') {
     rules = rules.concat([
       {
         test: /\.mpx$/,
@@ -157,7 +157,7 @@ module.exports = function getRules (options) {
         ]
       }
     ])
-  } else {
+  } {% endif %}else {
     rules = rules.concat([
       {
         test: /\.mpx$/,
