@@ -65,7 +65,7 @@
     "babel-jest": "^22.4.4",
     {% endif %}
     {% if needE2eTest %}
-    "miniprogram-automator": "^0.10.0",
+    "@didi/e2e-extension": "^0.0.5",
     {% endif %}
     "eslint-loader": "^2.1.1",
     "babel-eslint": "^10.0.1",
