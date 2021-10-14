@@ -7,6 +7,12 @@ module.exports = {
     extensions: ['.mpx', '.js', '.wxml', '.vue', '.ts'],
     modules: ['node_modules']
   },
+  cache: {
+    type: 'filesystem'
+  },
+  experiments: {
+    executeModule: true,
+  },
   optimization: {
     minimizer: [
       {

@@ -7,7 +7,7 @@ const { resolveSrc, resolveDist, getRootPath } = require('./utils')
 module.exports = function getWebpackConfs (options) {
   const { plugin, subDir, mode, env, production, watch } = options
   const entry = plugin ? {
-    plugin: resolveSrc('plugin.json?plugin', subDir)
+    plugin: resolveSrc('plugin.json?mpx&type=json&extract&isPlugin&asScript', subDir)
   } : {
     app: resolveSrc('app.mpx', subDir)
   }

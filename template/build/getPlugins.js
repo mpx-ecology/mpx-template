@@ -10,7 +10,7 @@ const webpack = require('webpack')
 const path = require('path')
 
 module.exports = function getPlugins (options) {
-  const { mode, env, srcMode, subDir, production, report } = options
+  const { mode, srcMode, env, subDir, production, report } = options
   const plugins = []
   const copyIgnoreArr = supportedModes.map((item) => {
     return `**/${item}/**`
@@ -70,7 +70,9 @@ module.exports = function getPlugins (options) {
       })
     })
   }
-  plugins.push(new CopyWebpackPlugin(copyList))
+  plugins.push(new CopyWebpackPlugin({
+    patterns: copyList
+  }))
 
   plugins.push(new webpack.DefinePlugin({
     'process.env': {
