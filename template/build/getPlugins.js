@@ -31,7 +31,8 @@ module.exports = function getPlugins (options) {
     {
       context: resolve(`static/${mode}`),
       from: '**/*',
-      to: subDir ? '..' : ''
+      to: subDir ? '..' : '',
+      noErrorOnMissing: true
     },
     {
       context: resolve(`static`),
@@ -39,7 +40,8 @@ module.exports = function getPlugins (options) {
       to: subDir ? '..' : '',
       globOptions: {
         ignore: copyIgnoreArr
-      }
+      },
+      noErrorOnMissing: true
     }
   ]
 
