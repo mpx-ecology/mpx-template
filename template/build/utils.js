@@ -1,15 +1,15 @@
 const path = require('path')
 
 function resolveSrc (file, subDir = '') {
-  return path.resolve(__dirname, '../src', subDir, file || '')
+  return path.join(__dirname, '../src', subDir, file || '')
 }
 
 function resolveDist (platform, subDir = '') {
-  return path.resolve(__dirname, '../dist', platform, subDir)
+  return path.join(__dirname, '../dist', platform, subDir)
 }
 
 function resolve (file) {
-  return path.resolve(__dirname, '..', file || '')
+  return path.join(__dirname, '..', file || '')
 }
 
 function normalizeArr (arrCfg) {
