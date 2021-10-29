@@ -20,9 +20,6 @@ module.exports = {
   snapshot: {
     managedPaths: [resolve('node_modules/')]
   },
-  experiments: {
-    executeModule: true,
-  },
   optimization: {
     minimizer: [
       {
