@@ -15,23 +15,20 @@ const baseRules = [
   },
   {
     test: /\.(wxs|qs|sjs|filter\.js)$/,
-    use: [MpxWebpackPlugin.wxsPreLoader()],
+    use: [
+      MpxWebpackPlugin.wxsPreLoader()
+    ],
     enforce: 'pre'
   },
   {
     test: /\.(png|jpe?g|gif|svg)$/,
-    use: [MpxWebpackPlugin.urlLoader({
-      name: 'img/[name][hash].[ext]'
-    })]
+    use: [
+      MpxWebpackPlugin.urlLoader({
+        name: 'img/[name][hash].[ext]'
+      })
+    ]
   }
 ]
-
-const eslintRule = {
-  test: /\.(js|ts|mpx)$/,
-  loader: 'eslint-loader',
-  enforce: 'pre',
-  include: [resolve('src')]
-}
 
 const tsRule = {
   test: /\.ts$/,
@@ -42,16 +39,12 @@ const tsRule = {
 }
 
 module.exports = function getRules (options) {
-  const { mode, tsSupport, needEslint, subDir } = options
+  const { mode, tsSupport } = options
 
   let rules = baseRules.slice()
 
   if (tsSupport) {
     rules.push(tsRule)
-  }
-
-  if (needEslint) {
-    rules.push(eslintRule)
   }
 
   let currentMpxLoaderConf
@@ -109,20 +102,20 @@ module.exports = function getRules (options) {
       {
         test: /\.styl(us)?$/,
         use: [
-          'css-loader',
+          MpxWebpackPlugin.wxssLoader(),
           'stylus-loader'
         ]
       },
       {
         test: /\.wxss$/,
         use: [
-          'css-loader'
+          MpxWebpackPlugin.wxssLoader()
         ]
       },
       {
         test: /\.wxml$/,
         use: [
-          'html-loader'
+          MpxWebpackPlugin.wxmlLoader()
         ]
       }
     ])

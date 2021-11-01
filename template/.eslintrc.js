@@ -2,7 +2,7 @@ const { userConf } = require('./config/index')
 
 const eslintConf = {
   root: true,
-  parser: 'babel-eslint',
+  parser: userConf.babel7Support ? '@babel/eslint-parser' : 'babel-eslint',
   parserOptions: {
     sourceType: 'module'
   },

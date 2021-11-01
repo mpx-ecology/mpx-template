@@ -3,13 +3,14 @@ const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 const { resolve, resolveSrc } = require('./utils')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 const webpack = require('webpack')
 const path = require('path')
 
 module.exports = function getPlugins (options) {
-  const { mode, srcMode, env, subDir, production, report } = options
+  const { mode, srcMode, env, subDir, production, report, cloudFunc, needDll, needEslint } = options
   const plugins = []
   const copyIgnoreArr = supportedModes.map((item) => {
     return `**/${item}/**`
@@ -44,7 +45,7 @@ module.exports = function getPlugins (options) {
     }
   ]
 
-  if (options.cloudFunc) {
+  if (cloudFunc) {
     copyList.push({
       context: resolve(`src/functions`),
       from: '**/*',
@@ -52,7 +53,7 @@ module.exports = function getPlugins (options) {
     })
   }
 
-  if (options.needDll) {
+  if (needDll) {
     const getDllManifests = require('./getDllManifests')
     const dllManifests = getDllManifests(production)
     const localDllManifests = dllManifests.filter((manifest) => {
@@ -71,6 +72,15 @@ module.exports = function getPlugins (options) {
       })
     })
   }
+
+  if (needEslint) {
+    plugins.push(new ESLintPlugin({
+      context: resolve(),
+      exclude: [resolve('node_modules')],
+      extensions: ['js', 'ts', 'mpx']
+    }))
+  }
+
   plugins.push(new CopyWebpackPlugin({
     patterns: copyList
   }))
