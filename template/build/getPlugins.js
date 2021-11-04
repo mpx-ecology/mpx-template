@@ -1,6 +1,6 @@
 let { mpxPluginConf, dllConf, supportedModes } = require('../config/index')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-const { resolve, resolveSrc } = require('./utils')
+const { resolve, resolveSrc, getConf } = require('./utils')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
@@ -16,12 +16,8 @@ module.exports = function getPlugins (options) {
     return `**/${item}/**`
   })
 
-  let currentMpxPluginConf
-  if (typeof mpxPluginConf === 'function') {
-    currentMpxPluginConf = mpxPluginConf(options)
-  } else {
-    currentMpxPluginConf = mpxPluginConf
-  }
+  const currentMpxPluginConf = getConf(mpxPluginConf, options)
+
   plugins.push(new MpxWebpackPlugin(Object.assign({}, currentMpxPluginConf, {
     mode,
     srcMode
@@ -35,7 +31,7 @@ module.exports = function getPlugins (options) {
       noErrorOnMissing: true
     },
     {
-      context: resolve(`static`),
+      context: resolve('static'),
       from: '**/*',
       to: subDir ? '..' : '',
       globOptions: {
@@ -47,7 +43,7 @@ module.exports = function getPlugins (options) {
 
   if (cloudFunc) {
     copyList.push({
-      context: resolve(`src/functions`),
+      context: resolve('src/functions'),
       from: '**/*',
       to: '../functions/'
     })

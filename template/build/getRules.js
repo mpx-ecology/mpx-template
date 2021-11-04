@@ -1,6 +1,6 @@
 let { mpxLoaderConf } = require('../config/index')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-const { resolve } = require('./utils')
+const { resolve, getConf } = require('./utils')
 
 const baseRules = [
   {
@@ -47,12 +47,7 @@ module.exports = function getRules (options) {
     rules.push(tsRule)
   }
 
-  let currentMpxLoaderConf
-  if (typeof mpxLoaderConf === 'function') {
-    currentMpxLoaderConf = mpxLoaderConf(options)
-  } else {
-    currentMpxLoaderConf = mpxLoaderConf
-  }
+  const currentMpxLoaderConf = getConf(mpxLoaderConf, options)
 
   if (mode === 'web') {
     rules = rules.concat([
@@ -102,20 +97,20 @@ module.exports = function getRules (options) {
       {
         test: /\.styl(us)?$/,
         use: [
-          MpxWebpackPlugin.wxssLoader(),
+          'css-loader',
           'stylus-loader'
         ]
       },
       {
         test: /\.wxss$/,
         use: [
-          MpxWebpackPlugin.wxssLoader()
+          'css-loader'
         ]
       },
       {
         test: /\.wxml$/,
         use: [
-          MpxWebpackPlugin.wxmlLoader()
+          'html-loader'
         ]
       }
     ])

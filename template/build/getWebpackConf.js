@@ -26,10 +26,6 @@ module.exports = function getWebpackConfs (options) {
     nodeEnv: production ? 'production' : 'development'
   }
   if (watch) {
-    extendConfs.cache = true
-    extendConfs.snapshot = {
-      managedPaths: []
-    }
     // 仅在watch模式下生产sourcemap
     // 百度小程序不开启sourcemap，开启会有模板渲染问题
     if (mode !== 'swan') {

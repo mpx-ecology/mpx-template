@@ -21,8 +21,12 @@ function normalizeArr (arrCfg) {
   return []
 }
 
-function getRootPath (mode, env) {
-  return env ? `${mode}:${env}` : mode
+function getRootPath (...args) {
+  return args.filter(item => item).join('_')
+}
+
+function getConf (conf, options) {
+  return typeof conf === 'function' ? conf(options) : conf
 }
 
 module.exports = {
@@ -30,5 +34,6 @@ module.exports = {
   resolveSrc,
   resolveDist,
   normalizeArr,
-  getRootPath
+  getRootPath,
+  getConf
 }

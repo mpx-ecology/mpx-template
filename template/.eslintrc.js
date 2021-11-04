@@ -8,7 +8,8 @@ const eslintConf = {
   },
   extends: 'standard',
   settings: {
-    'html/html-extensions': ['.html', '.mpx'],  // consider .html and .mpx files as HTML
+    // consider .html and .mpx files as HTML
+    'html/html-extensions': ['.html', '.mpx']
   },
   plugins: [
     'html'
@@ -17,12 +18,14 @@ const eslintConf = {
     wx: 'readonly',
     getApp: 'readonly',
     App: 'readonly',
+    Page: 'readonly',
+    Component: 'readonly',
     __mpx_mode__: 'readonly',
     __mpx_env__: 'readonly',
     requirePlugin: 'readonly'
   },
   rules: {
-    camelcase: ['error', { 'allow': ['__mpx_mode__', '__mpx_env__'] }]
+    camelcase: ['error', { allow: ['__mpx_mode__', '__mpx_env__'] }]
   }
 }
 if (userConf.tsSupport) {

@@ -31,6 +31,8 @@
   },
   "author": "<$ author $>",
   "license": "ISC",
+  "repository": {
+  },
   "dependencies": {
     "@mpxjs/api-proxy": "^2.7.0-beta.0",
     "vue": "^2.6.10",
@@ -62,8 +64,8 @@
     "eslint-webpack-plugin": "^3.1.0",
     "ts-loader": "^6.0.0",
     "typescript": "^4.1.2",
-    "@typescript-eslint/eslint-plugin": "^2.27.0",
-    "@typescript-eslint/parser": "^2.27.0",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
     {% if babel7Support %}
     "@babel/core": "^7.10.4",
     "@babel/plugin-transform-runtime": "^7.10.4",
@@ -84,6 +86,7 @@
     {% endif %}
     "chalk": "^2.3.2",
     "css-loader": "^0.28.11",
+    "html-loader": "^3.0.1",
     "path": "^0.12.7",
     "rimraf": "^2.6.2",
     "stylus": "^0.54.5",
