@@ -18,6 +18,7 @@ module.exports = {
     cacheDirectory: resolve('.cache/')
   },
   snapshot: {
+    // 如果希望修改node_modules下的文件时对应的缓存可以失效，可以将此处的配置改为 managedPaths: []
     managedPaths: [resolve('node_modules/')]
   },
   optimization: {
