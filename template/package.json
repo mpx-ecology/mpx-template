@@ -20,13 +20,12 @@
     {% if needEslint %}
     "lint": "eslint --ext .js,.ts,.mpx src/",
     {% endif %}
-    {% if needUnitTest or needE2eTest %}
-    "test": "jest",
-    "build:test": "npm run build && jest",
+    {% if needUnitTest %}
+    "test:unit": "jest",
+    "build:unit": "npm run build && jest",
     {% endif %}
-    {% if needUnitTest and needE2eTest %}
-    "test:e2e": "jest ./test/e2e/index.spec.js",
-    "test:unit": "jest ./test/unit/**/*.spec.js",
+    {% if needE2eTest %}
+    "test:e2e": "node ./build/e2e.js",
     {% endif %}
     {% if needDll %}
     "build:dll": "node ./build/buildDll.js",

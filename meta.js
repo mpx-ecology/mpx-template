@@ -82,6 +82,7 @@ module.exports = {
       default: false
     },
     needE2eTest: {
+      when: 'srcMode === "wx"',
       type: 'confirm',
       message: '是否需要E2E测试',
       default: false
@@ -138,7 +139,8 @@ module.exports = {
     'build/getDllEntries.js': 'needDll',
     'build/getDllManifests.js': 'needDll',
     'src/lib/dll.js': 'needDll',
-    '.eslintrc.js': 'needEslint'
+    '.eslintrc.js': 'needEslint',
+    'build/e2e.js': 'needE2eTest'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
