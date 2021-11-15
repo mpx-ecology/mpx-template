@@ -34,7 +34,12 @@ const tsRule = {
   test: /\.ts$/,
   use: [
     'babel-loader',
-    'ts-loader'
+    {
+      loader: 'ts-loader',
+      options: {
+        appendTsSuffixTo: [/\.(mpx|vue)$/]
+      }
+    }
   ]
 }
 
