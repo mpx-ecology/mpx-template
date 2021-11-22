@@ -13,7 +13,9 @@ module.exports = function getWebpackConfs (options) {
   }
   const rootPath = getRootPath(mode, env)
   const output = {
-    path: resolveDist(rootPath, subDir)
+    path: resolveDist(rootPath, subDir),
+    publicPath: '/',
+    filename: '[name].js'
   }
   const name = plugin ? `${rootPath}-plugin-compiler` : `${rootPath}-compiler`
   const rules = getRules(options)
