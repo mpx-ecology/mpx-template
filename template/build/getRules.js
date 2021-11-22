@@ -14,7 +14,7 @@ const baseRules = [
     type: 'javascript/auto'
   },
   {
-    test: /\.(wxs|qs|sjs|filter\.js)$/,
+    test: /\.(wxs|qs|sjs|qjs|jds|dds|filter\.js)$/,
     use: [
       MpxWebpackPlugin.wxsPreLoader()
     ],
@@ -107,13 +107,13 @@ module.exports = function getRules (options) {
         ]
       },
       {
-        test: /\.wxss$/,
+        test: /\.(wxss|acss|css|qss|ttss|jxss|ddss)$/,
         use: [
           'css-loader'
         ]
       },
       {
-        test: /\.wxml$/,
+        test: /\.(wxml|axml|swan|qml|ttml|qxml|jxml|ddml)$/,
         use: [
           'html-loader'
         ]
