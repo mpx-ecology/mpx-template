@@ -139,8 +139,7 @@ module.exports = {
     'build/getDllEntries.js': 'needDll',
     'build/getDllManifests.js': 'needDll',
     'src/lib/dll.js': 'needDll',
-    '.eslintrc.js': 'needEslint',
-    'build/e2e.js': 'needE2eTest'
+    '.eslintrc.js': 'needEslint'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green

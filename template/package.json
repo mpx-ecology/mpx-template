@@ -21,11 +21,12 @@
     "lint": "eslint --ext .js,.ts,.mpx src/",
     {% endif %}
     {% if needUnitTest %}
-    "test:unit": "jest",
-    "build:unit": "npm run build && jest",
+    "test:unit": "jest --verbose ./test/unit",
+    "build:unit": "npm run build && jest --verbose ./test/unit",
     {% endif %}
     {% if needE2eTest %}
-    "test:e2e": "node ./build/e2e.js",
+    "test:e2e": "jest --verbose ./test/e2e",
+    "test:build": "npm run build && jest --verbose ./test/e2e"
     {% endif %}
     {% if needDll %}
     "build:dll": "node ./build/buildDll.js",
