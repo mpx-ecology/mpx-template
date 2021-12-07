@@ -19,7 +19,7 @@ describe('index', () => {
   }, 30000)
 
   it('desc', async () => {
-    const desc = await page.$('list--list')
+    const desc = await page.$('list', 'components/list2271575d/index')
     expect(desc.tagName).toBe('view')
     expect(await desc.text()).toContain('手机')
   })

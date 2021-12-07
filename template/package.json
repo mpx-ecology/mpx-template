@@ -26,7 +26,7 @@
     {% endif %}
     {% if needE2eTest %}
     "test:e2e": "jest --verbose ./test/e2e",
-    "test:build": "npm run build && jest --verbose ./test/e2e"
+    "build:e2e": "npm run build && jest --verbose ./test/e2e",
     {% endif %}
     {% if needDll %}
     "build:dll": "node ./build/buildDll.js",
@@ -39,7 +39,7 @@
     "@mpxjs/api-proxy": "^2.5.10",
     "vue": "^2.6.10",
     "vue-i18n": "^8.15.3",
-    "@mpxjs/core": "^2.6.31"
+    "@mpxjs/core": "^2.6.106"
   },
   "browserslist": [
     "ios >= 9",
@@ -65,7 +65,7 @@
     "babel-jest": "^22.4.4",
     {% endif %}
     {% if needE2eTest %}
-    "@didi/e2e-extension": "^0.0.5",
+    "@didi/e2e-extension": "^0.0.9",
     {% endif %}
     "eslint-loader": "^2.1.1",
     "babel-eslint": "^10.0.1",
