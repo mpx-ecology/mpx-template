@@ -15,6 +15,9 @@ module.exports = {
   setupFiles: ['<rootDir>/test/setup'],
   transform: {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
+    {% if tsSupport %}
+    '^.+\\.ts$': '<rootDir>/node_modules/ts-jest',
+    {% endif %}
     '^.+\\.mpx$': '<rootDir>/node_modules/@mpxjs/mpx-jest'
   },
   transformIgnorePatterns: ['node_modules/(?!(@mpxjs))']
