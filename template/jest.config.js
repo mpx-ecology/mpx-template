@@ -4,7 +4,7 @@
  */
 module.exports = {
   // rootDir: path.join(__dirname),
-  moduleFileExtensions: ['js', 'mpx'],
+  moduleFileExtensions: ['js', 'mpx', 'json'],
   moduleNameMapper: {
     // webpack的alias需要在此处理
   },
@@ -12,7 +12,8 @@ module.exports = {
   testURL: 'http://test.api.com',
   setupFiles: ['<rootDir>/test/setup'],
   transform: {
-    '^.+\\.js$': '<rootDir>/node_modules/babel-jest'
+    '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.mpx$': '<rootDir>/node_modules/@mpxjs/mpx-jest'
   },
   transformIgnorePatterns: ['node_modules/(?!(@mpxjs))']
 }
