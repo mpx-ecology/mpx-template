@@ -20,13 +20,13 @@
 
 <script name="json">
   module.exorts = {
-    "pages": [
-      "./pages/index"
+    pages: [
+      './pages/index'
     ]{% if isPlugin %},
-    "plugins": {
-      "myPlugin": {
-        "version": "dev",
-        "provider": __mpx_mode__ === "ali" ? "{{currentPluginId}}" : "<$ appid $>"
+    plugins: {
+      myPlugin: {
+        version: 'dev',
+        provider: __mpx_mode__ === 'ali' ? '{{currentPluginId}}' : '<$ appid $>'
       }
     }
 {% endif %}
