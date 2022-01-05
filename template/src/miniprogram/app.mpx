@@ -28,7 +28,7 @@
         version: 'dev',
         provider: __mpx_mode__ === 'ali' ? '{{currentPluginId}}' : '<$ appid $>'
       }
-    }
-{% endif %}
+    }{% endif %}
+
   }
 </script>
