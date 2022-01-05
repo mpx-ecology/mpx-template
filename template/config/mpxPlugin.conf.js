@@ -38,10 +38,7 @@ module.exports = {
   ],
 
   // 输出web时，vue-loader版本<15时需要将该配置关闭
-  forceDisableBuiltInLoader: true,
-
-  // 是否生成用于测试的源文件/dist的映射表
-  generateBuildMap: userConf.needUnitTest
+  forceDisableBuiltInLoader: true
 
   // 多语言i18n能力 以下是简单示例，更多详情请参考文档：https://didi.github.io/mpx/i18n.html
   // i18n: {
