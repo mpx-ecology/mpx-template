@@ -102,21 +102,17 @@ module.exports = function getRules (options) {
       {
         test: /\.styl(us)?$/,
         use: [
-          'css-loader',
+          MpxWebpackPlugin.wxssLoader(),
           'stylus-loader'
         ]
       },
       {
         test: /\.(wxss|acss|css|qss|ttss|jxss|ddss)$/,
-        use: [
-          'css-loader'
-        ]
+        use: MpxWebpackPlugin.wxssLoader()
       },
       {
         test: /\.(wxml|axml|swan|qml|ttml|qxml|jxml|ddml)$/,
-        use: [
-          'html-loader'
-        ]
+        use: MpxWebpackPlugin.wxmlLoader()
       }
     ])
   }

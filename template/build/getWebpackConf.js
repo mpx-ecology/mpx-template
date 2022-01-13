@@ -3,14 +3,13 @@ const { mergeWithCustomize, customizeObject } = require('webpack-merge')
 const getRules = require('./getRules')
 const getPlugins = require('./getPlugins')
 const { resolveSrc, resolveDist, getRootPath } = require('./utils')
+const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 
 module.exports = function getWebpackConfs (options) {
   const { plugin, subDir, mode, env, production, watch } = options
-  const entry = plugin ? {
-    plugin: resolveSrc('plugin.json?mpx&type=json&extract&isPlugin&asScript', subDir)
-  } : {
-    app: resolveSrc('app.mpx', subDir)
-  }
+  const entry = plugin
+    ? { plugin: MpxWebpackPlugin.getPluginEntry(resolveSrc('plugin.json', subDir)) }
+    : { app: resolveSrc('app.mpx', subDir) }
   const rootPath = getRootPath(mode, env)
   const output = {
     path: resolveDist(rootPath, subDir),
