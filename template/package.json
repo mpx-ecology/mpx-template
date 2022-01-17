@@ -86,6 +86,7 @@
     {% endif %}
     "chalk": "^2.3.2",
     "css-loader": "^0.28.11",
+    "autoprefixer": "^6.3.1",
     "html-loader": "^3.0.1",
     "path": "^0.12.7",
     "rimraf": "^2.6.2",
