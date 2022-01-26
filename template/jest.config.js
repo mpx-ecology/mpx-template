@@ -4,15 +4,21 @@
  */
 module.exports = {
   // rootDir: path.join(__dirname),
-  moduleFileExtensions: ['js', 'mpx'],
+  moduleFileExtensions: ['js', 'mpx', 'json'],
+  testEnvironment: 'jsdom',
   moduleNameMapper: {
     // webpack的alias需要在此处理
+    '^src(.*)': '<rootDir>/src/$1'
   },
   testPathIgnorePatterns: ['dist', 'node_modules'],
   testURL: 'http://test.api.com',
   setupFiles: ['<rootDir>/test/setup'],
   transform: {
-    '^.+\\.js$': '<rootDir>/node_modules/babel-jest'
+    '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
+    {% if tsSupport %}
+    '^.+\\.ts$': '<rootDir>/node_modules/ts-jest',
+    {% endif %}
+    '^.+\\.mpx$': '<rootDir>/node_modules/@mpxjs/mpx-jest'
   },
   transformIgnorePatterns: ['node_modules/(?!(@mpxjs))']
 }
