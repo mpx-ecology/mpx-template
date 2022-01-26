@@ -1,19 +1,20 @@
 const webpackBaseConf = require('./webpack.base.conf')
-const merge = require('webpack-merge')
+const { mergeWithCustomize, customizeObject } = require('webpack-merge')
 const getRules = require('./getRules')
 const getPlugins = require('./getPlugins')
 const { resolveSrc, resolveDist, getRootPath } = require('./utils')
+const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 
 module.exports = function getWebpackConfs (options) {
   const { plugin, subDir, mode, env, production, watch } = options
-  const entry = plugin ? {
-    plugin: resolveSrc('plugin.json?plugin', subDir)
-  } : {
-    app: resolveSrc('app.mpx', subDir)
-  }
+  const entry = plugin
+    ? { plugin: MpxWebpackPlugin.getPluginEntry(resolveSrc('plugin.json', subDir)) }
+    : { app: resolveSrc('app.mpx', subDir) }
   const rootPath = getRootPath(mode, env)
   const output = {
-    path: resolveDist(rootPath, subDir)
+    path: resolveDist(rootPath, subDir),
+    publicPath: '/',
+    filename: '[name].js'
   }
   const name = plugin ? `${rootPath}-plugin-compiler` : `${rootPath}-compiler`
   const rules = getRules(options)
@@ -26,7 +27,6 @@ module.exports = function getWebpackConfs (options) {
     nodeEnv: production ? 'production' : 'development'
   }
   if (watch) {
-    extendConfs.cache = true
     // 仅在watch模式下生产sourcemap
     // 百度小程序不开启sourcemap，开启会有模板渲染问题
     if (mode !== 'swan') {
@@ -34,7 +34,11 @@ module.exports = function getWebpackConfs (options) {
     }
   }
 
-  return merge(webpackBaseConf, {
+  return mergeWithCustomize({
+    customizeObject: customizeObject({
+      snapshot: 'replace'
+    })
+  })(webpackBaseConf, {
     name,
     entry,
     output,
