@@ -40,7 +40,7 @@ module.exports = {
   forceDisableBuiltInLoader: true,
 
   // 对于buildDependencies进行hack处理，避免使用cssnano或postcss时将package.json作为buildDependencies处理，问题详情可查看：https://github.com/webpack/webpack/issues/15466
-  // 注意开启这项hack配置时请确保package.json中没有存放编译配置，否则请关闭hack配置
+  // 注意，开启这项hack配置时请确保package.json中没有存放编译配置，否则请关闭hack配置
   hackResolveBuildDependencies: ({ files, resolveDependencies }) => {
     const packageJSONPath = resolve('package.json')
     if (files.has(packageJSONPath)) files.delete(packageJSONPath)
