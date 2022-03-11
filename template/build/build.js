@@ -5,10 +5,14 @@ const program = require('commander')
 const { userConf, supportedModes } = require('../config/index')
 const getWebpackConf = require('./getWebpackConf')
 const { resolveDist, getRootPath } = require('./utils')
+const WebpackDevServer = require('webpack-dev-server')
+const webpackDevConf = require('./webpack.dev.conf')
+const devServer = require('../config/devServer')
 
 program
   .option('-w, --watch', 'watch mode')
   .option('-p, --production', 'production release')
+  .option('-s, --serve', 'dev server')
   .parse(process.argv)
 
 const env = process.env
@@ -101,6 +105,8 @@ try {
 
 if (program.watch) {
   webpack(webpackConfs).watch(undefined, callback)
+} if (program.serve) {
+  runServer()
 } else {
   webpack(webpackConfs, callback)
 }
@@ -140,4 +146,13 @@ function callback (err, stats) {
   } else {
     console.log(chalk.cyan('  Build complete.\n'))
   }
+}
+
+function runServer () {
+  const compiler = webpack(webpackDevConf)
+  const server = new WebpackDevServer({
+    ...devServer,
+    open: true
+  }, compiler)
+  server.start()
 }

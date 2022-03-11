@@ -13,7 +13,7 @@
     "build:cross": "npm run build --modes=wx,ali{% if transWeb %},web{% endif %}",
     {% endif %}
     {% if transWeb %}
-    "watch:web:serve": "npx npm-run-all --parallel watch:web serve",
+    "watch:web:serve": "node ./build/build.js -s",
     "watch:web": "npm run watch --mode=web",
     "serve": "npx http-server dist/web",
     {% endif %}
@@ -85,6 +85,7 @@
     "webpack": "^5.43.0",
     "webpack-merge": "^5.8.0",
     "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-dev-server": "^4.7.4",
     "commander": "^6.0.0",
     "postcss": "^8.4.5"
   }
