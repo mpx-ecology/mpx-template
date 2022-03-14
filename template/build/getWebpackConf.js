@@ -11,10 +11,13 @@ module.exports = function getWebpackConfs (options) {
     ? { plugin: MpxWebpackPlugin.getPluginEntry(resolveSrc('plugin.json', subDir)) }
     : { app: resolveSrc('app.mpx', subDir) }
   const rootPath = getRootPath(mode, env)
-  const output = {
-    path: resolveDist(rootPath, subDir),
-    publicPath: '/',
-    filename: '[name].js'
+  let output = {}
+  if (mode !== 'web') {
+    output = {
+      path: resolveDist(rootPath, subDir),
+      publicPath: '/',
+      filename: '[name].js'
+    }
   }
   const name = plugin ? `${rootPath}-plugin-compiler` : `${rootPath}-compiler`
   const rules = getRules(options)
@@ -23,13 +26,15 @@ module.exports = function getWebpackConfs (options) {
   if (production) {
     extendConfs.mode = 'production'
   }
-  extendConfs.optimization = {
-    nodeEnv: production ? 'production' : 'development'
+  if (mode !== 'web') {
+    extendConfs.optimization = {
+      nodeEnv: production ? 'production' : 'development'
+    }
   }
   if (watch) {
     // 仅在watch模式下生产sourcemap
     // 百度小程序不开启sourcemap，开启会有模板渲染问题
-    if (mode !== 'swan') {
+    if (mode !== 'swan' && mode !== 'web') {
       extendConfs.devtool = 'source-map'
     }
   }
