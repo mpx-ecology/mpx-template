@@ -67,7 +67,7 @@ modes.forEach(({ mode, env }) => {
     report,
     subDir: (userConf.isPlugin || userConf.cloudFunc) ? 'miniprogram' : ''
   })
-  if (mode === 'web') {
+  if (mode === 'web' && program.watch) {
     webWebpackConf = getWebpackConf(options)
     return
   }

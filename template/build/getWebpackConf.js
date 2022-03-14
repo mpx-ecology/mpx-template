@@ -12,7 +12,7 @@ module.exports = function getWebpackConfs (options) {
     : { app: resolveSrc('app.mpx', subDir) }
   const rootPath = getRootPath(mode, env)
   let output = {}
-  if (mode !== 'web') {
+  if (mode !== 'web' || !watch) {
     output = {
       path: resolveDist(rootPath, subDir),
       publicPath: '/',
@@ -26,7 +26,7 @@ module.exports = function getWebpackConfs (options) {
   if (production) {
     extendConfs.mode = 'production'
   }
-  if (mode !== 'web') {
+  if (mode !== 'web' || !watch) {
     extendConfs.optimization = {
       nodeEnv: production ? 'production' : 'development'
     }
