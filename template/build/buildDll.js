@@ -7,8 +7,8 @@ const getDllEntries = require('./getDllEntries')
 const { dllConf } = require('../config/index')
 const { normalizeArr } = require('./utils')
 
-const dllName = '[name].[chunkHash].dll.js'
-const manifestName = '[chunkHash].manifest.json'
+const dllName = '[name].[chunkhash].dll.js'
+const manifestName = '[chunkhash].manifest.json'
 
 const webpackCfgs = []
 
