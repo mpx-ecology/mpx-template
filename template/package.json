@@ -78,7 +78,7 @@
     "html-loader": "^3.0.1",
     "path": "^0.12.7",
     "rimraf": "^2.6.2",
-    "stylus": "^0.54.5",
+    "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
     "webpack": "^5.43.0",
     "webpack-merge": "^5.8.0",
