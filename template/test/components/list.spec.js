@@ -2,12 +2,18 @@
  * @file unit test example
  * docs of miniprogram-simulate: https://github.com/wechat-miniprogram/miniprogram-simulate
  */
-const {loadComponent} = require('../util')
-const simulate = require('miniprogram-simulate')
+const simulate = require('@mpxjs/miniprogram-simulate')
+
 
 describe('test list component', () => {
+  it('components instance data', function () {
+    const id = simulate.loadMpx('src/components/list.mpx')
+    const comp = simulate.render(id)
+    expect(comp.data.listData.length).toBe(3)
+    expect(comp.data.listData).toEqual(["手机", "电视", "电脑"])
+  })
   it('should render list correct', function () {
-    const id = loadComponent('src/components/list.mpx')
+    const id = simulate.loadMpx('src/components/list.mpx')
     const comp = simulate.render(id) // 渲染自定义组件
 
     const parent = document.createElement('parent-wrapper') // 创建容器节点

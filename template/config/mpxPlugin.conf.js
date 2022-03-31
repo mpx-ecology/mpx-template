@@ -1,4 +1,3 @@
-const userConf = require('./user.conf')
 const resolve = require('../build/utils').resolve
 
 // 可以在此配置mpx webpack plugin
@@ -40,8 +39,13 @@ module.exports = {
   // 输出web时，vue-loader版本<15时需要将该配置关闭
   forceDisableBuiltInLoader: true,
 
-  // 是否生成用于测试的源文件/dist的映射表
-  generateBuildMap: userConf.needUnitTest
+  // 对于buildDependencies进行hack处理，避免使用cssnano或postcss时将package.json作为buildDependencies处理，问题详情可查看：https://github.com/webpack/webpack/issues/15466
+  // 注意，开启这项hack配置时请确保package.json中没有存放编译配置，否则请关闭hack配置
+  hackResolveBuildDependencies: ({ files, resolveDependencies }) => {
+    const packageJSONPath = resolve('package.json')
+    if (files.has(packageJSONPath)) files.delete(packageJSONPath)
+    if (resolveDependencies.files.has(packageJSONPath)) resolveDependencies.files.delete(packageJSONPath)
+  },
 
   // 多语言i18n能力 以下是简单示例，更多详情请参考文档：https://didi.github.io/mpx/i18n.html
   // i18n: {

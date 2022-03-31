@@ -1,48 +1,50 @@
 let { mpxLoaderConf } = require('../config/index')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
-const { resolve, resolveSrc } = require('./utils')
+const { resolve, getConf } = require('./utils')
 
 const baseRules = [
   {
     test: /\.js$/,
     loader: 'babel-loader',
-    include: [resolve('src'), resolve('test'), resolve('node_modules/@mpxjs')]
+    include: [/\.mpx\.js/, resolve('src'), resolve('test'), resolve('node_modules/@mpxjs')]
   },
   {
     test: /\.json$/,
-    resourceQuery: /__component/,
+    resourceQuery: /asScript/,
     type: 'javascript/auto'
   },
   {
-    test: /\.(wxs|qs|sjs|filter\.js)$/,
-    loader: MpxWebpackPlugin.wxsPreLoader(),
+    test: /\.(wxs|qs|sjs|qjs|jds|dds|filter\.js)$/,
+    use: [
+      MpxWebpackPlugin.wxsPreLoader()
+    ],
     enforce: 'pre'
   },
   {
     test: /\.(png|jpe?g|gif|svg)$/,
-    loader: MpxWebpackPlugin.urlLoader({
-      name: 'img/[name][hash].[ext]'
-    })
+    use: [
+      MpxWebpackPlugin.urlLoader({
+        name: 'img/[name][hash].[ext]'
+      })
+    ]
   }
 ]
-
-const eslintRule = {
-  test: /\.(js|ts|mpx)$/,
-  loader: 'eslint-loader',
-  enforce: 'pre',
-  include: [resolve('src')]
-}
 
 const tsRule = {
   test: /\.ts$/,
   use: [
     'babel-loader',
-    'ts-loader'
+    {
+      loader: 'ts-loader',
+      options: {
+        appendTsSuffixTo: [/\.(mpx|vue)$/]
+      }
+    }
   ]
 }
 
 module.exports = function getRules (options) {
-  const { mode, tsSupport, needEslint, plugin, subDir } = options
+  const { mode, tsSupport } = options
 
   let rules = baseRules.slice()
 
@@ -50,24 +52,7 @@ module.exports = function getRules (options) {
     rules.push(tsRule)
   }
 
-  if (needEslint) {
-    rules.push(eslintRule)
-  }
-
-  if (plugin) {
-    rules.push({
-      test: /\.json$/,
-      resourceQuery: /plugin/,
-      use: MpxWebpackPlugin.pluginLoader()
-    })
-  }
-
-  let currentMpxLoaderConf
-  if (typeof mpxLoaderConf === 'function') {
-    currentMpxLoaderConf = mpxLoaderConf(options)
-  } else {
-    currentMpxLoaderConf = mpxLoaderConf
-  }
+  const currentMpxLoaderConf = getConf(mpxLoaderConf, options)
 
   if (mode === 'web') {
     rules = rules.concat([
@@ -113,6 +98,21 @@ module.exports = function getRules (options) {
       {
         test: /\.mpx$/,
         use: MpxWebpackPlugin.loader(currentMpxLoaderConf)
+      },
+      {
+        test: /\.styl(us)?$/,
+        use: [
+          MpxWebpackPlugin.wxssLoader(),
+          'stylus-loader'
+        ]
+      },
+      {
+        test: /\.(wxss|acss|css|qss|ttss|jxss|ddss)$/,
+        use: MpxWebpackPlugin.wxssLoader()
+      },
+      {
+        test: /\.(wxml|axml|swan|qml|ttml|qxml|jxml|ddml)$/,
+        use: MpxWebpackPlugin.wxmlLoader()
       }
     ])
   }

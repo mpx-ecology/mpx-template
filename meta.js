@@ -61,11 +61,6 @@ module.exports = {
       type: 'confirm',
       default: false
     },
-    babel7Support: {
-      message: '是否需要使用Babel7？',
-      type: 'confirm',
-      default: true
-    },
     needEslint: {
       type: 'confirm',
       message: '是否需要ESlint',
@@ -122,8 +117,6 @@ module.exports = {
     'static/swan/*': 'srcMode === "swan" || cross',
     'tsconfig.json': 'tsSupport',
     '**/*.ts': 'tsSupport',
-    '.babelrc': '!babel7Support',
-    'babel.config.json': 'babel7Support',
     'test/**/*': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc',
@@ -147,7 +140,6 @@ module.exports = {
       cloudFunc: false,
       isPlugin: false,
       needEslint: true,
-      babel7Support: true,
       needUnitTest: false,
       needDll: false,
       tsSupport: false
