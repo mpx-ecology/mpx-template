@@ -5,7 +5,7 @@
 </template>
 
 {% if tsSupport %}
-<script lang="ts" src="./list.ts"></script>
+<script src="./list.ts"></script>
 {% else %}
 <script>
   import { createComponent } from '@mpxjs/core'

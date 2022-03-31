@@ -2,8 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const rm = require('rimraf')
 const chalk = require('chalk')
-const merge = require('webpack-merge')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const { merge } = require('webpack-merge')
 const getDllEntries = require('./getDllEntries')
 const { dllConf } = require('../config/index')
 const { normalizeArr } = require('./utils')
@@ -33,7 +32,7 @@ normalizeArr(dllConf.groups).forEach((item) => {
           type: 'commonjs2',
           context: dllConf.context
         }),
-        new ProgressBarPlugin()
+        new webpack.ProgressPlugin()
       ]
     }, item.webpackCfg))
   }

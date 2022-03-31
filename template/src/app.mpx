@@ -1,5 +1,5 @@
 {% if tsSupport %}
-<script lang="ts" src="./app.ts"></script>
+<script src="./app.ts"></script>
 {% else %}
 <script>
   import mpx, { createApp } from '@mpxjs/core'
