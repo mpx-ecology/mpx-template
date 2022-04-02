@@ -16,6 +16,5 @@ module.exports = {
   isPlugin: formatOption('<$ isPlugin $>'),
   tsSupport: formatOption('<$ tsSupport $>'),
   needEslint: formatOption('<$ needEslint $>'),
-  needDll: formatOption('<$ needDll $>'),
   needUnitTest: formatOption('<$ needUnitTest $>')
 }

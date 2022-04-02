@@ -1,4 +1,4 @@
-let { mpxPluginConf, dllConf, supportedModes } = require('../config/index')
+let { mpxPluginConf, supportedModes } = require('../config/index')
 const MpxWebpackPlugin = require('@mpxjs/webpack-plugin')
 const { resolve, resolveSrc, getConf } = require('./utils')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -10,7 +10,7 @@ const webpack = require('webpack')
 const path = require('path')
 
 module.exports = function getPlugins (options) {
-  const { mode, srcMode, env, subDir, production, report, cloudFunc, needDll, needEslint } = options
+  const { mode, srcMode, env, subDir, production, report, cloudFunc, needEslint } = options
   const plugins = []
   const copyIgnoreArr = supportedModes.map((item) => {
     return `**/${item}/**`
@@ -46,26 +46,6 @@ module.exports = function getPlugins (options) {
       context: resolve('src/functions'),
       from: '**/*',
       to: '../functions/'
-    })
-  }
-
-  if (needDll) {
-    const getDllManifests = require('./getDllManifests')
-    const dllManifests = getDllManifests(production)
-    const localDllManifests = dllManifests.filter((manifest) => {
-      return manifest.mode === mode || !manifest.mode
-    })
-
-    localDllManifests.forEach((manifest) => {
-      plugins.push(new webpack.DllReferencePlugin({
-        context: dllConf.context,
-        manifest: manifest.content
-      }))
-      copyList.push({
-        context: path.join(dllConf.path, 'lib'),
-        from: manifest.content.name,
-        to: manifest.content.name
-      })
     })
   }
 
