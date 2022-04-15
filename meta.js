@@ -66,11 +66,6 @@ module.exports = {
       message: '是否需要ESlint',
       default: true
     },
-    needDll: {
-      type: 'confirm',
-      message: '是否需要配置Dll',
-      default: false
-    },
     needUnitTest: {
       type: 'confirm',
       message: '是否需要单元测试',

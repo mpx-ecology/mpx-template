@@ -7,10 +7,6 @@
 {% else %}
 <script>
   import { createPage } from '@mpxjs/core'
-{% if needDll %}
-  import dll from '../lib/dll'
-  console.log(dll)
-{% endif %}
 
   createPage({
     onLoad () {}

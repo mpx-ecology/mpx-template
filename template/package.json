@@ -22,9 +22,6 @@
     "test": "jest",
     "build:test": "npm run build && jest",
     {% endif %}
-    {% if needDll %}
-    "build:dll": "node ./build/buildDll.js",
-    {% endif %}
     "help": "node ./build/build.js --help"
   },
   "author": "<$ author $>",

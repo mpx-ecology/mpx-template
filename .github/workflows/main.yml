@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
+        os: [macos-latest, windows-latest, ubuntu-latest]
         node: [12, 14, 16]
 
     steps:
@@ -42,9 +42,3 @@ jobs:
 
       - name: test ts project
         run: node __test__/test-ts.js
-
-      - name: test dll project
-        run: node __test__/test-dll.js
-
-      - name: test dll cross project
-        run: node __test__/test-dll-cross.js

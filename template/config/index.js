@@ -15,8 +15,5 @@ const options = {
   supportedModes
 }
 
-if (userConf.needDll) {
-  options.dllConf = require('./dll.conf')
-}
 
 module.exports = options
