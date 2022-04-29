@@ -22,6 +22,7 @@ module.exports = {
     managedPaths: [resolve('node_modules/')]
   },
   optimization: {
+    emitOnErrors: true,
     minimizer: [
       {
         apply: compiler => {
