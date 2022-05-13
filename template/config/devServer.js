@@ -1,8 +1,5 @@
-const path = require('path')
 module.exports = {
-  static: {
-    directory: path.resolve(__dirname, '/')
-  },
+  static: false,
   allowedHosts: 'auto',
   compress: true,
   client: {

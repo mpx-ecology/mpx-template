@@ -7,7 +7,6 @@ const ESLintPlugin = require('eslint-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 const webpack = require('webpack')
-const path = require('path')
 
 module.exports = function getPlugins (options) {
   const { mode, srcMode, env, subDir, production, report, cloudFunc, needEslint } = options
