@@ -1,10 +1,12 @@
 const rm = require('rimraf')
 const chalk = require('chalk')
 const webpack = require('webpack')
+const WebpackDevServer = require('webpack-dev-server')
 const program = require('commander')
 const { userConf, supportedModes } = require('../config/index')
 const getWebpackConf = require('./getWebpackConf')
 const { resolveDist, getRootPath } = require('./utils')
+const devServer = require('../config/devServer')
 
 program
   .option('-w, --watch', 'watch mode')
@@ -27,7 +29,6 @@ const modes = modeStr.split(/[,|]/)
       }
     }
   }).filter((item) => item)
-
 if (!modes.length) {
   modes.push({
     mode: userConf.srcMode
@@ -56,7 +57,7 @@ if (userConf.openChildProcess && modes.length > 1) {
 }
 
 let webpackConfs = []
-
+let webWebpackConf = null
 modes.forEach(({ mode, env }) => {
   const options = Object.assign({}, userConf, {
     mode,
@@ -66,9 +67,12 @@ modes.forEach(({ mode, env }) => {
     report,
     subDir: (userConf.isPlugin || userConf.cloudFunc) ? 'miniprogram' : ''
   })
+  if (mode === 'web' && program.watch) {
+    webWebpackConf = getWebpackConf(options)
+    return
+  }
   webpackConfs.push(getWebpackConf(options))
 })
-
 if (userConf.isPlugin) {
   // 目前支持的plugin构建平台
   modes.filter(({ mode }) => ['wx', 'ali'].includes(mode)).forEach(({ mode, env }) => {
@@ -98,8 +102,10 @@ try {
   console.error(e)
   console.log('\n\n删除dist文件夹遇到了一些问题，如果遇到问题请手工删除dist重来\n\n')
 }
-
 if (program.watch) {
+  if (webWebpackConf) {
+    runServer()
+  }
   webpack(webpackConfs).watch(undefined, callback)
 } else {
   webpack(webpackConfs, callback)
@@ -140,4 +146,13 @@ function callback (err, stats) {
   } else {
     console.log(chalk.cyan('  Build complete.\n'))
   }
+}
+
+function runServer () {
+  const compiler = webpack(webWebpackConf)
+  const server = new WebpackDevServer({
+    ...devServer,
+    open: true
+  }, compiler)
+  server.start()
 }

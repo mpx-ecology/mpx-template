@@ -15,8 +15,6 @@ module.exports = {
   cloudFunc: formatOption('<$ cloudFunc $>'),
   isPlugin: formatOption('<$ isPlugin $>'),
   tsSupport: formatOption('<$ tsSupport $>'),
-  babel7Support: formatOption('<$ babel7Support $>'),
   needEslint: formatOption('<$ needEslint $>'),
-  needDll: formatOption('<$ needDll $>'),
   needUnitTest: formatOption('<$ needUnitTest $>')
 }

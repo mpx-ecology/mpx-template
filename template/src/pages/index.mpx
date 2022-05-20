@@ -3,14 +3,10 @@
 </template>
 
 {% if tsSupport %}
-<script lang="ts" src="./index.ts"></script>
+<script src="./index.ts"></script>
 {% else %}
 <script>
   import { createPage } from '@mpxjs/core'
-{% if needDll %}
-  import dll from '../lib/dll'
-  console.log(dll)
-{% endif %}
 
   createPage({
     onLoad () {}

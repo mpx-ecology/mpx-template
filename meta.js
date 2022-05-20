@@ -61,20 +61,10 @@ module.exports = {
       type: 'confirm',
       default: false
     },
-    babel7Support: {
-      message: '是否需要使用Babel7？',
-      type: 'confirm',
-      default: true
-    },
     needEslint: {
       type: 'confirm',
       message: '是否需要ESlint',
       default: true
-    },
-    needDll: {
-      type: 'confirm',
-      message: '是否需要配置Dll',
-      default: false
     },
     needUnitTest: {
       type: 'confirm',
@@ -128,11 +118,7 @@ module.exports = {
     'static/swan/*': 'srcMode === "swan" || cross',
     'tsconfig.json': 'tsSupport',
     '**/*.ts': 'tsSupport',
-    '.babelrc': '!babel7Support',
-    'babel.config.json': 'babel7Support',
-    'test/unit/**/*': 'needUnitTest',
-    'test/e2e/**/*': 'needE2eTest',
-    '.e2erc': 'needE2eTest',
+    'test/**/*': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc',
     'build/buildDll.js': 'needDll',
@@ -140,7 +126,9 @@ module.exports = {
     'build/getDllEntries.js': 'needDll',
     'build/getDllManifests.js': 'needDll',
     'src/lib/dll.js': 'needDll',
-    '.eslintrc.js': 'needEslint'
+    '.eslintrc.js': 'needEslint',
+    'test/e2e/**/*': 'needE2eTest',
+    '.e2erc': 'needE2eTest'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
@@ -155,7 +143,6 @@ module.exports = {
       cloudFunc: false,
       isPlugin: false,
       needEslint: true,
-      babel7Support: true,
       needUnitTest: false,
       needDll: false,
       tsSupport: false
