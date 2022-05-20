@@ -115,11 +115,6 @@ module.exports = {
     'test/**/*': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc',
-    'build/buildDll.js': 'needDll',
-    'config/dll.conf.js': 'needDll',
-    'build/getDllEntries.js': 'needDll',
-    'build/getDllManifests.js': 'needDll',
-    'src/lib/dll.js': 'needDll',
     '.eslintrc.js': 'needEslint'
   },
   complete: function (data, { chalk }) {
@@ -136,7 +131,6 @@ module.exports = {
       isPlugin: false,
       needEslint: true,
       needUnitTest: false,
-      needDll: false,
       tsSupport: false
     }
     if (mockList.length) {
