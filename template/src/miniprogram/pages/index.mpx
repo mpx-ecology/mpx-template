@@ -1,9 +1,9 @@
 <template>
-  <view>
-{% if isPlugin %}
-    <list></list>
-{% endif %}
-  </view>
+  {% if isPlugin %}
+  <list></list>
+  {% else %}
+  <view>page</view>
+  {% endif %}
 </template>
 
 {% if tsSupport %}
@@ -20,9 +20,9 @@
 <script type="application/json">
   {
     "usingComponents": {
-{% if isPlugin %}
+      {% if isPlugin %}
       "list": "plugin://myPlugin/list"
-{% endif %}
+      {% endif %}
     }
   }
 </script>
