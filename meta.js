@@ -132,6 +132,7 @@ module.exports = {
     'babel.config.json': 'babel7Support',
     'test/unit/**/*': 'needUnitTest',
     'test/e2e/**/*': 'needE2eTest',
+    '.e2erc': 'needE2eTest',
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc',
     'build/buildDll.js': 'needDll',
