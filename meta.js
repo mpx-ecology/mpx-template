@@ -31,29 +31,35 @@ module.exports = {
       }
     },
     openChildProcess: {
-      when: 'cross === true',
+      when: 'cross',
       message: '是否需要开启子进程进行编译',
       type: 'confirm',
       default: false
     },
     transWeb: {
-      when: 'cross === true',
+      when: 'cross',
       message: '是否需要支持输出web',
       type: 'confirm',
       default: (data) => {
         return data.cross
       }
     },
-    cloudFunc: {
-      when: 'srcMode === "wx" && cross === false',
-      message: '是否需要使用小程序云开发能力',
-      type: 'confirm',
-      default: false
-    },
     isPlugin: {
       when: 'srcMode === "ali" || srcMode === "wx"',
       type: 'confirm',
       message: '是否是个插件项目?（不清楚请选 No ！什么是插件项目请看微信或支付宝官方文档！）',
+      default: false
+    },
+    functional: {
+      when: 'srcMode === "wx" && !cross && !isPlugin',
+      message: '是否需要提供插件功能页',
+      type: 'confirm',
+      default: false
+    },
+    cloudFunc: {
+      when: 'srcMode === "wx" && !cross && !isPlugin',
+      message: '是否需要使用小程序云开发能力',
+      type: 'confirm',
       default: false
     },
     tsSupport: {
@@ -106,12 +112,12 @@ module.exports = {
     }
   },
   filters: {
-    'src/@(miniprogram)/**/*': 'isPlugin || cloudFunc',
-    'src/@(plugin)/**/*': 'isPlugin',
-    'src/@(functions)/**/*': 'cloudFunc',
+    'src/@(miniprogram|plugin)/**/*': 'isPlugin',
+    'src/functions/**/*': 'cloudFunc',
+    'src/functional-pages/**/*': 'functional',
     'src/index.html': 'transWeb',
-    'src/!(miniprogram|plugin|functions)/**/*': '!isPlugin && !cloudFunc',
-    'src/*': '!isPlugin && !cloudFunc',
+    'src/!(miniprogram|plugin)/**/*': '!isPlugin',
+    'src/*': '!isPlugin',
     'static/wx/*': 'srcMode === "wx"',
     'static/ali/*': 'srcMode === "ali" || cross',
     'static/tt/*': 'srcMode === "tt" || cross',
@@ -121,12 +127,6 @@ module.exports = {
     'test/unit/**/*': 'needUnitTest',
     'test/setup.js': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
-    'functions/*': 'cloudFunc',
-    'build/buildDll.js': 'needDll',
-    'config/dll.conf.js': 'needDll',
-    'build/getDllEntries.js': 'needDll',
-    'build/getDllManifests.js': 'needDll',
-    'src/lib/dll.js': 'needDll',
     '.eslintrc.js': 'needEslint',
     'test/e2e/components/list.spec.js': 'needE2eTest && !tsSupport',
     'test/e2e/components/list.spec.ts': 'needE2eTest && tsSupport',
@@ -145,10 +145,10 @@ module.exports = {
       cross: false,
       transWeb: false,
       cloudFunc: false,
+      functional: false,
       isPlugin: false,
       needEslint: true,
       needUnitTest: false,
-      needDll: false,
       tsSupport: false
     }
     if (mockList.length) {

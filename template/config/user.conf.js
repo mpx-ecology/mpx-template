@@ -12,8 +12,9 @@ module.exports = {
   cross: formatOption('<$ cross $>'),
   openChildProcess: formatOption('<$ openChildProcess $>'),
   transWeb: formatOption('<$ transWeb $>'),
-  cloudFunc: formatOption('<$ cloudFunc $>'),
   isPlugin: formatOption('<$ isPlugin $>'),
+  functional: formatOption('<$ functional $>'),
+  cloudFunc: formatOption('<$ cloudFunc $>'),
   tsSupport: formatOption('<$ tsSupport $>'),
   needEslint: formatOption('<$ needEslint $>'),
   needUnitTest: formatOption('<$ needUnitTest $>')

@@ -9,7 +9,7 @@ const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 const webpack = require('webpack')
 
 module.exports = function getPlugins (options) {
-  const { mode, srcMode, env, subDir, production, report, cloudFunc, needEslint } = options
+  const { mode, srcMode, env, subDir, production, report, functional, cloudFunc, needEslint } = options
   const plugins = []
   const copyIgnoreArr = supportedModes.map((item) => {
     return `**/${item}/**`
@@ -40,11 +40,19 @@ module.exports = function getPlugins (options) {
     }
   ]
 
+  if (functional) {
+    copyList.push({
+      context: resolve('src/functional-pages'),
+      from: '**/*',
+      to: 'functional-pages'
+    })
+  }
+
   if (cloudFunc) {
     copyList.push({
       context: resolve('src/functions'),
       from: '**/*',
-      to: '../functions/'
+      to: 'functions'
     })
   }
 

@@ -22,7 +22,11 @@
   {
     "pages": [
       "./pages/index"
-    ]
+    ]{% if functional %},
+    "functionalPages": {
+      "independent": true
+    }
+    {% endif %}
   }
 </script>
 
