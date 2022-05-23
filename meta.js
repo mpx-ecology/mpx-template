@@ -118,7 +118,8 @@ module.exports = {
     'static/swan/*': 'srcMode === "swan" || cross',
     'tsconfig.json': 'tsSupport',
     '**/*.ts': 'tsSupport',
-    'test/**/*': 'needUnitTest',
+    'test/unit/**/*': 'needUnitTest',
+    'test/setup.js': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
     'functions/*': 'cloudFunc',
     'build/buildDll.js': 'needDll',
@@ -127,8 +128,11 @@ module.exports = {
     'build/getDllManifests.js': 'needDll',
     'src/lib/dll.js': 'needDll',
     '.eslintrc.js': 'needEslint',
-    'test/e2e/**/*': 'needE2eTest',
-    '.e2erc': 'needE2eTest'
+    'test/e2e/components/list.spec.js': 'needE2eTest && !tsSupport',
+    'test/e2e/components/list.spec.ts': 'needE2eTest && tsSupport',
+    'test/e2e/screenshot/*': 'needE2eTest',
+    'jest-e2e.config.js': 'needE2eTest',
+    '.e2erc.js': 'needE2eTest'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
