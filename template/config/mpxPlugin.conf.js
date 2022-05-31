@@ -8,7 +8,7 @@ module.exports = {
   // 执行e2e时候保证每次构建hash不变
   pathHashMode: 'relative',
   // 当resolveMode为native时可通过该字段指定项目根目录
-  // projectRoot: resolve('src'),
+  projectRoot: resolve('src'),
 
   // 可选值 full / changed，不传默认为change，当设置为changed时在watch模式下将只会对内容发生变化的文件进行写入，以提升小程序开发者工具编译性能
   writeMode: 'changed',
