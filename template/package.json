@@ -19,8 +19,12 @@
     "lint": "eslint --ext .js,.ts,.mpx src/",
     {% endif %}
     {% if needUnitTest %}
-    "test": "jest",
-    "build:test": "npm run build && jest",
+    "test:unit": "jest --verbose ./test/unit",
+    "build:unit": "npm run build && jest --verbose ./test/unit",
+    {% endif %}
+    {% if needE2eTest %}
+    "test:e2e": "npx e2e-runner j---config=./jest-e2e.config.js",
+    "build:e2e": "npm run build && npm run test:e2e",
     {% endif %}
     "help": "node ./build/build.js --help"
   },
@@ -47,8 +51,8 @@
     "vue-template-compiler": "^2.6.10",
     "vue-style-loader": "^4.1.2",
     "jest": "^27.4.5",
-    "@mpxjs/miniprogram-simulate": "^1.4.8",
-    "@mpxjs/mpx-jest": "0.0.9",
+    "@mpxjs/miniprogram-simulate": "^1.4.12",
+    "@mpxjs/mpx-jest": "0.0.18",
     "babel-jest": "^27.4.5",
     "ts-jest": "^27.1.2",
     "@babel/plugin-transform-typescript": "^7.16.1",
@@ -82,6 +86,12 @@
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-dev-server": "^4.7.4",
     "commander": "^6.0.0",
+    {% if needE2eTest %}
+    "@mpxjs/e2e": "^0.0.11",
+    "@mpxjs/e2e-scripts": "^0.0.9",
+    "@types/jest": "^27.5.1",
+    "miniprogram-automator": "^0.10.0",
+    {% endif %}
     "postcss": "^8.4.5"
   }
 }

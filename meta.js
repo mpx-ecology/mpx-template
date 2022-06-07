@@ -77,6 +77,12 @@ module.exports = {
       message: '是否需要单元测试',
       default: false
     },
+    needE2eTest: {
+      when: 'srcMode === "wx"',
+      type: 'confirm',
+      message: '是否需要E2E测试',
+      default: false
+    },
     appid: {
       type: 'string',
       message: '请输入小程序的Appid',
@@ -118,9 +124,15 @@ module.exports = {
     'static/swan/*': 'srcMode === "swan" || cross',
     'tsconfig.json': 'tsSupport',
     '**/*.ts': 'tsSupport',
-    'test/**/*': 'needUnitTest',
+    'test/unit/**/*': 'needUnitTest',
+    'test/setup.js': 'needUnitTest',
     'jest.config.js': 'needUnitTest',
-    '.eslintrc.js': 'needEslint'
+    '.eslintrc.js': 'needEslint',
+    'test/e2e/components/list.spec.js': 'needE2eTest && !tsSupport',
+    'test/e2e/components/list.spec.ts': 'needE2eTest && tsSupport',
+    'test/e2e/screenshot/*': 'needE2eTest',
+    'jest-e2e.config.js': 'needE2eTest',
+    '.e2erc.js': 'needE2eTest'
   },
   complete: function (data, { chalk }) {
     const green = chalk.green
