@@ -1,6 +1,6 @@
 <template>
   {% if isPlugin %}
-  <list></list>
+  <m-list></m-list>
   {% else %}
   <view>page</view>
   {% endif %}
@@ -21,7 +21,7 @@
   {
     "usingComponents": {
       {% if isPlugin %}
-      "list": "plugin://myPlugin/list"
+      "m-list": "plugin://myPlugin/list"
       {% endif %}
     }
   }

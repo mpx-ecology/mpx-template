@@ -1,5 +1,5 @@
 <template>
-  <list></list>
+  <m-list></m-list>
 </template>
 
 {% if tsSupport %}
@@ -17,7 +17,7 @@
 <script type="application/json">
   {
     "usingComponents": {
-      "list": "../components/list"
+      "m-list": "../components/list"
     }
   }
 </script>
