@@ -86,7 +86,7 @@ module.exports = {
     appid: {
       type: 'string',
       message: '请输入小程序的Appid',
-      default: 'touristappid'
+      default: ''
     }
   },
   computed: {
