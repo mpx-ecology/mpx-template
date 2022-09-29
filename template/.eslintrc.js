@@ -31,7 +31,7 @@ const eslintConf = {
 if (userConf.tsSupport) {
   eslintConf.overrides = [
     {
-      files: ['**/*.ts'],
+      files: ['**/*.ts', '**/*.mpx'],
       parser: '@typescript-eslint/parser',
       extends: [
         'standard',
