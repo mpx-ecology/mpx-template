@@ -31,18 +31,26 @@
   "author": "<$ author $>",
   "license": "ISC",
   "dependencies": {
-    "@mpxjs/api-proxy": "^2.7.1",
-    "vue": "^2.6.10",
-    "vue-i18n": "^8.15.3",
-    "@mpxjs/core": "^2.7.18"
+    "@mpxjs/api-proxy": "^2.8.0",
+    "@mpxjs/core": "^2.8.0",
+    "@mpxjs/store": "^2.8.0",
+    "@mpxjs/pinia": "^2.8.0",
+    "@mpxjs/utils": "^2.8.0",
+    "@mpxjs/fetch": "^2.8.0",
+    "vue": "^2.7.10",
+    "vue-demi": "^0.13.11",
+    "vue-i18n": "^8.27.2",
+    "vue-i18n-bridge": "^9.2.2"
   },
   "browserslist": [
     "ios >= 9",
     "chrome >= 47"
   ],
   "devDependencies": {
+    "@mpxjs/webpack-plugin": "^2.8.0",
+    "@mpxjs/size-report": "^2.8.0",
+    "@mpxjs/babel-plugin-inject-page-events": "^2.8.0",
     "copy-webpack-plugin": "^9.0.1",
-    "@mpxjs/webpack-plugin": "^2.7.18",
     "http-server": "^0.12.0",
     "npm-run-all": "^4.1.5",
     "html-webpack-plugin": "^5.3.2",
