@@ -19,7 +19,7 @@
 </style>
 
 <script name="json">
-  module.exorts = {
+  module.exports = {
     pages: [
       './pages/index'
     ]{% if isPlugin %},
