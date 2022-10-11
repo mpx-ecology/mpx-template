@@ -100,6 +100,9 @@
     "@types/jest": "^27.5.1",
     "miniprogram-automator": "^0.10.0",
     {% endif %}
+    {% if needEslint %}
+    "@mpxjs/eslint-config": "^1.0.3",
+    {% endif %}
     "postcss": "^8.4.5"
   }
 }
