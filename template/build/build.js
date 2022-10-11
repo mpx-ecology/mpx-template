@@ -6,6 +6,7 @@ const program = require('commander')
 const { userConf, supportedModes } = require('../config/index')
 const getWebpackConf = require('./getWebpackConf')
 const { resolveDist, getRootPath } = require('./utils')
+const { syncProjectConfig } = require('./syncProjectConfig')
 const devServer = require('../config/devServer')
 
 program
@@ -34,6 +35,9 @@ if (!modes.length) {
     mode: userConf.srcMode
   })
 }
+
+// 同步 dist 中 project config 文件
+syncProjectConfig()
 
 // 开启子进程
 if (userConf.openChildProcess && modes.length > 1) {
