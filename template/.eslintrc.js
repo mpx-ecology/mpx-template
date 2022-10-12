@@ -1,6 +1,6 @@
 const { userConf } = require('./config/index')
 
-const eslintCof = {
+const eslintConf = {
   extends: ['@mpxjs'],
   rules: {
     // .mpx文件规则 https://mpx-ecology.github.io/eslint-plugin-mpx/rules/
@@ -33,4 +33,4 @@ if (userConf.tsSupport) {
   ]
 }
 
-module.exports = eslintCof
+module.exports = eslintConf
