@@ -95,8 +95,8 @@
     "webpack-dev-server": "^4.7.4",
     "commander": "^6.0.0",
     {% if needE2eTest %}
-    "@mpxjs/e2e": "^0.0.11",
-    "@mpxjs/e2e-scripts": "^0.0.9",
+    "@mpxjs/e2e": "^0.0.12-66",
+    "@mpxjs/e2e-scripts": "^0.0.10-beta.4",
     "@types/jest": "^27.5.1",
     "miniprogram-automator": "^0.10.0",
     {% endif %}
