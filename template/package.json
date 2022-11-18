@@ -101,7 +101,11 @@
     "miniprogram-automator": "^0.10.0",
     {% endif %}
     {% if needEslint %}
-    "@mpxjs/eslint-config": "^1.0.3",
+    {% if tsSupport %}
+    "@mpxjs/eslint-config-ts": "^1.0.5",
+    {% else %}
+    "@mpxjs/eslint-config": "^1.0.5",
+    {% endif %}
     {% endif %}
     "postcss": "^8.4.5"
   }
