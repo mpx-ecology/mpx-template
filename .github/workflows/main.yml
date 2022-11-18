@@ -23,7 +23,7 @@ jobs:
         run: npm i
 
       - name: install mpx cli
-        run: npm i -g @mpxjs/cli
+        run: npm i -g @mpxjs/cli@2.8
 
       - name: test basic project
         run: node __test__/test-basic.js
