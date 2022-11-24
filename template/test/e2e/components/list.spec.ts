@@ -3,6 +3,8 @@
  * 首先开启工具安全设置中的 CLI/HTTP 调用功能
  * docs of miniprogram-automator: https://developers.weixin.qq.com/miniprogram/dev/devtools/auto/quick-start.html
  */
+
+// @ts-ignore
 import automator from '@mpxjs/e2e'
 
 describe('index', () => {
