@@ -60,6 +60,7 @@
     "vue-template-compiler": "^2.6.10",
     "vue-style-loader": "^4.1.2",
     "jest": "^27.4.5",
+    "@types/jest": "^27.5.1",
     "@mpxjs/miniprogram-simulate": "^1.4.12",
     "@mpxjs/mpx-jest": "0.0.18",
     "babel-jest": "^27.4.5",
@@ -98,7 +99,6 @@
     {% if needE2eTest %}
     "@mpxjs/e2e": "^0.0.13",
     "@mpxjs/e2e-scripts": "^0.0.12",
-    "@types/jest": "^27.5.1",
     "miniprogram-automator": "^0.10.0",
     {% endif %}
     {% if needEslint %}
